@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>うさうさ研修工房 ／ 庭園デザインラボ（統合版）🐰🪴</title>
+<style>
+  :root{
+    --sumi:#33302a; --sub:#7a7363; --washi:#f6f1e6; --paper:#fcfaf3; --line:#e0d7c2;
+    --moss:#5f7d4f; --moss-deep:#435a36; --moss-soft:#e8eede;
+    --stone:#9b968a; --sand:#ece4d2; --water:#41607a; --shu:#b5462f;
+    --shadow:0 6px 22px rgba(67,90,54,.14);
+  }
+  *{box-sizing:border-box}
+  body{margin:0; font-family:"Hiragino Mincho ProN","Yu Mincho","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,serif;
+    color:var(--sumi); background:linear-gradient(165deg,#f7f2e8,#efe7d6 60%,#e9e0ce); line-height:1.8}
+  header{background:linear-gradient(135deg,var(--moss-deep),#33402a); color:#f3efe2; padding:16px 22px; box-shadow:var(--shadow); position:sticky; top:0; z-index:30; overflow:hidden}
+  header .sand{position:absolute; right:-30px; top:-40px; opacity:.18}
+  .brand{display:flex; align-items:center; gap:12px; flex-wrap:wrap; position:relative}
+  .brand h1{font-size:1.12rem; margin:0; font-weight:700; letter-spacing:.03em}
+  .brand .mascot{font-size:1.7rem; filter:drop-shadow(0 2px 3px rgba(0,0,0,.25))}
+  .tagline{font-size:.72rem; opacity:.9; margin-top:2px}
+  .seal{font-size:.62rem; background:var(--shu); color:#fff; padding:2px 8px; border-radius:4px; letter-spacing:.08em}
+  .pill{font-size:.62rem; background:rgba(255,255,255,.16); padding:2px 9px; border-radius:999px; white-space:nowrap}
+  .ver{font-size:.62rem; background:#f3efe2; color:var(--moss-deep); padding:2px 10px; border-radius:999px; font-weight:700}
+  .tabs{display:flex; gap:6px; flex-wrap:wrap; max-width:1180px; margin:14px auto 0; padding:0 16px}
+  .tab{cursor:pointer; border:1.5px solid var(--line); background:#fbf7ec; color:var(--sub); padding:9px 15px; border-radius:12px 12px 0 0; font-size:.86rem; font-weight:700; transition:.15s}
+  .tab:hover{border-color:var(--moss)}
+  .tab.on{background:var(--paper); color:var(--moss-deep); border-bottom-color:var(--paper)}
+  .wrap{max-width:1180px; margin:0 auto; padding:16px}
+  .pane{display:none} .pane.on{display:block}
+  .grid{display:grid; grid-template-columns:1fr 340px; gap:16px}
+  @media(max-width:900px){ .grid{grid-template-columns:1fr} }
+  .card{background:var(--paper); border:1px solid var(--line); border-radius:14px; box-shadow:var(--shadow)}
+  .pad{padding:16px}
+  h2.sec{font-size:.84rem; color:var(--moss-deep); margin:0 0 10px; letter-spacing:.05em; display:flex; align-items:center; gap:7px}
+  input[type=password],input[type=text],select,textarea{font:inherit; padding:9px 11px; border:1px solid var(--line); border-radius:10px; background:#fbf7ec; color:var(--sumi)}
+  input[type=password],input[type=text]{flex:1; min-width:150px}
+  .setrow{display:flex; gap:8px; flex-wrap:wrap; align-items:center}
+  .hint{font-size:.7rem; color:var(--sub); margin-top:6px}
+  .chips{display:flex; gap:8px; flex-wrap:wrap}
+  .chip{cursor:pointer; border:1.5px solid var(--line); background:#fbf7ec; color:var(--sub); padding:8px 12px; border-radius:11px; font-size:.8rem; transition:.15s; font-weight:600}
+  .chip:hover{border-color:var(--moss)}
+  .chip.on{background:var(--moss); color:#fff; border-color:var(--moss)}
+  .chip.persona.on[data-k="review"]{background:var(--water);border-color:var(--water)}
+  .chip.persona.on[data-k="field"]{background:var(--shu);border-color:var(--shu)}
+  .chip.persona.on[data-k="newbie"]{background:var(--stone);border-color:var(--stone)}
+  #chat{display:flex; flex-direction:column; gap:14px; min-height:120px; padding:6px 2px}
+  .msg{display:flex; gap:10px; align-items:flex-start}
+  .msg .ava{font-size:1.4rem; flex:none; margin-top:2px}
+  .bubble{padding:12px 14px; border-radius:14px; max-width:100%; font-size:.92rem; white-space:pre-wrap; word-break:break-word}
+  .me{flex-direction:row-reverse}
+  .me .bubble{background:var(--moss); color:#fff; border-bottom-right-radius:4px}
+  .ai .bubble{background:var(--moss-soft); border:1px solid var(--line); border-bottom-left-radius:4px}
+  .ai .bubble h4{margin:.4em 0 .2em; font-size:.86rem; color:var(--moss-deep)}
+  .ai .bubble .doi{display:inline-block; font-size:.72rem; background:#fff; border:1px solid var(--line); border-radius:8px; padding:1px 7px; margin:2px 4px 2px 0; color:var(--water); text-decoration:none}
+  .toolbar{display:flex; gap:6px; margin-top:6px}
+  .speakbtn{border:none; background:none; cursor:pointer; font-size:1rem; opacity:.7} .speakbtn:hover{opacity:1}
+  .composer{display:flex; gap:8px; align-items:flex-end; margin-top:12px}
+  textarea{flex:1; resize:none; min-height:48px; max-height:160px}
+  .iconbtn{flex:none; width:48px; height:48px; border-radius:14px; border:none; cursor:pointer; font-size:1.2rem; color:#fff; background:var(--moss); transition:.15s; box-shadow:0 3px 10px rgba(67,90,54,.3)}
+  .iconbtn:hover{background:var(--moss-deep)}
+  .iconbtn.mic{background:#fff; color:var(--moss); border:1.5px solid var(--moss)}
+  .iconbtn.mic.rec{background:var(--moss); color:#fff; animation:pulse 1s infinite}
+  @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(95,125,79,.5)}50%{box-shadow:0 0 0 8px rgba(95,125,79,0)}}
+  .iconbtn:disabled{opacity:.45; cursor:not-allowed}
+  .btn{cursor:pointer; border:none; border-radius:11px; padding:9px 15px; font:inherit; font-weight:700; color:#fff; background:var(--moss); box-shadow:0 3px 10px rgba(67,90,54,.28); transition:.15s}
+  .btn:hover{background:var(--moss-deep)} .btn.ghost{background:#fff; color:var(--moss-deep); border:1.5px solid var(--line); box-shadow:none}
+  .voicebar{display:flex; align-items:center; gap:8px; font-size:.75rem; color:var(--sub); margin-top:8px}
+  .switch{position:relative; width:40px; height:22px; background:var(--line); border-radius:999px; cursor:pointer; transition:.2s}
+  .switch.on{background:var(--moss)}
+  .switch i{position:absolute; top:2px; left:2px; width:18px; height:18px; background:#fff; border-radius:50%; transition:.2s}
+  .switch.on i{left:20px}
+  .empty{text-align:center; color:var(--sub); font-size:.82rem; padding:20px 6px} .empty .big{font-size:2.4rem}
+  .badge{display:inline-block; font-size:.62rem; padding:1px 8px; border-radius:999px; background:var(--moss-soft); color:var(--moss-deep); margin-left:4px}
+  footer{max-width:1180px; margin:0 auto; padding:8px 20px 30px; font-size:.68rem; color:var(--sub)}
+  .out{border:1px solid var(--line); border-radius:12px; padding:14px; background:var(--moss-soft); min-height:60px; white-space:pre-wrap; font-size:.9rem}
+  .paper{border:1px solid var(--line); border-radius:11px; padding:10px 12px; margin-bottom:9px; background:#fbf7ec; cursor:pointer; transition:.15s}
+  .paper:hover{border-color:var(--moss); background:var(--moss-soft)}
+  .paper .t{font-size:.8rem; font-weight:700}
+  .paper .m{font-size:.68rem; color:var(--sub); margin-top:2px}
+  .paper .tag{font-size:.62rem; background:var(--sand); color:var(--moss-deep); padding:1px 7px; border-radius:999px; margin-top:5px; display:inline-block}
+  .paper a.doilink{font-size:.66rem; color:var(--water)}
+  .quick{display:flex; gap:6px; flex-wrap:wrap; margin-bottom:10px}
+  .mini{font-size:.68rem; cursor:pointer; border:1px solid var(--line); background:#fff; border-radius:999px; padding:4px 10px; color:var(--moss-deep); font-weight:600}
+  .mini:hover{background:var(--moss-soft)}
+  /* composition */
+  .stage{display:flex; justify-content:center; align-items:center; background:#fbf7ec; border:1px solid var(--line); border-radius:14px; padding:14px; min-height:240px}
+  .fwlist{display:grid; grid-template-columns:repeat(auto-fill,minmax(120px,1fr)); gap:8px}
+  .fw{cursor:pointer; border:1.5px solid var(--line); background:#fbf7ec; border-radius:11px; padding:9px 10px; transition:.15s}
+  .fw:hover{border-color:var(--moss); background:var(--moss-soft)} .fw.on{border-color:var(--moss); background:var(--moss); color:#fff}
+  .fw .nm{font-size:.82rem; font-weight:700} .fw .en{font-size:.62rem; opacity:.8}
+  .fwinfo{border:1px solid var(--line); border-radius:12px; padding:12px 14px; background:#fbf7ec; font-size:.86rem}
+  .fwinfo h3{margin:0 0 4px; font-size:.95rem; color:var(--moss-deep)}
+  .fwinfo .use{font-size:.78rem; color:var(--sub); margin-top:6px}
+  label.lab{font-size:.74rem; color:var(--sub)}
+  /* garden */
+  .gcard{border:1px solid var(--line); border-radius:14px; overflow:hidden; margin-bottom:16px; background:var(--paper)}
+  .gcard .ghead{padding:12px 16px; background:var(--moss-soft); border-bottom:1px solid var(--line); display:flex; align-items:baseline; gap:10px; flex-wrap:wrap}
+  .gcard .ghead .jp{font-size:1.15rem; font-weight:800; color:var(--moss-deep)}
+  .gcard .ghead .kana{font-size:.72rem; color:var(--sub)}
+  .gcard .gbody{padding:14px 16px; display:grid; grid-template-columns:1fr 1fr; gap:12px}
+  @media(max-width:680px){ .gcard .gbody{grid-template-columns:1fr} }
+  .gbox{border:1px solid var(--line); border-radius:10px; padding:10px 12px; background:#fbf7ec}
+  .gbox .glab{font-size:.66rem; font-weight:800; color:#fff; padding:2px 9px; border-radius:7px; display:inline-block; margin-bottom:6px}
+  .glab.def{background:var(--moss)} .glab.ex{background:var(--shu)} .glab.gd{background:var(--water)} .glab.br{background:var(--moss-deep)}
+  .gbox p{margin:0; font-size:.84rem}
+  .bridge{padding:10px 16px 14px; font-size:.8rem; color:var(--sumi); border-top:1px dashed var(--line)}
+  .bridge a{color:var(--water)}
+  .gpill{cursor:pointer; font-size:.7rem; border:1px solid var(--moss); color:var(--moss-deep); background:#fff; border-radius:999px; padding:2px 10px; font-weight:700}
+  .gpill:hover{background:var(--moss); color:#fff}
+  .palette{display:flex; gap:0; border-radius:12px; overflow:hidden; border:1px solid var(--line); margin-top:8px}
+  .palette span{flex:1; height:50px; position:relative; cursor:pointer}
+  .palette span:hover::after{content:attr(data-n) " " attr(data-hex); position:absolute; bottom:5px; left:50%; transform:translateX(-50%); font-size:.58rem; background:rgba(0,0,0,.6); color:#fff; padding:1px 6px; border-radius:5px; white-space:nowrap}
+  .params{margin-top:10px; display:flex; flex-direction:column; gap:10px}
+  .prow{display:flex; align-items:center; gap:10px; flex-wrap:wrap}
+  .prow label{font-size:.78rem; color:var(--sub); min-width:172px}
+  .prow input[type=range]{flex:1; min-width:120px; accent-color:var(--moss)}
+  .prow select{min-width:120px}
+  .pval{font-size:.74rem; color:var(--moss-deep); font-weight:700; min-width:52px; text-align:right}
+  .cfg{font-family:ui-monospace,Menlo,Consolas,monospace; font-size:.7rem; color:var(--water); background:#fbf7ec; border:1px dashed var(--line); border-radius:8px; padding:6px 9px; word-break:break-all}
+  .chip.mode.on[data-m="reference"]{background:var(--water);border-color:var(--water)}
+  .chip.mode.on[data-m="socratic"]{background:var(--shu);border-color:var(--shu)}
+  .presetbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+  .preset{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--line);background:#fbf7ec;border-radius:11px;padding:6px 10px;font-size:.78rem;cursor:pointer}
+  .preset:hover{border-color:var(--moss);background:var(--moss-soft)}
+  .preset.good{border-color:#c79a3a;background:#fbf4e3}
+  .preset .pn{font-weight:700;color:var(--moss-deep)}
+  .preset .star,.preset .del{border:none;background:none;cursor:pointer;font-size:.8rem;opacity:.65;padding:0}
+  .preset .star:hover,.preset .del:hover{opacity:1}
+  #presetJSON{width:100%;min-height:70px;margin-top:6px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.7rem}
+  .modeind{font-size:.72rem;color:var(--sub);align-self:center}
+</style>
+</head>
+<body>
+<header>
+  <svg class="sand" width="190" height="150" viewBox="0 0 190 150"><g fill="none" stroke="#f3efe2" stroke-width="2">
+    <circle cx="120" cy="60" r="18"/><circle cx="120" cy="60" r="30"/><circle cx="120" cy="60" r="42"/><circle cx="120" cy="60" r="54"/>
+    <line x1="0" y1="118" x2="190" y2="118"/><line x1="0" y1="130" x2="190" y2="130"/><line x1="0" y1="142" x2="190" y2="142"/></g></svg>
+  <div class="brand">
+    <span class="mascot">🐰🪴</span>
+    <div>
+      <h1>うさうさ研修工房 ／ 庭園デザインラボ</h1>
+      <div class="tagline">面白きこともなき世を面白く ― 庭の知恵で、デザイン論と構図を束ねて学ぶ。</div>
+    </div>
+    <span class="ver" id="verBadge">v1.3 ・ 2026-06-23（統合版）</span>
+    <span class="seal">嘘つかない原則</span>
+    <span class="pill">アーティファクト＆HTML兼用</span>
+    <span class="pill">鍵=任意</span>
+  </div>
+</header>
+
+<div class="tabs" id="tabs">
+  <div class="tab on" data-tab="chat">💬 相談（庭師AI）</div>
+  <div class="tab" data-tab="theory">🌿 デザイン論（査読15本）</div>
+  <div class="tab" data-tab="comp">📐 構図（9型）</div>
+  <div class="tab" data-tab="garden">🪨 庭園の知恵（橋渡し）</div>
+</div>
+
+<div class="wrap">
+
+  <!-- ===== CHAT ===== -->
+  <section class="pane on" id="pane-chat">
+    <section class="card pad" style="margin-bottom:14px">
+      <h2 class="sec">⚙️ 設定 ― 統合版（アーティファクト ＆ HTML 兼用）</h2>
+      <div class="setrow">
+        <input id="apikey" type="password" placeholder="APIキー（空ならアーティファクト版・claude.ai内で鍵不要）">
+        <select id="model">
+          <option value="claude-sonnet-4-6">Sonnet 4.6（標準）</option>
+          <option value="claude-haiku-4-5-20251001">Haiku 4.5（速い）</option>
+          <option value="claude-opus-4-8">Opus 4.8（じっくり）</option>
+        </select>
+        <span class="modeind" id="modeInd"></span>
+      </div>
+      <div class="hint">🔒 キーはメモリ内だけ（保存しません）。<strong>空</strong>＝claude.aiのアーティファクトとして鍵なしで動作（モデル Sonnet 4.6・最大1000トークン）。<strong>鍵を入力</strong>＝HTML版としてオフラインでも自分の鍵で動作（モデル選択・最大トークン調整が有効）。通信先は api.anthropic.com のみ。</div>
+    </section>
+    <div class="grid">
+      <main>
+        <section class="card pad" style="margin-bottom:14px">
+          <h2 class="sec">🎭 相談相手（ペルソナ）</h2>
+          <div class="chips" id="personas">
+            <div class="chip persona on" data-k="sensei">🐰 庭師先生</div>
+            <div class="chip persona" data-k="review">🔍 査読者モード</div>
+            <div class="chip persona" data-k="field">🛠 現場リーダー</div>
+            <div class="chip persona" data-k="newbie">🌱 新人代弁者</div>
+          </div>
+        </section>
+        <section class="card pad" style="margin-bottom:14px">
+          <h2 class="sec">🧭 回答モード</h2>
+          <div class="chips" id="modes">
+            <div class="chip mode on" data-m="consult">🪴 じっくり相談（四段）</div>
+            <div class="chip mode" data-m="reference">📚 参照先モード（即答・出典）</div>
+            <div class="chip mode" data-m="socratic">🧠 考えさせる問モード</div>
+          </div>
+          <details style="margin-top:12px">
+            <summary>🪴 パラメータ盆栽（エンジニア向け・庭師の道具箱）</summary>
+            <div class="params">
+              <div class="prow"><label>🌡 温度（ゆらぎ / temperature）</label><input type="range" id="pTemp" min="0" max="1" step="0.05" value="0.7"><span class="pval" id="pTempV">0.70</span></div>
+              <div class="prow"><label>📐 区切り（最大トークン / max_tokens）</label><input type="range" id="pMax" min="400" max="3000" step="100" value="1600"><span class="pval" id="pMaxV">1600</span></div>
+              <div class="prow"><label>✂️ 剪定（回答の詳しさ）</label>
+                <select id="pVerb"><option value="short">短め</option><option value="std" selected>標準</option><option value="long">詳しめ</option></select></div>
+              <div class="prow"><label>🪴 仕立て（専門度）</label>
+                <select id="pLevel"><option value="new">新人</option><option value="mid" selected>中級</option><option value="eng">エンジニア</option></select></div>
+              <div class="prow"><label>💧 水やり（たとえの量）</label>
+                <select id="pEx"><option value="few">少なめ</option><option value="std" selected>普通</option><option value="many">多め</option></select></div>
+              <div class="prow"><label>📚 出典（DOIの厳しさ）</label>
+                <select id="pCite"><option value="strict" selected>必須（できる限りDOI）</option><option value="loose">任意</option></select></div>
+              <div class="prow"><label>🔊 話速（読み上げ速度）</label><input type="range" id="pRate" min="0.7" max="1.4" step="0.05" value="1.0"><span class="pval" id="pRateV">1.00x</span></div>
+              <div class="cfg" id="cfgLine"></div>
+              <div class="presetbar">
+                <input id="presetName" type="text" placeholder="設定名（例：設計書レビュー・厳格）">
+                <button class="btn" id="presetSave">💾 保存</button>
+                <button class="btn ghost" id="presetGood">⭐ よかった設定に戻す</button>
+              </div>
+              <div class="chips" id="presetList" style="margin-top:8px"></div>
+              <details style="margin-top:8px"><summary>📋 設定の書き出し／読み込み（JSON）</summary>
+                <div class="hint">プリセットは保存中メモリ内です。下のJSONをコピーして控えれば、次回ここに貼って「読み込み」で復元できます。</div>
+                <textarea id="presetJSON" placeholder="ここにJSONを貼って［JSONから読み込み］"></textarea>
+                <div class="chips" style="margin-top:6px"><button class="btn ghost" id="presetCopy">📋 全プリセットをコピー</button><button class="btn ghost" id="presetImport">⬇️ JSONから読み込み</button></div>
+              </details>
+            </div>
+          </details>
+        </section>
+
+        <section class="card pad">
+          <h2 class="sec">💬 対話で学ぶ <span class="badge" id="ctxbadge">🐰 庭師先生</span></h2>
+          <div id="chat">
+            <div class="empty" id="empty">
+              <div class="big">🐰🪴</div>
+              庭の知恵で、最新デザイン論と構図を束ねて学びます。<br>
+              「定義→たとえ→詳細→一言まとめ」でやさしく。<br>
+              例）「間（ま）の考え方を、資料デザインと認知負荷でつなげて教えて」
+            </div>
+          </div>
+          <div class="voicebar">
+            <span>🔊 読み上げ</span>
+            <div class="switch on" id="ttsToggle"><i></i></div>
+            <span id="ttsState" style="font-size:.7rem">ON</span>
+            <span style="margin-left:auto; font-size:.7rem" id="recHint"></span>
+          </div>
+          <div class="composer">
+            <button class="iconbtn mic" id="micBtn" title="音声で話す">🎤</button>
+            <textarea id="input" placeholder="例）借景って、写真の額縁構図やUXとどうつながる？"></textarea>
+            <button class="iconbtn" id="sendBtn" title="送信">➤</button>
+          </div>
+          <div class="chips" style="margin-top:10px">
+            <button class="btn ghost" id="toQuestions">🧠 直前の回答を“考えさせる問い”に</button>
+          </div>
+        </section>
+      </main>
+      <aside>
+        <section class="card pad" style="margin-bottom:14px">
+          <h2 class="sec">🪨 庭の知恵から相談（クリック）</h2>
+          <div class="chips" id="gardenQuick"></div>
+        </section>
+        <section class="card pad">
+          <h2 class="sec">🧭 この工房の約束</h2>
+          <div class="hint">
+            3つの知をつなげて教えます：<strong>査読デザイン論</strong>（実在DOIのみ）／<strong>写真の構図</strong>（定石・例外あり）／<strong>日本庭園の設計思想</strong>（伝統的な慣習）。<br><br>
+            <strong>嘘つかない原則：</strong>庭園や構図の原則は文化的・実務的な“慣習”で、査読論文の主張ではありません。論文DOIは検証済みのものだけを引用し、両者は「響き合うアナロジー」として正直に区別します。未確認は「分かりません」と答えます。
+          </div>
+        </section>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ===== THEORY ===== -->
+  <section class="pane" id="pane-theory">
+    <section class="card pad" style="margin-bottom:14px">
+      <h2 class="sec">🌿 最新デザイン論ライブラリ <span class="badge">DOI実在確認済・15本</span></h2>
+      <div class="quick" id="quick">
+        <span class="mini" data-th="all">すべて</span>
+        <span class="mini" data-th="認知負荷">認知負荷</span>
+        <span class="mini" data-th="マルチメディア">マルチメディア</span>
+        <span class="mini" data-th="UX/美">UX/美</span>
+        <span class="mini" data-th="アクセシビリティ">A11y</span>
+        <span class="mini" data-th="デザイン思考">DT</span>
+        <span class="mini" data-th="学習心理">学習心理</span>
+        <span class="mini" data-th="カラー心理">カラー心理</span>
+      </div>
+      <div class="hint">カードを押すと、その論文から相談を始められます。</div>
+    </section>
+    <div id="papers"></div>
+  </section>
+
+  <!-- ===== COMPOSITION ===== -->
+  <section class="pane" id="pane-comp">
+    <div class="grid">
+      <main>
+        <section class="card pad" style="margin-bottom:14px">
+          <h2 class="sec">📐 構図プレビュー（構成図）</h2>
+          <div class="setrow" style="margin-bottom:10px">
+            <label class="lab">縦横比</label>
+            <select id="ratio">
+              <option value="3,2">3:2（横）</option><option value="2,3">2:3（縦）</option>
+              <option value="16,9">16:9</option><option value="1,1">1:1</option><option value="4,5">4:5</option>
+            </select>
+            <label class="lab">主役位置</label>
+            <select id="subjPos">
+              <option value="auto">型のおすすめ</option>
+              <option value="tl">左上</option><option value="tr">右上</option>
+              <option value="bl">左下</option><option value="br">右下</option><option value="c">中央</option>
+            </select>
+            <button class="btn ghost" id="toggleSubj">主役マーカー: ON</button>
+          </div>
+          <div class="stage" id="stage"></div>
+        </section>
+        <section class="card pad"><div class="fwinfo" id="fwInfo"></div></section>
+      </main>
+      <aside>
+        <section class="card pad">
+          <h2 class="sec">📐 構図の型を選ぶ（9）</h2>
+          <div class="fwlist" id="fwGrid"></div>
+        </section>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ===== GARDEN ===== -->
+  <section class="pane" id="pane-garden">
+    <section class="card pad" style="margin-bottom:14px">
+      <h2 class="sec">🪨 庭園の知恵で、デザイン論と構図を束ねる</h2>
+      <p style="font-size:.88rem;margin:.2em 0">
+        日本庭園の設計思想は、「引き算」「不均整」「視線の誘導」「自然らしさ」を磨いてきた知恵の宝庫。
+        これは写真の<strong>構図の型</strong>とも、認知負荷や視覚的美といった<strong>査読デザイン論</strong>とも響き合います。
+        7つの知恵を、両者への橋渡しとして読み解きます。
+      </p>
+      <div class="hint">⚠️ 庭園の原則は伝統的な設計思想（慣習）です。下に添えるDOIは「概念が響き合う」近代デザイン科学であり、“論文が日本庭園を実証した”という意味ではありません（嘘つかない原則）。</div>
+    </section>
+    <div id="garden"></div>
+    <section class="card pad">
+      <h2 class="sec">🎨 庭の色トーン</h2>
+      <div class="hint">苔・石・水・朱・和紙。落ち着きの中に一点の差し色。<a href="https://doi.org/10.1037/0096-3445.123.4.394" target="_blank" rel="noopener">Valdez & Mehrabian (1994)</a>＝明度↑で快・彩度↑で覚醒。</div>
+      <div class="palette" id="gardenPalette"></div>
+      <div class="hint">緑(苔)＝快・低覚醒で“静”／石のグレー＝無彩色で主役を邪魔しない／水の藍＝寒色で静けさ／朱＝高彩度の差し色を小面積で一点強調（覚醒）。背景は和紙の高明度で“快”を底上げ。</div>
+    </section>
+  </section>
+
+</div>
+
+<footer>
+  🐰🪴 うさうさ研修工房 庭園デザインラボ <strong>v1.3 統合版（2026-06-23 商用テスト済）</strong>／鍵が空ならアーティファクト版・入れればHTML版に自動切替。
+  査読デザイン論は実在DOIのみ。庭園・構図の原則は文化的/実務的な慣習で、論文の主張とは区別して扱います（嘘つかない原則）。
+</footer>
+
+<script>
+/* ===== 査読論文ライブラリ（DOI実在確認済・15本） ===== */
+const PAPERS=[
+ {id:"sweller2019",au:"Sweller, van Merriënboer & Paas",yr:2019,th:"認知負荷",t:"Cognitive Architecture and Instructional Design: 20 Years Later",j:"Educational Psychology Review, 31(2), 261–292",doi:"10.1007/s10648-019-09465-5",plain:"作業記憶は小さい。教え方で“余計な負荷”を減らすのが設計の肝。"},
+ {id:"sweller1994",au:"Sweller",yr:1994,th:"認知負荷",t:"Cognitive load theory, learning difficulty, and instructional design",j:"Learning and Instruction, 4(4), 295–312",doi:"10.1016/0959-4752(94)90003-5",plain:"学習の難しさは“素材”と“見せ方”に分けられる原典級。"},
+ {id:"paas2020",au:"Paas & van Merriënboer",yr:2020,th:"認知負荷",t:"Cognitive-Load Theory: Methods to Manage Working Memory Load",j:"Current Directions in Psychological Science, 29(4), 394–398",doi:"10.1177/0963721420922183",plain:"作業記憶の負荷を“下げる・割り当てる”手法のまとめ。"},
+ {id:"mayer2024",au:"Mayer",yr:2024,th:"マルチメディア",t:"The past, present, and future of the cognitive theory of multimedia learning",j:"Educational Psychology Review, 36(1), 8",doi:"10.1007/s10648-023-09842-1",plain:"言葉＋絵は言葉だけより学べる。15の実証原則の最新総説。"},
+ {id:"mayer2001",au:"Mayer, Heiser & Lonn",yr:2001,th:"マルチメディア",t:"Cognitive constraints on multimedia learning",j:"Journal of Educational Psychology, 93(1), 187–198",doi:"10.1037/0022-0663.93.1.187",plain:"盛りすぎると理解は減る（一貫性原則）。"},
+ {id:"mayer2008",au:"Mayer & Johnson",yr:2008,th:"マルチメディア",t:"Revising the redundancy principle in multimedia learning",j:"Journal of Educational Psychology, 100(2), 380–386",doi:"10.1037/0022-0663.100.2.380",plain:"ナレーションと同じ全文字は逆効果（冗長性原則）。"},
+ {id:"sonderegger2010",au:"Sonderegger & Sauer",yr:2010,th:"UX/美",t:"The influence of design aesthetics in usability testing",j:"Applied Ergonomics, 41(3), 403–410",doi:"10.1016/j.apergo.2009.09.002",plain:"見た目が良いと“使いやすく感じる”。実測とは別物。"},
+ {id:"moshagen2010",au:"Moshagen & Thielsch",yr:2010,th:"UX/美",t:"Facets of visual aesthetics",j:"International Journal of Human-Computer Studies, 68(10), 689–709",doi:"10.1016/j.ijhcs.2010.05.006",plain:"画面の“美しさ”は4側面（簡潔さ・多様性・色彩・職人技）。"},
+ {id:"mccarthy2010",au:"McCarthy & Swierenga",yr:2010,th:"アクセシビリティ",t:"What we know about dyslexia and web accessibility",j:"Universal Access in the Information Society, 9(2), 147–152",doi:"10.1007/s10209-009-0160-5",plain:"読みやすい配色・行間・書体は“配慮”でなく“設計”。"},
+ {id:"micheli2019",au:"Micheli et al.",yr:2019,th:"デザイン思考",t:"Doing Design Thinking: Conceptual Review, Synthesis, and Research Agenda",j:"Journal of Product Innovation Management",doi:"10.1111/jpim.12466",plain:"デザイン思考の“10属性・8手法”を体系化したレビュー。"},
+ {id:"baker2020",au:"Baker & Moukhliss",yr:2020,th:"デザイン思考",t:"Concretising Design Thinking",j:"Review of Education, 8(1), 305–333",doi:"10.1002/rev3.3186",plain:"デザイン思考を“教育設計”にどう落とすか。"},
+ {id:"carlgren2016",au:"Carlgren, Rauth & Elmquist",yr:2016,th:"デザイン思考",t:"The Challenges of Using Design Thinking in Industry",j:"Creativity and Innovation Management",doi:"10.1111/caim.12176",plain:"現場でDTを回す“あるある”を5社事例で整理。"},
+ {id:"roediger2006",au:"Roediger & Karpicke",yr:2006,th:"学習心理",t:"Test-Enhanced Learning: Taking Memory Tests Improves Long-Term Retention",j:"Psychological Science, 17(3), 249–255",doi:"10.1111/j.1467-9280.2006.01693.x",plain:"思い出す行為が記憶を強める（テスト効果）。"},
+ {id:"dunlosky2013",au:"Dunlosky et al.",yr:2013,th:"学習心理",t:"Improving Students' Learning With Effective Learning Techniques",j:"Psychological Science in the Public Interest, 14(1), 4–58",doi:"10.1177/1529100612453266",plain:"練習テスト・自己説明・精緻化質問が高効果。"},
+ {id:"valdez1994",au:"Valdez & Mehrabian",yr:1994,th:"カラー心理",t:"Effects of Color on Emotions",j:"Journal of Experimental Psychology: General, 123(4), 394–409",doi:"10.1037/0096-3445.123.4.394",plain:"明度↑で快、彩度↑で覚醒（PADモデル）。"}
+];
+
+/* ===== 構図フレームワーク ===== */
+const FRAMEWORKS=[
+ {key:"thirds",nm:"三分割法",en:"Rule of Thirds",desc:"3×3分割の交点に主役を置く基本の型。",use:"迷ったらまず。風景/人物/スナップ全般。"},
+ {key:"phi",nm:"黄金比グリッド",en:"Phi Grid",desc:"約0.382:0.618の繊細グリッド。上品・静か。",use:"きっちり整った印象を出したい時。"},
+ {key:"spiral",nm:"黄金螺旋",en:"Golden Spiral",desc:"渦の中心に主役。視線を巻き込む。",use:"動き・流れを見せたい時。"},
+ {key:"diagonal",nm:"対角線構図",en:"Diagonal",desc:"対角線で奥行きと動き。",use:"道・階段・並木。退屈を崩したい時。"},
+ {key:"triangle",nm:"三角構図",en:"Triangle",desc:"3要素を三角形に。安定とまとまり。",use:"集合・静物・建築。安定させたい時。"},
+ {key:"center",nm:"日の丸構図",en:"Center",desc:"主役を中央に。力強いが単調になりやすい。",use:"主役が強い時。背景は整理。"},
+ {key:"symmetry",nm:"対称構図",en:"Symmetry",desc:"中央軸で鏡像。秩序・静けさ。",use:"建築・反射・並木トンネル。"},
+ {key:"frame",nm:"額縁構図",en:"Framing",desc:"前景で主役を囲み視線を内へ。",use:"奥行きと物語性を足したい時。"},
+ {key:"leading",nm:"リーディングライン",en:"Leading Lines",desc:"線で視線を主役(消失点)へ導く。",use:"奥行き・誘導を強く出したい時。"}
+];
+
+/* ===== 庭園の知恵（橋渡し） ===== */
+const GARDEN=[
+ {jp:"間（ま）・余白",kana:"Ma / Negative Space",fw:"leading",
+  def:"何も置かない“余白”を、積極的なデザイン要素として効かせる考え方。",
+  ex:"茶室のがらんとした空間。何もないからこそ、一輪の花が際立つ。",
+  gd:"砂庭の白砂や苔の広がり。石を引き立てるために“空ける”。",
+  br:'引き算は理解を助ける。余計を削る＝外在的な認知負荷を下げる発想と響き合う。構図では“主役の進行方向に余白”。',
+  doi:["sweller2019","mayer2001"], one:"足すより、空ける。"},
+ {jp:"不均整（不等辺）",kana:"Asymmetry",fw:"thirds",
+  def:"中央のべったり対称を避け、不揃いな重みで動きとバランスを作る。",
+  ex:"主石を中央から外し、添石を小さく離す。緊張と自然さが生まれる。",
+  gd:"三尊石も大中小で不等辺に。きっちり等間隔にしない。",
+  br:'真ん中を外す感覚は、写真の“三分割法”そのもの。整い過ぎない美が知覚的な好ましさにつながる。',
+  doi:["moshagen2010"], one:"真ん中を、外す。"},
+ {jp:"借景（しゃっけい）",kana:"Shakkei / Borrowed Scenery",fw:"frame",
+  def:"庭の外の遠山や樹木を、庭の構図の一部として“借りて”取り込む。",
+  ex:"生垣や軒で遠景を切り取り、庭と山を一枚の絵にする。",
+  gd:"窓・門・木立を“額縁”にして、遠くの景色を主役の背景に据える。",
+  br:'前景で主役を囲んで奥行きを足す“額縁構図”と同じ発想。視線を内へ誘導する。',
+  doi:["moshagen2010"], one:"遠くを、借りる。"},
+ {jp:"見え隠れ",kana:"Miegakure / Hide-and-Reveal",fw:"leading",
+  def:"全部を一度に見せず、曲がり道や植栽で“少しずつ”見せて歩を誘う。",
+  ex:"露地の飛び石。先が隠れているから、次を見たくて進みたくなる。",
+  gd:"園路を曲げ、要石を植栽で半分隠す。期待が視線と足を動かす。",
+  br:'視線を導く“リーディングライン”と同じ。学びでも、全部説明せず問いで関与を促す（テスト効果）と定着する。',
+  doi:["roediger2006","dunlosky2013"], one:"隠して、誘う。"},
+ {jp:"三尊石（不等三角）",kana:"Triad / Sanzon",fw:"triangle",
+  def:"主・添・控の3石を大中小・不等辺の三角に組み、安定とまとまりを作る。",
+  ex:"中央に主石、脇に低い添石、奥に控石。三点で“締まる”。",
+  gd:"植栽や景物も3点を基本に。点が散らず一群にまとまる。",
+  br:'写真の“三角構図”と同型。底辺で安定、頂点へ視線。群化（近いものはまとまって見える）も効く。',
+  doi:["moshagen2010"], one:"三点で、締める。"},
+ {jp:"簡素・枯山水",kana:"Simplicity / Karesansui",fw:"center",
+  def:"水を使わず砂と石で水景を“見立てる”。最小の要素で多くを語る。",
+  ex:"白砂の波紋と数個の石だけで、大海と島を想像させる。",
+  gd:"要素を絞り、背景を徹底して整理。主役（石）を潔く立てる。",
+  br:'“盛らない”は冗長性・一貫性原則と響き合う。日の丸構図も、主役が強く背景が整理された時に最も効く。',
+  doi:["mayer2008","mayer2001"], one:"少なさで、語る。"},
+ {jp:"侘び寂び・自然石",kana:"Wabi-sabi / Naturalness",fw:"diagonal",
+  def:"不均整・経年・素材の質感など“自然の不完全さ”に美を見出す感性。",
+  ex:"苔むした石、ふぞろいの飛び石。完璧でないからこその味わい。",
+  gd:"直線一辺倒を避け、自然な曲線・斜めの流れで“動”と素材感を出す。",
+  br:'対角線で“動”を足す感覚に近い。視覚的美の「職人技・色彩・多様性」の側面とも響き合う（文化的美意識として）。',
+  doi:["moshagen2010"], one:"不揃いを、味わう。"}
+];
+
+const GARDEN_PALETTE=[
+ {n:"苔",hex:"#5f7d4f"},{n:"石",hex:"#9b968a"},{n:"水",hex:"#41607a"},{n:"朱",hex:"#b5462f"},{n:"和紙",hex:"#f6f1e6"}
+];
+
+const $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
+let persona="sensei", tts=true, history=[], curFW="thirds", showSubj=true;
+let mode="consult", ttsRate=1.0;
+let presets=[
+ {name:"設計書レビュー・厳格", good:true, cfg:{mode:"reference",temp:0.2,maxtok:1600,verbosity:"std",level:"eng",examples:"few",cite:"strict",rate:1.0}},
+ {name:"設計書レビュー・教育的", good:false, cfg:{mode:"socratic",temp:0.5,maxtok:1600,verbosity:"std",level:"mid",examples:"std",cite:"strict",rate:1.0}},
+ {name:"設計書レビュー・解説", good:false, cfg:{mode:"consult",temp:0.4,maxtok:2200,verbosity:"long",level:"eng",examples:"std",cite:"strict",rate:1.0}}
+];
+function currentCfg(){ return {mode, temp:params.temp, maxtok:params.maxtok, verbosity:params.verbosity, level:params.level, examples:params.examples, cite:params.cite, rate:ttsRate}; }
+function applyCfg(c){
+ if(c.mode){ mode=c.mode; $$("#modes .mode").forEach(x=>x.classList.toggle("on", x.dataset.m===mode)); }
+ if(c.temp!=null){ params.temp=c.temp; const e=$("#pTemp"); if(e)e.value=c.temp; }
+ if(c.maxtok!=null && $("#pMax")){ params.maxtok=c.maxtok; $("#pMax").value=c.maxtok; }
+ if(c.verbosity){ params.verbosity=c.verbosity; const e=$("#pVerb"); if(e)e.value=c.verbosity; }
+ if(c.level){ params.level=c.level; const e=$("#pLevel"); if(e)e.value=c.level; }
+ if(c.examples){ params.examples=c.examples; const e=$("#pEx"); if(e)e.value=c.examples; }
+ if(c.cite){ params.cite=c.cite; const e=$("#pCite"); if(e)e.value=c.cite; }
+ if(c.rate!=null){ ttsRate=c.rate; const e=$("#pRate"); if(e)e.value=c.rate; }
+ updateCfg();
+}
+function renderPresets(){
+ const box=$("#presetList"); if(!box)return; box.innerHTML="";
+ presets.forEach((p,i)=>{
+  const d=document.createElement("div"); d.className="preset"+(p.good?" good":"");
+  d.innerHTML=`<span class="pn">${p.good?"⭐ ":""}${p.name}</span> <button class="star" title="この設定を“よかった”目印にする">⭐</button> <button class="del" title="削除">✕</button>`;
+  d.querySelector(".pn").onclick=()=>applyCfg(p.cfg);
+  d.querySelector(".star").onclick=ev=>{ ev.stopPropagation(); presets.forEach(q=>q.good=false); p.good=true; renderPresets(); };
+  d.querySelector(".del").onclick=ev=>{ ev.stopPropagation(); presets.splice(i,1); renderPresets(); };
+  box.appendChild(d);
+ });
+}
+function savePreset(){
+ const n=$("#presetName").value.trim(); if(!n){ alert("設定名を入力してね（例：設計書レビュー・厳格）"); return; }
+ const ex=presets.find(p=>p.name===n);
+ if(ex){ ex.cfg=currentCfg(); } else { presets.push({name:n,good:false,cfg:currentCfg()}); }
+ $("#presetName").value=""; renderPresets();
+}
+function loadGood(){ const g=presets.find(p=>p.good); if(!g){ alert("⭐を付けた設定がありません。気に入った設定の⭐を押して目印にしてね。"); return; } applyCfg(g.cfg); }
+function exportPresets(){ const j=JSON.stringify(presets,null,2); if(navigator.clipboard)navigator.clipboard.writeText(j); const t=$("#presetJSON"); if(t)t.value=j; }
+function importPresets(){ try{ const a=JSON.parse($("#presetJSON").value); if(!Array.isArray(a))throw new Error("配列ではありません"); presets=a.map(p=>({name:String(p.name||"無題"),good:!!p.good,cfg:p.cfg||{}})); renderPresets(); alert("プリセットを読み込みました（"+presets.length+"件）"); }catch(e){ alert("JSONの読み込みに失敗: "+(e.message||e)); } }
+const params={temp:0.7, maxtok:1600, verbosity:"std", level:"mid", examples:"std", cite:"strict"};
+function modeDirective(m){
+ if(m==="reference") return `# 応答モード：参照先モード（即答・出典重視）
+- 前置き・たとえを省き、すぐ結論。要点は箇条書き3点以内。
+- 各要点の末尾に必ず「参照先: 著者(年) doi:番号」を付ける（検証済みライブラリのDOIのみ）。
+- 該当する査読論文が無ければ「手元の検証済み論文には該当なし」と明記。構図/庭園の話なら“慣習/定石”と断る。`;
+ if(m==="socratic") return `# 応答モード：考えさせる問モード（答えを与えない）
+- 直接の答えは出さず、学習者に“考えさせる問い”を投げる。
+- 型：①予測 ②自己説明 ③反例・境界条件 ④転移(現場接続) ⑤想起 から3〜5問。各問に【ねらい】を一行。
+- 根拠：テスト効果(Roediger & Karpicke 2006)・Dunlosky 2013。最後に「ヒントが欲しければ言ってね」と添える。`;
+ return `# 応答モード：じっくり相談モード（四段構成）
+- WHY→WHAT→HOWで、本文は【定義】【たとえ】【詳細】【一言まとめ】の四段。
+- 可能なら「庭の知恵⇄構図⇄デザイン論」を1本の線でつなぐ。`;
+}
+function paramDirective(){
+ const v={short:"短め（1〜3文で簡潔に。冗長禁止）",std:"標準",long:"詳しめ（具体例を増やす。ただし冗長は避ける）"}[params.verbosity];
+ const lv={"new":"新人（専門語は必ずかみ砕く）",mid:"中級",eng:"エンジニア（専門語OK。実装・運用の含意、擬似コードや設定例も歓迎）"}[params.level];
+ const ex={few:"少なめ",std:"普通",many:"多め（たとえ話を厚めに）"}[params.examples];
+ const ci=params.cite==="strict"?"各主張に可能な限りDOIを添える。無ければ『該当論文なし』と明記":"出典は要点のみで可（ただし捏造は禁止）";
+ return `# チューニング（エンジニア設定）
+- 詳しさ：${v}
+- 専門度：${lv}
+- たとえの量：${ex}
+- 出典の厳しさ：${ci}`;
+}
+function updateCfg(){
+ if($("#pTempV")) $("#pTempV").textContent=params.temp.toFixed(2);
+ if($("#pMaxV")) $("#pMaxV").textContent=String(params.maxtok);
+ if($("#pRateV")) $("#pRateV").textContent=ttsRate.toFixed(2)+"x";
+ const el=$("#cfgLine"); if(el) el.textContent=`mode=${mode} | temp=${params.temp.toFixed(2)} | max=${params.maxtok} | 詳しさ=${params.verbosity} | 専門度=${params.level} | たとえ=${params.examples} | 出典=${params.cite} | 話速=${ttsRate.toFixed(2)}x`;
+}
+
+const PERSONAS={
+ sensei:{label:"🐰 庭師先生",sys:"あなたは『うさうさ庭師先生🐰』。やさしく、たとえ話（🍜うさうさラーメン店や、茶室・枯山水など庭のたとえ）でかみ砕く。励ましながら教える。"},
+ review:{label:"🔍 査読者モード",sys:"あなたは『査読者』。厳密で建設的。主張には根拠（提供論文DOI）を要求し、過度な一般化やエビデンスの飛躍を指摘。庭園/構図の原則を論文の主張と混同しないよう厳しく区別する。"},
+ field:{label:"🛠 現場リーダー",sys:"あなたは『現場リーダー』。理論や庭の知恵を、資料・UI・撮影・研修で“明日から使える具体策”に翻訳する。"},
+ newbie:{label:"🌱 新人代弁者",sys:"あなたは『新人の代弁者』。『それ知識ゼロの新人に本当に伝わる？』の視点で、難所を率直に質問し噛み砕きを引き出す。"}
+};
+
+function buildSystem(mode){
+ const lib=PAPERS.map(p=>`- [${p.id}] ${p.au} (${p.yr}). ${p.t}. ${p.j}. doi:${p.doi} ｜要点:${p.plain}`).join("\n");
+ const fw=FRAMEWORKS.map(f=>`- ${f.nm}(${f.en}): ${f.desc}`).join("\n");
+ const gd=GARDEN.map(g=>`- ${g.jp}(${g.kana}): ${g.def} ｜対応する構図=${(FRAMEWORKS.find(f=>f.key===g.fw)||{}).nm}`).join("\n");
+ return `あなたは「うさうさ庭園デザインラボ」の解説AIです。日本語で、3つの知をつなげて教えます：①最新の査読デザイン論 ②写真の構図の型 ③日本庭園の設計思想。
+
+# いまの役回り
+${PERSONAS[persona].sys}
+
+${modeDirective(mode)}
+
+${paramDirective()}
+
+# 嘘つかない原則（最重要）
+- 査読デザイン論の出典は下の「検証済みライブラリ」のDOIだけを引用。ライブラリ外のDOI・論文名・数値を絶対に捏造しない。無ければ「手元の検証済み論文には無い」と正直に言う。
+- 日本庭園の設計思想や写真の構図は“文化的・実務的な慣習/定石（例外あり）”であり、査読論文の主張ではない。両者をつなぐ時は「論文が庭園を実証した」とは言わず、「概念が響き合うアナロジー」として明確に区別する。
+- 実在の作庭家・写真家の発言や経歴を確証なく断定で作り話ししない。
+
+# 検証済みライブラリ（査読・15本）
+${lib}
+
+# 写真の構図（定石・例外あり）
+${fw}
+
+# 日本庭園の設計思想（伝統的慣習）
+${gd}`;
+}
+
+async function callClaude(system, messages){
+ const key=$("#apikey").value.trim();
+ let headers, body;
+ if(key){ // HTML版：自分の鍵でブラウザから直接
+  headers={"content-type":"application/json","x-api-key":key,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"};
+  body={model:$("#model").value, max_tokens:params.maxtok, temperature:params.temp, system, messages};
+ } else { // アーティファクト版：claude.ai内・鍵不要（自動注入）
+  headers={"content-type":"application/json"};
+  body={model:"claude-sonnet-4-6", max_tokens:Math.min(params.maxtok,1000), temperature:params.temp, system, messages};
+ }
+ const res=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers,body:JSON.stringify(body)});
+ if(!res.ok){ const e=await res.text(); throw new Error(res.status+" "+e.slice(0,200)); }
+ const data=await res.json();
+ return (data.content||[]).filter(c=>c.type==="text").map(c=>c.text).join("\n").trim()||"(応答が空でした)";
+}
+function linkifyDOI(text){
+ const known=new Set(PAPERS.map(p=>p.doi));
+ return text.replace(/doi:\s*(10\.\d{4,9}\/[^\s)）、]+)/g,(m,d)=>{
+  const clean=d.replace(/[.,。]$/,"");
+  if(known.has(clean)) return `<a class="doi" href="https://doi.org/${clean}" target="_blank" rel="noopener">🔗 doi:${clean}</a>`;
+  return m;
+ }).replace(/【(定義|たとえ|詳細|一言まとめ)】/g,'<h4>【$1】</h4>');
+}
+
+const chat=()=>$("#chat");
+function addMsg(role,text){
+ $("#empty")?.remove();
+ const wrap=document.createElement("div"); wrap.className="msg "+(role==="user"?"me":"ai");
+ const ava=document.createElement("div"); ava.className="ava"; ava.textContent=role==="user"?"🧑":"🐰";
+ const b=document.createElement("div"); b.className="bubble";
+ if(role==="user"){ b.textContent=text; }
+ else{ b.innerHTML=linkifyDOI(text);
+  const tb=document.createElement("div"); tb.className="toolbar";
+  const sp=document.createElement("button"); sp.className="speakbtn"; sp.textContent="🔊"; sp.title="読み上げ"; sp.onclick=()=>speak(text); tb.appendChild(sp); b.appendChild(tb); }
+ wrap.appendChild(ava); wrap.appendChild(b); chat().appendChild(wrap); b.scrollIntoView({block:"nearest"}); return b;
+}
+async function ask(userText,isTransform=false){
+ if(!isTransform) addMsg("user",userText);
+ history.push({role:"user",content:userText});
+ const thinking=addMsg("assistant","🐰 考え中…"); $("#sendBtn").disabled=true;
+ try{ const text=await callClaude(buildSystem(mode),history.slice(-10)); thinking.parentElement.remove(); addMsg("assistant",text); history.push({role:"assistant",content:text}); if(tts)speak(text); }
+ catch(err){ thinking.innerHTML="⚠️ エラー: "+String(err.message||err); }
+ finally{ $("#sendBtn").disabled=false; }
+}
+function send(){ const t=$("#input").value.trim(); if(!t)return; $("#input").value=""; ask(t); }
+
+let jpVoice=null;
+function pickVoice(){ const vs=speechSynthesis.getVoices(); jpVoice=vs.find(v=>/ja|Japanese/i.test(v.lang))||null; }
+if("speechSynthesis" in window){ pickVoice(); speechSynthesis.onvoiceschanged=pickVoice; }
+function speak(text){ if(!("speechSynthesis" in window))return; speechSynthesis.cancel();
+ const u=new SpeechSynthesisUtterance(text.replace(/doi:[^\s]+/g,"").replace(/【|】/g,"。").replace(/[#*_`>]/g,""));
+ u.lang="ja-JP"; if(jpVoice)u.voice=jpVoice; u.rate=ttsRate; u.pitch=1.04; speechSynthesis.speak(u); }
+let rec=null,recOn=false;
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+if(SR){ rec=new SR(); rec.lang="ja-JP"; rec.interimResults=true; rec.continuous=false;
+ rec.onresult=e=>{ let t=""; for(const r of e.results)t+=r[0].transcript; $("#input").value=t; };
+ rec.onend=()=>{ recOn=false; $("#micBtn").classList.remove("rec"); $("#recHint").textContent=""; };
+ rec.onerror=()=>{ recOn=false; $("#micBtn").classList.remove("rec"); $("#recHint").textContent="🎤認識エラー"; }; }
+function micToggle(){ if(!rec){ alert("この環境は音声入力に対応していません（Chrome系推奨）"); return; }
+ if(recOn){ rec.stop(); return; } recOn=true; $("#micBtn").classList.add("rec"); $("#recHint").textContent="🎤聞いています…"; rec.start(); }
+
+/* theory */
+function renderPapers(filter="all"){
+ const box=$("#papers"); box.innerHTML="";
+ PAPERS.filter(p=>filter==="all"||p.th===filter).forEach(p=>{
+  const d=document.createElement("div"); d.className="paper";
+  d.innerHTML=`<div class="t">${p.t}</div><div class="m">${p.au} (${p.yr}) ｜ ${p.j}</div>
+    <div class="m" style="color:var(--moss-deep);margin-top:3px">${p.plain}</div>
+    <span class="tag">${p.th}</span>
+    <a class="doilink" href="https://doi.org/${p.doi}" target="_blank" rel="noopener" onclick="event.stopPropagation()"> 🔗 doi:${p.doi}</a>`;
+  d.onclick=()=>{ goTab("chat"); $("#input").value=`「${p.t}」(${p.au}, ${p.yr}) の内容を、四段構成でやさしく。可能なら庭の知恵か構図ともつなげて。`; $("#input").focus(); };
+  box.appendChild(d);
+ });
+}
+function ctxBadge(){ $("#ctxbadge").textContent=PERSONAS[persona].label; }
+
+/* composition overlay */
+function powerPoint(key,W,H){
+ switch(key){
+  case "thirds": return {x:W/3,y:H/3};
+  case "phi": return {x:0.618*W,y:0.382*H};
+  case "spiral": return {x:0.62*W,y:0.62*H};
+  case "diagonal": return {x:0.66*W,y:0.66*H};
+  case "triangle": return {x:W/2,y:0.7*H};
+  case "center": return {x:W/2,y:H/2};
+  case "symmetry": return {x:W/2,y:0.4*H};
+  case "frame": return {x:W/2,y:H/2};
+  case "leading": return {x:0.5*W,y:0.42*H};
+  default: return {x:W/3,y:H/3};
+ }
+}
+function manualPos(pos,W,H){ const m={tl:[W/3,H/3],tr:[2*W/3,H/3],bl:[W/3,2*H/3],br:[2*W/3,2*H/3],c:[W/2,H/2]}; return m[pos]?{x:m[pos][0],y:m[pos][1]}:null; }
+function overlay(key,W,H){
+ const R="#5f7d4f",G="#b5462f";
+ const L=(x1,y1,x2,y2,dash)=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${R}" stroke-width="1.5" ${dash?'stroke-dasharray="5 5"':''} opacity=".9"/>`;
+ let s="";
+ if(key==="thirds"){ s+=L(W/3,0,W/3,H)+L(2*W/3,0,2*W/3,H)+L(0,H/3,W,H/3)+L(0,2*H/3,W,2*H/3); }
+ else if(key==="phi"){ [0.382,0.618].forEach(f=>{ s+=L(f*W,0,f*W,H)+L(0,f*H,W,f*H); }); }
+ else if(key==="spiral"){ const cx=0.618*W,cy=0.618*H,b=Math.log(1.618)/(Math.PI/2),base=Math.max(W,H)/120; let pts=[];
+  for(let i=0;i<=240;i++){ const th=-i*Math.PI/40,r=base*Math.exp(b*Math.abs(th)),x=cx+r*Math.cos(th),y=cy+r*Math.sin(th); if(x<-50||x>W+50||y<-50||y>H+50)break; pts.push(x.toFixed(1)+","+y.toFixed(1)); }
+  s+=`<polyline points="${pts.join(' ')}" fill="none" stroke="${R}" stroke-width="1.7" opacity=".9"/>`+L(0.382*W,0,0.382*W,H,1)+L(0,0.382*H,W,0.382*H,1); }
+ else if(key==="diagonal"){ s+=L(0,0,W,H)+L(W,0,0,H)+`<line x1="0" y1="0" x2="${H}" y2="${H}" stroke="${G}" stroke-width="1.2" opacity=".75"/><line x1="${W}" y1="0" x2="${W-H}" y2="${H}" stroke="${G}" stroke-width="1.2" opacity=".75"/>`; }
+ else if(key==="triangle"){ s+=`<polygon points="${W/2},${0.18*H} ${0.18*W},${0.86*H} ${0.82*W},${0.86*H}" fill="none" stroke="${R}" stroke-width="1.7" opacity=".9"/>`; }
+ else if(key==="center"){ s+=L(W/2,0,W/2,H,1)+L(0,H/2,W,H/2,1)+`<circle cx="${W/2}" cy="${H/2}" r="${Math.min(W,H)*0.16}" fill="none" stroke="${R}" stroke-width="1.7" opacity=".85"/>`; }
+ else if(key==="symmetry"){ s+=L(W/2,0,W/2,H,1)+`<text x="${W/2+6}" y="16" font-size="11" fill="${R}">対称軸</text>`; }
+ else if(key==="frame"){ const ix=W*0.16,iy=H*0.16; s+=`<rect x="${ix}" y="${iy}" width="${W-2*ix}" height="${H-2*iy}" fill="none" stroke="${R}" stroke-width="1.9" opacity=".9"/>`; }
+ else if(key==="leading"){ const vx=0.5*W,vy=0.42*H; s+=L(0,H,vx,vy)+L(W,H,vx,vy)+L(0.2*W,H,vx,vy)+L(0.8*W,H,vx,vy)+`<circle cx="${vx}" cy="${vy}" r="4" fill="${R}"/>`; }
+ return s;
+}
+function renderStage(){
+ const [rw,rh]=$("#ratio").value.split(",").map(Number); const maxLen=560; let W,H;
+ if(rw>=rh){ W=maxLen; H=maxLen*rh/rw; } else { H=Math.min(420,maxLen); W=H*rw/rh; }
+ const pos=$("#subjPos").value;
+ let pt=pos==="auto"?powerPoint(curFW,W,H):(manualPos(pos,W,H)||powerPoint(curFW,W,H));
+ const subj=showSubj?`<circle cx="${pt.x}" cy="${pt.y}" r="${Math.min(W,H)*0.07}" fill="#435a36" opacity=".9"/><circle cx="${pt.x}" cy="${pt.y}" r="${Math.min(W,H)*0.07}" fill="none" stroke="#fff" stroke-width="2.5"/><text x="${pt.x}" y="${pt.y-Math.min(W,H)*0.09}" font-size="11" fill="#435a36" text-anchor="middle">主役</text>`:"";
+ $("#stage").innerHTML=`<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg" style="border-radius:10px;box-shadow:0 4px 16px rgba(67,90,54,.18)">
+   <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#eef0e3"/><stop offset=".6" stop-color="#e7e2d2"/><stop offset="1" stop-color="#d9ddc8"/></linearGradient></defs>
+   <rect width="${W}" height="${H}" fill="url(#g)"/><rect x="0" y="${H*0.66}" width="${W}" height="${H*0.34}" fill="#c3cbb0" opacity=".7"/>
+   ${overlay(curFW,W,H)}${subj}</svg>`;
+ const f=FRAMEWORKS.find(x=>x.key===curFW);
+ $("#fwInfo").innerHTML=`<h3>${f.nm} <span style="font-size:.72rem;color:var(--sub)">${f.en}</span></h3><div>${f.desc}</div><div class="use">📌 使いどころ：${f.use}</div>`;
+}
+function renderFWGrid(){
+ const g=$("#fwGrid"); g.innerHTML="";
+ FRAMEWORKS.forEach(f=>{ const d=document.createElement("div"); d.className="fw"+(f.key===curFW?" on":""); d.innerHTML=`<div class="nm">${f.nm}</div><div class="en">${f.en}</div>`; d.onclick=()=>{ curFW=f.key; renderFWGrid(); renderStage(); }; g.appendChild(d); });
+}
+
+/* garden */
+function renderGarden(){
+ const box=$("#garden"); box.innerHTML="";
+ GARDEN.forEach(g=>{
+  const fwNm=(FRAMEWORKS.find(f=>f.key===g.fw)||{}).nm||"";
+  const dois=g.doi.map(id=>{ const p=PAPERS.find(x=>x.id===id); return p?`<a href="https://doi.org/${p.doi}" target="_blank" rel="noopener">${p.au.split(" ")[0]} ${p.yr}</a>`:""; }).join(" ／ ");
+  const el=document.createElement("div"); el.className="gcard";
+  el.innerHTML=`
+   <div class="ghead"><span class="jp">${g.jp}</span><span class="kana">${g.kana}</span></div>
+   <div class="gbody">
+     <div class="gbox"><span class="glab def">定義</span><p>${g.def}</p></div>
+     <div class="gbox"><span class="glab ex">🍵 たとえ</span><p>${g.ex}</p></div>
+     <div class="gbox"><span class="glab gd">庭での例</span><p>${g.gd}</p></div>
+     <div class="gbox"><span class="glab br">一言まとめ</span><p>${g.one}</p></div>
+   </div>
+   <div class="bridge">🔗 <strong>つながり：</strong>${g.br}　
+     <span class="gpill" data-fw="${g.fw}">構図「${fwNm}」を見る</span>
+     <span style="font-size:.72rem;color:var(--sub)">　響き合う論文: ${dois}</span></div>`;
+  box.appendChild(el);
+ });
+ $$("#garden .gpill").forEach(b=>b.onclick=()=>{ curFW=b.dataset.fw; renderFWGrid(); renderStage(); goTab("comp"); });
+}
+function renderGardenQuick(){
+ const g=$("#gardenQuick"); g.innerHTML="";
+ GARDEN.forEach(x=>{ const c=document.createElement("div"); c.className="chip"; c.textContent=x.jp; c.onclick=()=>{ goTab("chat"); $("#input").value=`日本庭園の「${x.jp}（${x.kana}）」を、写真の構図とデザイン論の両方につなげて、四段構成で教えて。`; $("#input").focus(); }; g.appendChild(c); });
+}
+function renderGardenPalette(){
+ const g=$("#gardenPalette"); g.innerHTML="";
+ GARDEN_PALETTE.forEach(c=>{ const s=document.createElement("span"); s.style.background=c.hex; s.dataset.n=c.n; s.dataset.hex=c.hex; s.title=c.n+" "+c.hex; s.onclick=()=>{ if(navigator.clipboard)navigator.clipboard.writeText(c.hex); }; g.appendChild(s); });
+}
+
+/* questions transform */
+function toQuestions(){
+ const last=[...history].reverse().find(h=>h.role==="assistant");
+ if(!last){ alert("先に相談して回答を出してね。"); return; }
+ ask("直前の回答について、読み手に“考えさせる問い”を5タイプ（予測/自己説明/反例・境界条件/転移/想起）作って。各問に【ねらい】を一行。テスト効果(Roediger&Karpicke 2006)とDunlosky 2013の趣旨に沿って。",true);
+}
+
+function goTab(name){
+ $$(".tab").forEach(t=>t.classList.toggle("on",t.dataset.tab===name));
+ $$(".pane").forEach(p=>p.classList.toggle("on",p.id==="pane-"+name));
+ if(name==="comp") renderStage();
+}
+
+function updateMode(){ const k=$("#apikey")&&$("#apikey").value.trim(); const el=$("#modeInd"); if(el) el.innerHTML = k ? '<b style="color:var(--water)">HTML版</b>（自分の鍵）' : '<b style="color:var(--moss-deep)">アーティファクト版</b>（鍵不要）'; }
+function wire(){
+ $("#tabs").onclick=e=>{ const t=e.target.closest(".tab"); if(t)goTab(t.dataset.tab); };
+ $("#sendBtn").onclick=send; $("#micBtn").onclick=micToggle;
+ $("#input").addEventListener("keydown",e=>{ if(e.key==="Enter"&&(e.ctrlKey||e.metaKey)){ e.preventDefault(); send(); }});
+ $("#personas").onclick=e=>{ const c=e.target.closest(".chip"); if(!c)return; $$(".persona").forEach(x=>x.classList.remove("on")); c.classList.add("on"); persona=c.dataset.k; ctxBadge(); };
+ $("#ttsToggle").onclick=()=>{ tts=!tts; $("#ttsToggle").classList.toggle("on",tts); $("#ttsState").textContent=tts?"ON":"OFF"; if(!tts)speechSynthesis.cancel(); };
+ $("#quick").addEventListener("click",e=>{ const m=e.target.closest(".mini"); if(m)renderPapers(m.dataset.th); });
+ $("#ratio").onchange=renderStage; $("#subjPos").onchange=renderStage;
+ $("#toggleSubj").onclick=()=>{ showSubj=!showSubj; $("#toggleSubj").textContent="主役マーカー: "+(showSubj?"ON":"OFF"); renderStage(); };
+ $("#toQuestions").onclick=toQuestions;
+ $("#modes").onclick=e=>{ const c=e.target.closest(".chip"); if(!c)return; $$("#modes .mode").forEach(x=>x.classList.remove("on")); c.classList.add("on"); mode=c.dataset.m; updateCfg(); };
+ $("#pTemp").oninput=e=>{ params.temp=parseFloat(e.target.value); updateCfg(); };
+ $("#pMax").oninput=e=>{ params.maxtok=parseInt(e.target.value); updateCfg(); };
+ $("#pVerb").onchange=e=>{ params.verbosity=e.target.value; updateCfg(); };
+ $("#pLevel").onchange=e=>{ params.level=e.target.value; updateCfg(); };
+ $("#pEx").onchange=e=>{ params.examples=e.target.value; updateCfg(); };
+ $("#pCite").onchange=e=>{ params.cite=e.target.value; updateCfg(); };
+ $("#pRate").oninput=e=>{ ttsRate=parseFloat(e.target.value); updateCfg(); };
+ $("#presetSave").onclick=savePreset;
+ $("#presetGood").onclick=loadGood;
+ $("#presetCopy").onclick=exportPresets;
+ $("#presetImport").onclick=importPresets;
+ $("#apikey").addEventListener("input",updateMode);
+}
+
+renderPapers("all"); ctxBadge(); renderFWGrid(); renderStage(); renderGarden(); renderGardenQuick(); renderGardenPalette(); wire(); updateCfg(); renderPresets(); updateMode();
+</script>
+</body>
+</html>
