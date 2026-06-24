@@ -1,0 +1,1704 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>うさうさ研修工房 ／ 庭園デザインラボ（統合版）🐰🪴</title>
+<style>
+  :root{
+    --sumi:#33302a; --sub:#7a7363; --washi:#f6f1e6; --paper:#fcfaf3; --line:#e0d7c2;
+    --moss:#5f7d4f; --moss-deep:#435a36; --moss-soft:#e8eede;
+    --stone:#9b968a; --sand:#ece4d2; --water:#41607a; --shu:#b5462f;
+    --shadow:0 6px 22px rgba(67,90,54,.14);
+  }
+  *{box-sizing:border-box}
+  body{margin:0; font-family:"Hiragino Mincho ProN","Yu Mincho","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,serif;
+    color:var(--sumi); background:linear-gradient(165deg,#f7f2e8,#efe7d6 60%,#e9e0ce); line-height:1.8}
+  header{background:linear-gradient(135deg,var(--moss-deep),#33402a); color:#f3efe2; padding:16px 22px; box-shadow:var(--shadow); position:sticky; top:0; z-index:30; overflow:hidden}
+  header .sand{position:absolute; right:-30px; top:-40px; opacity:.18}
+  .brand{display:flex; align-items:center; gap:12px; flex-wrap:wrap; position:relative}
+  .brand h1{font-size:1.12rem; margin:0; font-weight:700; letter-spacing:.03em}
+  .brand .mascot{font-size:1.7rem; filter:drop-shadow(0 2px 3px rgba(0,0,0,.25))}
+  .tagline{font-size:.72rem; opacity:.9; margin-top:2px}
+  .seal{font-size:.62rem; background:var(--shu); color:#fff; padding:2px 8px; border-radius:4px; letter-spacing:.08em}
+  .pill{font-size:.62rem; background:rgba(255,255,255,.16); padding:2px 9px; border-radius:999px; white-space:nowrap}
+  .ver{font-size:.62rem; background:#f3efe2; color:var(--moss-deep); padding:2px 10px; border-radius:999px; font-weight:700}
+  .tabs{display:flex; gap:6px; flex-wrap:wrap; max-width:1180px; margin:14px auto 0; padding:0 16px}
+  .tab{cursor:pointer; border:1.5px solid var(--line); background:#fbf7ec; color:var(--sub); padding:9px 15px; border-radius:12px 12px 0 0; font-size:.86rem; font-weight:700; transition:.15s}
+  .tab:hover{border-color:var(--moss)}
+  .tab.on{background:var(--paper); color:var(--moss-deep); border-bottom-color:var(--paper)}
+  .wrap{max-width:1180px; margin:0 auto; padding:16px}
+  .pane{display:none} .pane.on{display:block}
+  .grid{display:grid; grid-template-columns:1fr 340px; gap:16px}
+  @media(max-width:900px){ .grid{grid-template-columns:1fr} }
+  .card{background:var(--paper); border:1px solid var(--line); border-radius:14px; box-shadow:var(--shadow)}
+  .pad{padding:16px}
+  h2.sec{font-size:.84rem; color:var(--moss-deep); margin:0 0 10px; letter-spacing:.05em; display:flex; align-items:center; gap:7px}
+  input[type=password],input[type=text],select,textarea{font:inherit; padding:9px 11px; border:1px solid var(--line); border-radius:10px; background:#fbf7ec; color:var(--sumi)}
+  input[type=password],input[type=text]{flex:1; min-width:150px}
+  .setrow{display:flex; gap:8px; flex-wrap:wrap; align-items:center}
+  .hint{font-size:.7rem; color:var(--sub); margin-top:6px}
+  .chips{display:flex; gap:8px; flex-wrap:wrap}
+  .chip{cursor:pointer; border:1.5px solid var(--line); background:#fbf7ec; color:var(--sub); padding:8px 12px; border-radius:11px; font-size:.8rem; transition:.15s; font-weight:600}
+  .chip:hover{border-color:var(--moss)}
+  .chip.on{background:var(--moss); color:#fff; border-color:var(--moss)}
+  .chip.persona.on[data-k="review"]{background:var(--water);border-color:var(--water)}
+  .chip.persona.on[data-k="field"]{background:var(--shu);border-color:var(--shu)}
+  .chip.persona.on[data-k="newbie"]{background:var(--stone);border-color:var(--stone)}
+  #chat{display:flex; flex-direction:column; gap:14px; min-height:120px; padding:6px 2px}
+  .msg{display:flex; gap:10px; align-items:flex-start}
+  .msg .ava{font-size:1.4rem; flex:none; margin-top:2px}
+  .bubble{padding:12px 14px; border-radius:14px; max-width:100%; font-size:.92rem; white-space:pre-wrap; word-break:break-word}
+  .me{flex-direction:row-reverse}
+  .me .bubble{background:var(--moss); color:#fff; border-bottom-right-radius:4px}
+  .ai .bubble{background:var(--moss-soft); border:1px solid var(--line); border-bottom-left-radius:4px}
+  .ai .bubble h4{margin:.4em 0 .2em; font-size:.86rem; color:var(--moss-deep)}
+  .ai .bubble .doi{display:inline-block; font-size:.72rem; background:#fff; border:1px solid var(--line); border-radius:8px; padding:1px 7px; margin:2px 4px 2px 0; color:var(--water); text-decoration:none}
+  .toolbar{display:flex; gap:6px; margin-top:6px}
+  .speakbtn{border:none; background:none; cursor:pointer; font-size:1rem; opacity:.7} .speakbtn:hover{opacity:1}
+  .composer{display:flex; gap:8px; align-items:flex-end; margin-top:12px}
+  textarea{flex:1; resize:none; min-height:48px; max-height:160px}
+  .iconbtn{flex:none; width:48px; height:48px; border-radius:14px; border:none; cursor:pointer; font-size:1.2rem; color:#fff; background:var(--moss); transition:.15s; box-shadow:0 3px 10px rgba(67,90,54,.3)}
+  .iconbtn:hover{background:var(--moss-deep)}
+  .iconbtn.mic{background:#fff; color:var(--moss); border:1.5px solid var(--moss)}
+  .iconbtn.mic.rec{background:var(--moss); color:#fff; animation:pulse 1s infinite}
+  @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(95,125,79,.5)}50%{box-shadow:0 0 0 8px rgba(95,125,79,0)}}
+  .iconbtn:disabled{opacity:.45; cursor:not-allowed}
+  .btn{cursor:pointer; border:none; border-radius:11px; padding:9px 15px; font:inherit; font-weight:700; color:#fff; background:var(--moss); box-shadow:0 3px 10px rgba(67,90,54,.28); transition:.15s}
+  .btn:hover{background:var(--moss-deep)} .btn.ghost{background:#fff; color:var(--moss-deep); border:1.5px solid var(--line); box-shadow:none}
+  .voicebar{display:flex; align-items:center; gap:8px; font-size:.75rem; color:var(--sub); margin-top:8px}
+  .switch{position:relative; width:40px; height:22px; background:var(--line); border-radius:999px; cursor:pointer; transition:.2s}
+  .switch.on{background:var(--moss)}
+  .switch i{position:absolute; top:2px; left:2px; width:18px; height:18px; background:#fff; border-radius:50%; transition:.2s}
+  .switch.on i{left:20px}
+  .empty{text-align:center; color:var(--sub); font-size:.82rem; padding:20px 6px} .empty .big{font-size:2.4rem}
+  .badge{display:inline-block; font-size:.62rem; padding:1px 8px; border-radius:999px; background:var(--moss-soft); color:var(--moss-deep); margin-left:4px}
+  footer{max-width:1180px; margin:0 auto; padding:8px 20px 30px; font-size:.68rem; color:var(--sub)}
+  .out{border:1px solid var(--line); border-radius:12px; padding:14px; background:var(--moss-soft); min-height:60px; white-space:pre-wrap; font-size:.9rem}
+  .paper{border:1px solid var(--line); border-radius:11px; padding:10px 12px; margin-bottom:9px; background:#fbf7ec; cursor:pointer; transition:.15s}
+  .paper:hover{border-color:var(--moss); background:var(--moss-soft)}
+  .paper .t{font-size:.8rem; font-weight:700}
+  .paper .m{font-size:.68rem; color:var(--sub); margin-top:2px}
+  .paper .tag{font-size:.62rem; background:var(--sand); color:var(--moss-deep); padding:1px 7px; border-radius:999px; margin-top:5px; display:inline-block}
+  .paper a.doilink{font-size:.66rem; color:var(--water)}
+  .quick{display:flex; gap:6px; flex-wrap:wrap; margin-bottom:10px}
+  .mini{font-size:.68rem; cursor:pointer; border:1px solid var(--line); background:#fff; border-radius:999px; padding:4px 10px; color:var(--moss-deep); font-weight:600}
+  .mini:hover{background:var(--moss-soft)}
+  /* composition */
+  .stage{display:flex; justify-content:center; align-items:center; background:#fbf7ec; border:1px solid var(--line); border-radius:14px; padding:14px; min-height:240px}
+  .fwlist{display:grid; grid-template-columns:repeat(auto-fill,minmax(120px,1fr)); gap:8px}
+  .fw{cursor:pointer; border:1.5px solid var(--line); background:#fbf7ec; border-radius:11px; padding:9px 10px; transition:.15s}
+  .fw:hover{border-color:var(--moss); background:var(--moss-soft)} .fw.on{border-color:var(--moss); background:var(--moss); color:#fff}
+  .fw .nm{font-size:.82rem; font-weight:700} .fw .en{font-size:.62rem; opacity:.8}
+  .fwinfo{border:1px solid var(--line); border-radius:12px; padding:12px 14px; background:#fbf7ec; font-size:.86rem}
+  .fwinfo h3{margin:0 0 4px; font-size:.95rem; color:var(--moss-deep)}
+  .fwinfo .use{font-size:.78rem; color:var(--sub); margin-top:6px}
+  label.lab{font-size:.74rem; color:var(--sub)}
+  /* garden */
+  .gcard{border:1px solid var(--line); border-radius:14px; overflow:hidden; margin-bottom:16px; background:var(--paper)}
+  .gcard .ghead{padding:12px 16px; background:var(--moss-soft); border-bottom:1px solid var(--line); display:flex; align-items:baseline; gap:10px; flex-wrap:wrap}
+  .gcard .ghead .jp{font-size:1.15rem; font-weight:800; color:var(--moss-deep)}
+  .gcard .ghead .kana{font-size:.72rem; color:var(--sub)}
+  .gcard .gbody{padding:14px 16px; display:grid; grid-template-columns:1fr 1fr; gap:12px}
+  @media(max-width:680px){ .gcard .gbody{grid-template-columns:1fr} }
+  .gbox{border:1px solid var(--line); border-radius:10px; padding:10px 12px; background:#fbf7ec}
+  .gbox .glab{font-size:.66rem; font-weight:800; color:#fff; padding:2px 9px; border-radius:7px; display:inline-block; margin-bottom:6px}
+  .glab.def{background:var(--moss)} .glab.ex{background:var(--shu)} .glab.gd{background:var(--water)} .glab.br{background:var(--moss-deep)}
+  .gbox p{margin:0; font-size:.84rem}
+  .bridge{padding:10px 16px 14px; font-size:.8rem; color:var(--sumi); border-top:1px dashed var(--line)}
+  .bridge a{color:var(--water)}
+  .gpill{cursor:pointer; font-size:.7rem; border:1px solid var(--moss); color:var(--moss-deep); background:#fff; border-radius:999px; padding:2px 10px; font-weight:700}
+  .gpill:hover{background:var(--moss); color:#fff}
+  .palette{display:flex; gap:0; border-radius:12px; overflow:hidden; border:1px solid var(--line); margin-top:8px}
+  .palette span{flex:1; height:50px; position:relative; cursor:pointer}
+  .palette span:hover::after{content:attr(data-n) " " attr(data-hex); position:absolute; bottom:5px; left:50%; transform:translateX(-50%); font-size:.58rem; background:rgba(0,0,0,.6); color:#fff; padding:1px 6px; border-radius:5px; white-space:nowrap}
+  .params{margin-top:10px; display:flex; flex-direction:column; gap:10px}
+  .prow{display:flex; align-items:center; gap:10px; flex-wrap:wrap}
+  .prow label{font-size:.78rem; color:var(--sub); min-width:172px}
+  .prow input[type=range]{flex:1; min-width:120px; accent-color:var(--moss)}
+  .prow select{min-width:120px}
+  .pval{font-size:.74rem; color:var(--moss-deep); font-weight:700; min-width:52px; text-align:right}
+  .cfg{font-family:ui-monospace,Menlo,Consolas,monospace; font-size:.7rem; color:var(--water); background:#fbf7ec; border:1px dashed var(--line); border-radius:8px; padding:6px 9px; word-break:break-all}
+  .chip.mode.on[data-m="reference"]{background:var(--water);border-color:var(--water)}
+  .chip.mode.on[data-m="socratic"]{background:var(--shu);border-color:var(--shu)}
+  .presetbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+  .preset{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--line);background:#fbf7ec;border-radius:11px;padding:6px 10px;font-size:.78rem;cursor:pointer}
+  .preset:hover{border-color:var(--moss);background:var(--moss-soft)}
+  .preset.good{border-color:#c79a3a;background:#fbf4e3}
+  .preset .pn{font-weight:700;color:var(--moss-deep)}
+  .preset .star,.preset .del{border:none;background:none;cursor:pointer;font-size:.8rem;opacity:.65;padding:0}
+  .preset .star:hover,.preset .del:hover{opacity:1}
+  #presetJSON{width:100%;min-height:70px;margin-top:6px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.7rem}
+  .modeind{font-size:.72rem;color:var(--sub);align-self:center}
+  .demo svg{display:block}
+  .palette.tone span{height:46px}
+  .wcagrow{font-size:.72rem;margin-top:8px;color:var(--sub)}
+  .wcag{display:inline-block;padding:1px 7px;border-radius:999px;font-weight:700;font-size:.68rem}
+  .wcag.ok{background:#e3efe0;color:#2f6d3a;border:1px solid #bcd9b6}
+  .wcag.ng{background:#f6e2dc;color:#a23b22;border:1px solid #e6c3b7}
+  .wlab{font-weight:700;color:var(--moss-deep);margin-right:6px}
+  .paramdoc{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+  .effectprev{margin-top:8px;padding:8px 10px;border-radius:10px;background:linear-gradient(0deg,#fff,#fff),var(--moss-soft);background-blend-mode:normal;border:1px dashed var(--moss);color:var(--moss-deep);font-size:.78rem;line-height:1.5}
+  .pd .up{color:#b5462f;font-weight:700}.pd .dn{color:#41607a;font-weight:700}.pd .learn{color:var(--moss-deep);font-weight:700}
+  .guidecard{border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:12px;background:var(--paper)}
+  .guidecard h3{margin:.1em 0 .5em;color:var(--moss-deep);font-size:1rem}
+  .guidecard ol,.guidecard ul{margin:.3em 0 .3em 1.1em;padding:0}.guidecard li{margin:.28em 0;font-size:.9rem;line-height:1.6}
+  .stepnum{display:inline-block;min-width:1.5em;height:1.5em;line-height:1.5em;text-align:center;border-radius:50%;background:var(--moss);color:#fff;font-weight:700;font-size:.8rem;margin-right:6px}
+  .pd{font-size:.76rem;border-left:3px solid var(--moss);padding:2px 0 2px 9px}
+  .pd b{color:var(--moss-deep)} .pd span{display:block;color:var(--sub);margin-top:1px}
+  .imgchip{display:inline-flex;align-items:center;gap:6px;font-size:.74rem;background:var(--moss-soft);border:1px solid var(--line);border-radius:8px;padding:3px 8px;margin-bottom:6px}
+  .imgchip button{border:none;background:none;cursor:pointer;color:var(--shu);font-weight:700}
+  .chip.mode.on[data-m="anime"]{background:#7a4fae;border-color:#7a4fae}
+  .chip.mode.on[data-m="report"]{background:#1f7a8c;border-color:#1f7a8c}
+  #reportInput{width:100%;box-sizing:border-box;min-height:140px;border:1px solid var(--line);border-radius:10px;padding:10px;font-family:inherit;font-size:.86rem;color:var(--sumi);background:var(--paper);resize:vertical}
+  .promptcard{border:1px solid var(--line);border-radius:12px;margin-bottom:12px;background:var(--paper);overflow:hidden}
+  .promptcard .ph{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 12px;background:var(--moss-soft);border-bottom:1px solid var(--line)}
+  .promptcard .ph b{color:var(--moss-deep);font-size:.86rem}
+  .promptcard .ph .lg{font-size:.64rem;color:var(--sub);border:1px solid var(--line);border-radius:999px;padding:1px 7px}
+  .promptcard pre{margin:0;padding:11px 12px;white-space:pre-wrap;word-break:break-word;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.74rem;color:var(--sumi);max-height:230px;overflow:auto}
+  .copybtn{cursor:pointer;border:1px solid var(--moss);background:#fff;color:var(--moss-deep);border-radius:8px;padding:3px 10px;font-size:.72rem;font-weight:700}
+  .copybtn:hover{background:var(--moss);color:#fff}
+  .numtab{width:100%;border-collapse:collapse;font-size:.74rem}
+  .numtab th,.numtab td{border:1px solid var(--line);padding:4px 7px;text-align:left}
+  .numtab th{background:var(--moss-soft);color:var(--moss-deep)}
+  .sw{display:inline-block;width:13px;height:13px;border-radius:3px;border:1px solid #0002;vertical-align:middle;margin-right:5px}
+</style>
+</head>
+<body>
+<header>
+  <svg class="sand" width="190" height="150" viewBox="0 0 190 150"><g fill="none" stroke="#f3efe2" stroke-width="2">
+    <circle cx="120" cy="60" r="18"/><circle cx="120" cy="60" r="30"/><circle cx="120" cy="60" r="42"/><circle cx="120" cy="60" r="54"/>
+    <line x1="0" y1="118" x2="190" y2="118"/><line x1="0" y1="130" x2="190" y2="130"/><line x1="0" y1="142" x2="190" y2="142"/></g></svg>
+  <div class="brand">
+    <span class="mascot">🐰🪴</span>
+    <div>
+      <h1>うさうさ研修工房 ／ 庭園デザインラボ</h1>
+      <div class="tagline">面白きこともなき世を面白く ― 庭の知恵で、デザイン論と構図を束ねて学ぶ。</div>
+    </div>
+    <span class="ver" id="verBadge">v2.5 ・ 2026-06-24（統合版）</span>
+    <span class="seal">嘘つかない原則</span>
+    <span class="pill">アーティファクト＆HTML兼用</span>
+    <span class="pill">鍵=任意</span>
+  </div>
+</header>
+
+<div class="tabs" id="tabs">
+  <div class="tab on" data-tab="chat">💬 相談（庭師AI）</div>
+  <div class="tab" data-tab="theory">🌿 デザイン論（査読15本）</div>
+  <div class="tab" data-tab="comp">📐 構図（9型）</div>
+  <div class="tab" data-tab="garden">🪨 庭園の知恵（橋渡し）</div>
+  <div class="tab" data-tab="crap">🎯 4原則</div>
+  <div class="tab" data-tab="learn">🎓 学びデザイン</div>
+  <div class="tab" data-tab="anime">🎬 アニメ制作</div>
+  <div class="tab" data-tab="report">📄 レポート</div>
+  <div class="tab" data-tab="guide">❓ 使い方</div>
+</div>
+
+<div class="wrap">
+
+  <!-- ===== CHAT ===== -->
+  <section class="pane on" id="pane-chat">
+    <section class="card pad" style="margin-bottom:14px">
+      <h2 class="sec">⚙️ 設定 ― 統合版（アーティファクト ＆ HTML 兼用）</h2>
+      <div class="setrow">
+        <input id="apikey" type="password" placeholder="APIキー（空ならアーティファクト版・claude.ai内で鍵不要）">
+        <select id="model">
+          <option value="claude-sonnet-4-6">Sonnet 4.6（標準）</option>
+          <option value="claude-haiku-4-5-20251001">Haiku 4.5（速い）</option>
+          <option value="claude-opus-4-8">Opus 4.8（じっくり）</option>
+        </select>
+        <span class="modeind" id="modeInd"></span>
+      </div>
+      <div class="hint">🔒 キーはメモリ内だけ（保存しません）。<strong>空</strong>＝claude.aiのアーティファクトとして鍵なしで動作（モデル Sonnet 4.6・最大1000トークン）。<strong>鍵を入力</strong>＝HTML版としてオフラインでも自分の鍵で動作（モデル選択・最大トークン調整が有効）。通信先は api.anthropic.com のみ。</div>
+    </section>
+    <div class="grid">
+      <main>
+        <section class="card pad" style="margin-bottom:14px">
+          <h2 class="sec">🎭 相談相手（ペルソナ）</h2>
+          <div class="chips" id="personas">
+            <div class="chip persona on" data-k="sensei">🐰 庭師先生</div>
+            <div class="chip persona" data-k="review">🔍 査読者モード</div>
+            <div class="chip persona" data-k="field">🛠 現場リーダー</div>
+            <div class="chip persona" data-k="newbie">🌱 新人代弁者</div>
+          </div>
+        </section>
+        <section class="card pad" style="margin-bottom:14px">
+          <h2 class="sec">🧭 回答モード</h2>
+          <div class="chips" id="modes">
+            <div class="chip mode on" data-m="consult">🪴 じっくり相談（四段）</div>
+            <div class="chip mode" data-m="reference">📚 参照先モード（即答・出典）</div>
+            <div class="chip mode" data-m="socratic">🧠 考えさせる問モード</div>
+            <div class="chip mode" data-m="anime">🎬 アニメ分析</div>
+            <div class="chip mode" data-m="report">📄 レポート</div>
+          </div>
+          <details style="margin-top:12px">
+            <summary>🪴 パラメータ盆栽（エンジニア向け・庭師の道具箱）</summary>
+            <div class="params">
+              <div class="prow"><label>🌡 温度（ゆらぎ / temperature）</label><input type="range" id="pTemp" min="0" max="1" step="0.05" value="0.7"><span class="pval" id="pTempV">0.70</span></div>
+              <div class="prow"><label>📐 区切り（最大トークン / max_tokens）</label><input type="range" id="pMax" min="400" max="3000" step="100" value="1600"><span class="pval" id="pMaxV">1600</span></div>
+              <div class="prow"><label>✂️ 剪定（回答の詳しさ）</label>
+                <select id="pVerb"><option value="short">短め</option><option value="std" selected>標準</option><option value="long">詳しめ</option></select></div>
+              <div class="prow"><label>🪴 仕立て（専門度）</label>
+                <select id="pLevel"><option value="new">新人</option><option value="mid" selected>中級</option><option value="eng">エンジニア</option></select></div>
+              <div class="prow"><label>💧 水やり（たとえの量）</label>
+                <select id="pEx"><option value="few">少なめ</option><option value="std" selected>普通</option><option value="many">多め</option></select></div>
+              <div class="prow"><label>📚 出典（DOIの厳しさ）</label>
+                <select id="pCite"><option value="strict" selected>必須（できる限りDOI）</option><option value="loose">任意</option></select></div>
+              <div class="prow"><label>🔊 話速（読み上げ速度）</label><input type="range" id="pRate" min="0.7" max="1.4" step="0.05" value="1.0"><span class="pval" id="pRateV">1.00x</span></div>
+              <div class="cfg" id="cfgLine"></div>
+              <div class="effectprev" id="effectPreview"></div>
+              <div class="presetbar">
+                <input id="presetName" type="text" placeholder="設定名（例：設計書レビュー・厳格）">
+                <button class="btn" id="presetSave">💾 保存</button>
+                <button class="btn ghost" id="presetGood">⭐ よかった設定に戻す</button>
+              </div>
+              <div class="chips" id="presetList" style="margin-top:8px"></div>
+              <details style="margin-top:8px"><summary>📋 設定の書き出し／読み込み（JSON）</summary>
+                <div class="hint">プリセットは保存中メモリ内です。下のJSONをコピーして控えれば、次回ここに貼って「読み込み」で復元できます。</div>
+                <textarea id="presetJSON" placeholder="ここにJSONを貼って［JSONから読み込み］"></textarea>
+                <div class="chips" style="margin-top:6px"><button class="btn ghost" id="presetCopy">📋 全プリセットをコピー</button><button class="btn ghost" id="presetImport">⬇️ JSONから読み込み</button></div>
+              </details>
+            </div>
+          </details>
+        </section>
+
+        <section class="card pad">
+          <h2 class="sec">💬 対話で学ぶ <span class="badge" id="ctxbadge">🐰 庭師先生</span></h2>
+          <div id="chat">
+            <div class="empty" id="empty">
+              <div class="big">🐰🪴</div>
+              庭の知恵で、最新デザイン論と構図を束ねて学びます。<br>
+              「定義→たとえ→詳細→一言まとめ」でやさしく。<br>
+              例）「間（ま）の考え方を、資料デザインと認知負荷でつなげて教えて」
+            </div>
+          </div>
+          <div class="voicebar">
+            <span>🔊 読み上げ</span>
+            <div class="switch on" id="ttsToggle"><i></i></div>
+            <span id="ttsState" style="font-size:.7rem">ON</span>
+            <span style="margin-left:auto; font-size:.7rem" id="recHint"></span>
+          </div>
+          <div id="imgChip"></div>
+          <div class="composer">
+            <button class="iconbtn mic" id="imgBtn" title="画像を添付して分析" style="background:#fff;color:#7a4fae;border:1.5px solid #7a4fae">📎</button>
+            <button class="iconbtn mic" id="micBtn" title="音声で話す">🎤</button>
+            <textarea id="input" placeholder="例）借景って…／📎で画像を添付し『アニメ分析』で精密分析"></textarea>
+            <button class="iconbtn" id="sendBtn" title="送信">➤</button>
+          </div>
+          <input type="file" id="imgFile" accept="image/*" style="display:none">
+          <div class="chips" style="margin-top:10px">
+            <button class="btn ghost" id="toQuestions">🧠 直前の回答を“考えさせる問い”に</button>
+          </div>
+        </section>
+      </main>
+      <aside>
+        <section class="card pad" style="margin-bottom:14px">
+          <h2 class="sec">🪨 庭の知恵から相談（クリック）</h2>
+          <div class="chips" id="gardenQuick"></div>
+        </section>
+        <section class="card pad">
+          <h2 class="sec">🧭 この工房の約束</h2>
+          <div class="hint">
+            3つの知をつなげて教えます：<strong>査読デザイン論</strong>（実在DOIのみ）／<strong>写真の構図・4原則・日本庭園</strong>（定石・慣習、例外あり）／<strong>定番リファレンス</strong>（C.R.A.P.・Gestalt・WCAG 等）。<br><br>
+            <strong>嘘つかない原則：</strong>庭園や構図の原則は文化的・実務的な“慣習”で、査読論文の主張ではありません。論文DOIは検証済みのものだけを引用し、両者は「響き合うアナロジー」として正直に区別します。未確認は「分かりません」と答えます。
+          </div>
+        </section>
+        <section class="card pad" style="margin-top:14px">
+          <h2 class="sec">🔧 エンジニア向け：AIパラメータ詳細</h2>
+          <details>
+            <summary>各パラメータの意味とマッピング（クリックで開く）</summary>
+            <div class="hint" style="margin-bottom:6px">💡 上の設定を変えると、すぐ下の「効果プレビュー」が変化します。<b>同じ質問で1つだけ値を変えて投げ比べる</b>と、各パラメータの効きが体感できます（＝エンジニアの実験）。</div>
+            <div class="paramdoc">
+              <div class="pd"><b>🌡 温度 temperature（0–1・実API）</b><span>📖 出力のランダムさ。 <span class="up">⬆ 上げる</span>→発想的・多様（言い回しが毎回変わる／ブレ増）。 <span class="dn">⬇ 下げる</span>→決定的・再現性↑（設計書レビュー・出典重視は0.2前後）。 <span class="learn">🎓 学び</span>：温度だけ0.2と0.9で同じ質問を投げ、差を観察。</span></div>
+              <div class="pd"><b>📏 最大トークン max_tokens</b><span>📖 応答の長さ上限。 <span class="up">⬆ 上げる</span>→長文OK（待ち時間とトークン消費↑）。 <span class="dn">⬇ 下げる</span>→短く、途中で切れることも。 <span class="learn">🎓 学び</span>：HTML版は400–3000で実反映。アーティファクト版は1000上限（claude.ai制約）。</span></div>
+              <div class="pd"><b>🧭 回答モード mode（systemを切替）</b><span>📖 答え方の型。 参照先=即答＋DOI／考えさせる問=問いを返す（テスト効果）／じっくり相談=四段構成／アニメ分析=画像を数値分析／レポート=資料を記事化。 <span class="learn">🎓 学び</span>：同じ題材でモードを変えると“出力の骨格”が変わる。</span></div>
+              <div class="pd"><b>🎭 ペルソナ persona（systemの役回り）</b><span>📖 語り手の視点。 庭師先生＝やさしいたとえ／査読者＝厳密に根拠要求／現場リーダー＝実務翻訳／新人代弁者＝噛み砕き要求。 <span class="learn">🎓 学び</span>：同じ問いを査読者と新人で投げ比べると視点の差が分かる。</span></div>
+              <div class="pd"><b>✂ 詳しさ／🪴 専門度／💧 たとえ／📚 出典</b><span>📖 これらは“API数値”ではなく<b>自然言語の指示としてsystemに注入</b>するプロンプト制御。 専門度を「エンジニア」にすると擬似コード・運用含意が増える。出典「必須」は主張にDOIを厳しく要求。 <span class="learn">🎓 学び</span>：温度と違い、文体・粒度を狙って変えられる。</span></div>
+              <div class="pd"><b>🔊 話速 ttsRate（0.7–1.4x）</b><span>📖 読み上げ（Web Speech）の速度のみ。API非関与（出力内容は変わらない）。</span></div>
+              <div class="pd"><b>🔑 鍵の有無で経路自動切替</b><span>📖 鍵が空＝アーティファクト経路（claude.ai内・モデル固定sonnet-4-6・max1000）。鍵あり＝HTML経路（x-api-key＋ブラウザ直叩きヘッダ・モデル/max可変）。設定欄に現在の経路がライブ表示。</span></div>
+              <div class="pd"><b>⭐ プリセット presets</b><span>📖 上記一式をまとめて保存／復元。良かった設定に即復帰、JSONで書き出し・読み込み。 <span class="learn">🎓 学び</span>：効いた設定は“資産”。設計書レビュー用などを名前付き保存。</span></div>
+            </div>
+          </details>
+        </section>
+
+        <section class="card pad" style="margin-top:14px">
+          <h2 class="sec">🧪 くらべて学ぶ（学習デモ）</h2>
+          <div class="hint">同じ質問を<b>2通りの設定</b>で1回ずつ自動で投げ、出力の差を並べて見せます。🌡温度くらべ（0.2↔0.9）／🪴専門度くらべ（新人↔エンジニア）。他の設定は固定し、その1項目だけを変えて“効き”を体感します。<br>※ APIキーありのHTML経路だと差がはっきり出ます。</div>
+          <input id="tempDemoQ" type="text" value="資料デザインで『余白（間）』が大事な理由を、新人にやさしく説明して" style="width:100%;box-sizing:border-box;margin-top:8px;border:1px solid var(--line);border-radius:10px;padding:8px;font-size:.84rem">
+          <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn" id="tempDemoRun">🌡 温度くらべ</button><button class="btn" id="lvlDemoRun" style="background:#5f7d4f">🪴 専門度くらべ</button><button class="btn" id="personaDemoRun" style="background:#7a4fae">🎭 ペルソナくらべ</button><button class="btn" id="modeDemoRun" style="background:#41607a">🧭 モードくらべ</button><button class="btn" id="persona3DemoRun" style="background:#b5462f">🎚 3者くらべ</button></div>
+          <div style="margin-top:8px;display:flex;gap:6px;align-items:center;flex-wrap:wrap">
+            <span class="lab">2軸</span>
+            <select id="mxAxisA"><option value="temp">温度</option><option value="level" selected>専門度</option><option value="persona">ペルソナ</option><option value="mode">モード</option></select>
+            <select id="mxNA" title="軸Aの段数"><option value="2" selected>2段</option><option value="3">3段</option></select>
+            <span>×</span>
+            <select id="mxAxisB"><option value="temp" selected>温度</option><option value="level">専門度</option><option value="persona">ペルソナ</option><option value="mode">モード</option></select>
+            <select id="mxNB" title="軸Bの段数"><option value="2" selected>2段</option><option value="3">3段</option></select>
+            <button class="btn" id="matrixRun" style="background:#8a6d3b">🧮 2軸マトリクス</button>
+          </div>
+          <div id="tempDemoOut" style="margin-top:10px"></div>
+        </section>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ===== THEORY ===== -->
+  <section class="pane" id="pane-theory">
+    <section class="card pad" style="margin-bottom:14px">
+      <h2 class="sec">🌿 最新デザイン論ライブラリ <span class="badge">DOI実在確認済・15本</span></h2>
+      <div class="quick" id="quick">
+        <span class="mini" data-th="all">すべて</span>
+        <span class="mini" data-th="認知負荷">認知負荷</span>
+        <span class="mini" data-th="マルチメディア">マルチメディア</span>
+        <span class="mini" data-th="UX/美">UX/美</span>
+        <span class="mini" data-th="アクセシビリティ">A11y</span>
+        <span class="mini" data-th="デザイン思考">DT</span>
+        <span class="mini" data-th="学習心理">学習心理</span>
+        <span class="mini" data-th="カラー心理">カラー心理</span>
+      </div>
+      <div class="hint">カードを押すと、その論文から相談を始められます。</div>
+    </section>
+    <div id="papers"></div>
+  </section>
+
+  <!-- ===== COMPOSITION ===== -->
+  <section class="pane" id="pane-comp">
+    <div class="grid">
+      <main>
+        <section class="card pad" style="margin-bottom:14px">
+          <h2 class="sec">📐 構図プレビュー（構成図）</h2>
+          <div class="setrow" style="margin-bottom:10px">
+            <label class="lab">縦横比</label>
+            <select id="ratio">
+              <option value="3,2">3:2（横）</option><option value="2,3">2:3（縦）</option>
+              <option value="16,9">16:9</option><option value="1,1">1:1</option><option value="4,5">4:5</option>
+            </select>
+            <label class="lab">主役位置</label>
+            <select id="subjPos">
+              <option value="auto">型のおすすめ</option>
+              <option value="tl">左上</option><option value="tr">右上</option>
+              <option value="bl">左下</option><option value="br">右下</option><option value="c">中央</option>
+            </select>
+            <button class="btn ghost" id="toggleSubj">主役マーカー: ON</button>
+          </div>
+          <div class="stage" id="stage"></div>
+        </section>
+        <section class="card pad"><div class="fwinfo" id="fwInfo"></div></section>
+      </main>
+      <aside>
+        <section class="card pad">
+          <h2 class="sec">📐 構図の型を選ぶ（9）</h2>
+          <div class="fwlist" id="fwGrid"></div>
+        </section>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ===== GARDEN ===== -->
+  <section class="pane" id="pane-garden">
+    <section class="card pad" style="margin-bottom:14px">
+      <h2 class="sec">🪨 庭園の知恵で、デザイン論と構図を束ねる</h2>
+      <p style="font-size:.88rem;margin:.2em 0">
+        日本庭園の設計思想は、「引き算」「不均整」「視線の誘導」「自然らしさ」を磨いてきた知恵の宝庫。
+        これは写真の<strong>構図の型</strong>とも、認知負荷や視覚的美といった<strong>査読デザイン論</strong>とも響き合います。
+        7つの知恵を、両者への橋渡しとして読み解きます。
+      </p>
+      <div class="hint">⚠️ 庭園の原則は伝統的な設計思想（慣習）です。下に添えるDOIは「概念が響き合う」近代デザイン科学であり、“論文が日本庭園を実証した”という意味ではありません（嘘つかない原則）。</div>
+    </section>
+    <div id="garden"></div>
+    <section class="card pad">
+      <h2 class="sec">🎨 庭の色トーン</h2>
+      <div class="hint">苔・石・水・朱・和紙。落ち着きの中に一点の差し色。<a href="https://doi.org/10.1037/0096-3445.123.4.394" target="_blank" rel="noopener">Valdez & Mehrabian (1994)</a>＝明度↑で快・彩度↑で覚醒。</div>
+      <div class="palette" id="gardenPalette"></div>
+      <div class="hint">緑(苔)＝快・低覚醒で“静”／石のグレー＝無彩色で主役を邪魔しない／水の藍＝寒色で静けさ／朱＝高彩度の差し色を小面積で一点強調（覚醒）。背景は和紙の高明度で“快”を底上げ。</div>
+    </section>
+  </section>
+
+  <!-- ===== CRAP ===== -->
+  <section class="pane" id="pane-crap">
+    <section class="card pad" style="margin-bottom:14px">
+      <h2 class="sec">🎯 基本デザイン4原則（C.R.A.P.）を学ぶ</h2>
+      <p style="font-size:.88rem;margin:.2em 0">コントラスト・反復・整列・近接。誰でも“伝わる”レイアウトに近づく4つの定番。各原則に「悪い例→良い例」のお手本デモと、響く論文・定番リファレンスの根拠を添えています。</p>
+      <div class="hint">出典：C.R.A.P. は Robin Williams『ノンデザイナーズ・デザインブック』が広めた定番フレーム（書籍由来の定石）。Gestalt（近接）や WCAG（W3C）も“定番リファレンス”で、査読論文の主張とは区別します（嘘つかない原則）。</div>
+    </section>
+    <div id="crap"></div>
+  </section>
+
+  <!-- ===== LEARN DESIGN ===== -->
+  <section class="pane" id="pane-learn">
+    <section class="card pad" style="margin-bottom:14px">
+      <h2 class="sec">❓ 心理学ベース「問いを投げる」デザインのお手本</h2>
+      <p style="font-size:.88rem;margin:.2em 0">読んだ人に“考えさせる”ことで、記憶と理解を深めるデザインの型。テスト効果・生成効果・自己説明など、学習心理の知見が土台です。</p>
+      <div class="hint">根拠は検証済みDOIの査読論文（学習心理）。各カードの「この型で作ってもらう」でAIに具体例を作らせられます。</div>
+    </section>
+    <div id="qdesign"></div>
+
+    <section class="card pad" style="margin:18px 0 14px">
+      <h2 class="sec">🎨 ペルソナに沿った色トーン提案</h2>
+      <p style="font-size:.88rem;margin:.2em 0">誰に何を届けるかで、効く配色は変わります。代表的なペルソナの色トーンを「明度＝快・彩度＝覚醒」（カラー心理）の根拠つきで。色をクリックでHEXコピー。</p>
+      <div class="setrow" style="margin-top:8px">
+        <input id="customPersona" type="text" placeholder="自由なペルソナ（例：医療系の落ち着いた管理画面）">
+        <button class="btn" id="customPersonaBtn">このペルソナで提案</button>
+      </div>
+    </section>
+    <div id="ptone"></div>
+  </section>
+
+  <!-- ===== ANIME ===== -->
+  <section class="pane" id="pane-anime">
+    <section class="card pad" style="margin-bottom:14px">
+      <h2 class="sec">🎬 アニメ制作 ─ 画像分析・造形/色彩の数値化・100%再現プロンプト</h2>
+      <p style="font-size:.88rem;margin:.2em 0">見本画像を、写真家の造形学・色彩工学・アニメ制作の観点で精密分析し、数値化＆プロンプト化します。相談タブの <b>📎</b> から画像を添付し、下の観点で「🎬 アニメ分析」モードで送ってください。</p>
+      <div class="hint">嘘つかない原則：色・寸法は画像からの“推定値/実測値”として扱い、断定しません。下の数値表は今回の見本（しろうさぎアナウンサー）をピクセル実測したものです。</div>
+    </section>
+
+    <section class="card pad" style="margin-bottom:14px">
+      <h2 class="sec">🔍 分析観点パラメータ（エンジニア向け・検証しやすく）</h2>
+      <div class="setrow" style="margin-bottom:8px">
+        <label class="lab">キャラ辞書</label>
+        <select id="charSel"></select>
+        <span class="hint" style="margin:0">選ぶと数値表・プロンプトが切り替わります</span>
+      </div>
+      <div class="chips" id="animeAspects"></div>
+      <div class="setrow" style="margin-top:8px;flex-wrap:wrap">
+        <label class="lab">表現</label>
+        <select id="animeExpress"><option value="both">数値化＋言語化</option><option value="num">数値化のみ</option><option value="verbal">言語化のみ</option></select>
+        <label class="lab">読者</label>
+        <select id="animeAudience"><option value="both">理系＋文系</option><option value="sci">理系向け</option><option value="hum">文系向け</option></select>
+        <label class="lab">アングル</label>
+        <select id="animeAngle"><option value="front">正面</option><option value="side">横</option><option value="top">上から</option><option value="expr">表情編</option></select>
+        <label class="lab">出力</label>
+        <select id="animeOut"><option value="both">数値表＋プロンプト</option><option value="num">数値表のみ</option><option value="prompt">プロンプトのみ</option></select>
+      </div>
+      <div class="cfg" id="animeCfg" style="margin-top:10px"></div>
+      <div class="setrow" style="margin-top:10px;flex-wrap:wrap">
+        <input id="apName" type="text" placeholder="この設定に名前（例：理系・厳密）">
+        <button class="btn" id="apSave">💾 保存</button>
+        <button class="btn" id="apReset" style="background:#fff;color:var(--moss-deep);border:1px solid var(--moss)">↩︎ 既定に戻す</button>
+      </div>
+      <div id="apList" style="margin-top:8px"></div>
+      <div style="margin-top:10px"><button class="btn" id="animeRun">🎬 添付画像をこの観点で精密分析</button>
+        <span class="hint" style="margin-left:6px">※ 先に相談タブの 📎 で画像添付が必要</span></div>
+      <div class="hint" style="margin-top:8px">うまくいかない時：①観点/表現/読者/アングルを設定 → ②分析実行 → ③出力を検証 → ④良ければ💾保存／だめなら↩︎で戻す。設定はワンタップで再現できます。</div>
+    </section>
+
+    <section class="card pad" style="margin-bottom:14px">
+      <details>
+        <summary style="cursor:pointer;font-weight:700;color:var(--moss-deep);font-size:1rem">➕ キャラを追加（利用者カスタマイズ・保存できる）</summary>
+        <div style="margin-top:10px">
+          <div class="setrow"><label class="lab">キャラ名</label><input id="ccName" type="text" placeholder="例：しろうさぎ博士" style="flex:1"></div>
+          <h3 style="font-size:.8rem;color:var(--moss-deep);margin:.7em 0 .3em">■ 配色（パーツ名＋HEX）</h3>
+          <div id="ccColors"></div>
+          <button class="btn" id="ccAddColor" style="background:#fff;color:var(--moss-deep);border:1px solid var(--moss);margin-top:4px">＋ 色を追加</button>
+          <h3 style="font-size:.8rem;color:var(--moss-deep);margin:.9em 0 .3em">■ 造形メモ（1行1項目・「項目=値」推奨）</h3>
+          <textarea id="ccForm" placeholder="例：&#10;頭身=大頭（頭部55%）&#10;目間隔÷頭幅≈30%" style="width:100%;box-sizing:border-box;min-height:64px;border:1px solid var(--line);border-radius:10px;padding:8px;font-family:inherit;font-size:.82rem"></textarea>
+          <h3 style="font-size:.8rem;color:var(--moss-deep);margin:.9em 0 .3em">■ 背景・小道具（任意）</h3>
+          <div class="setrow" style="flex-wrap:wrap"><label class="lab">背景</label><input id="ccBg" type="text" placeholder="例：白背景／教室／夜のニューススタジオ" style="flex:1"></div>
+          <div class="setrow" style="flex-wrap:wrap;margin-top:4px"><label class="lab">小道具</label><input id="ccProps" type="text" placeholder="例：にんじん／本／マイク／黒板" style="flex:1"></div>
+          <h3 style="font-size:.8rem;color:var(--moss-deep);margin:.9em 0 .3em">■ 基本プロンプト（日本語）</h3>
+          <textarea id="ccPrompt" placeholder="このキャラの基本生成プロンプト。色は上の配色HEXに合わせて書くと再現性UP。" style="width:100%;box-sizing:border-box;min-height:80px;border:1px solid var(--line);border-radius:10px;padding:8px;font-family:inherit;font-size:.82rem"></textarea>
+          <div class="setrow" style="margin-top:8px;flex-wrap:wrap">
+            <button class="btn" id="ccSave">💾 このキャラを保存（辞書に追加）</button>
+            <button class="btn" id="ccExport" style="background:#fff;color:var(--moss-deep);border:1px solid var(--moss)">⬇️ エクスポート</button>
+            <button class="btn" id="ccImport" style="background:#fff;color:var(--moss-deep);border:1px solid var(--moss)">⬆️ インポート</button>
+          </div>
+          <textarea id="ccIO" placeholder="⬇️エクスポート結果がここに出ます／⬆️インポートはここにJSONを貼ってボタン。保存しておけば次回復元できます（localStorage不使用・オフライン）。" style="width:100%;box-sizing:border-box;min-height:54px;border:1px solid var(--line);border-radius:10px;padding:8px;font-family:ui-monospace,monospace;font-size:.72rem;margin-top:8px"></textarea>
+          <div class="hint">保存したキャラは上の「キャラ辞書」で選べます。表情12・上からプロンプト・チェックリストは自動生成されます。</div>
+        </div>
+      </details>
+    </section>
+
+    <section class="card pad" style="margin-bottom:14px">
+      <h2 class="sec">📐 <span id="charNameN">しろうさぎアナウンサー</span> 造形・色彩 数値表（ピクセル実測）</h2>
+      <p style="font-size:.82rem;margin:.2em 0;color:var(--sub)">見本画像から実測（PILピクセルサンプリング）。設計書値と併記し、差は正直に注記。</p>
+      <div id="animeNumbers"></div>
+      <div class="hint" style="margin-top:8px">※ 実測は見本画像（フラット2D塗り）からの推定。±誤差あり。100%再現には<b>HEX固定＋比率固定</b>が要。</div>
+    </section>
+
+    <section class="card pad">
+      <h2 class="sec">📝 <span id="charNameP">しろうさぎアナウンサー</span> プロンプト集（100%再現）</h2>
+      <div class="hint">コピーして ChatGPT Image / Midjourney / SD へ。色は<b>実測HEX</b>を使用。造形は比率で固定。正面/横/上から/表情編まで収録。</div>
+      <div id="promptbox"></div>
+    </section>
+  </section>
+
+  <!-- ===== REPORT ===== -->
+  <section class="pane" id="pane-report">
+    <section class="card pad" style="margin-bottom:14px">
+      <h2 class="sec">📄 レポート生成 ─ 資料/文章を入れて、うさうさ流レポートに</h2>
+      <p style="font-size:.88rem;margin:.2em 0">資料テキストを貼り付けるか、📎で画像を添付 →「📄 レポート」モードで、実践フレームワーク記事・定量分析レポートなどに整えます。</p>
+      <div class="hint">嘘つかない原則：入力資料に無い事実・数値・出典は創作しません。数値は資料から、または「推定」と明記します。</div>
+    </section>
+
+    <section class="card pad" style="margin-bottom:14px">
+      <h2 class="sec">📥 入力資料</h2>
+      <textarea id="reportInput" placeholder="ここに資料テキストを貼り付け（議事録・記事の素材・分析対象データなど）。画像だけでもOK。"></textarea>
+      <div id="reportImgChip" style="margin-top:6px"></div>
+      <div style="margin-top:6px"><button class="iconbtn mic" id="reportImgBtn" style="background:#fff;color:#1f7a8c;border:1.5px solid #1f7a8c;width:auto;padding:0 12px;border-radius:10px">📎 画像添付</button></div>
+    </section>
+
+    <section class="card pad" style="margin-bottom:14px">
+      <h2 class="sec">🔧 レポート設定（エンジニア向け・検証しやすく）</h2>
+      <div class="setrow" style="flex-wrap:wrap">
+        <label class="lab">種別</label>
+        <select id="rpType">
+          <option value="framework">実践フレームワーク記事（Qiita/Zenn風）</option>
+          <option value="analysis">定量分析レポート（要旨→手法→データ→考察→結論）</option>
+          <option value="compare">比較検討レポート</option>
+          <option value="summary">要約レポート</option>
+          <option value="howto">手順書（How-to）</option>
+          <option value="press">プレスリリース</option>
+          <option value="lt">LT登壇スライド構成</option>
+          <option value="blog">ブログ記事</option>
+          <option value="sns">SNS投稿（スレッド）</option>
+          <option value="minutes">議事録要約</option>
+          <option value="faq">FAQ生成</option>
+          <option value="email">ビジネスメール下書き</option>
+          <option value="manual">業務マニュアル</option>
+          <option value="lp">LP（ランディングページ）構成</option>
+          <option value="proposal">提案書</option>
+        </select>
+        <label class="lab">読者</label>
+        <select id="rpAudience"><option value="both">理系＋文系</option><option value="sci">理系向け</option><option value="hum">文系向け</option></select>
+        <label class="lab">長さ</label>
+        <select id="rpLength"><option value="std">標準</option><option value="brief">簡潔</option><option value="deep">詳細</option></select>
+        <label class="lab">出典</label>
+        <select id="rpCite"><option value="strict">厳しめ（検証可能のみ・捏造禁止）</option><option value="normal">通常</option></select>
+      </div>
+      <div class="cfg" id="reportCfg" style="margin-top:10px"></div>
+      <div class="setrow" style="margin-top:10px;flex-wrap:wrap">
+        <input id="rpName" type="text" placeholder="この設定に名前（例：Qiita実践記事）">
+        <button class="btn" id="rpSave">💾 保存</button>
+        <button class="btn" id="rpReset" style="background:#fff;color:var(--moss-deep);border:1px solid var(--moss)">↩︎ 既定に戻す</button>
+      </div>
+      <div id="rpList" style="margin-top:8px"></div>
+      <div style="margin-top:10px"><button class="btn" id="reportRun">📄 レポートを生成</button></div>
+      <div class="hint" style="margin-top:8px">うまくいかない時：①種別/読者/長さ/出典を設定 → ②生成 → ③出力を検証 → ④良ければ💾保存／だめなら↩︎で戻す。設定はワンタップで再現できます。</div>
+    </section>
+  </section>
+
+  <!-- ===== GUIDE ===== -->
+  <section class="pane" id="pane-guide">
+    <section class="card pad" style="margin-bottom:14px">
+      <h2 class="sec">❓ 使い方ガイド ─ はじめての方へ</h2>
+      <p style="font-size:.9rem;margin:.2em 0">このツールは<b>単一HTML・オフライン対応</b>。APIキーはメモリ内のみ（保存しません）。まずは下の流れで、相談 → 設定 → 保存、と進めてみてください。🐰</p>
+      <div class="hint">鍵なし＝claude.ai内（アーティファクト経路・モデル固定）／鍵あり＝HTML経路（モデル・最大トークン可変）。設定欄に現在の経路がライブ表示されます。</div>
+    </section>
+
+    <div class="guidecard">
+      <h3>🗂 タブ早見</h3>
+      <ul>
+        <li>💬 <b>相談</b>：AIに質問。モード・ペルソナ・パラメータを設定。📎で画像も。</li>
+        <li>🌿 <b>デザイン論</b>：査読論文15本（実在DOI）。カードから相談開始。</li>
+        <li>📐 <b>構図</b>：写真9構図のオーバーレイ。</li>
+        <li>🪨 <b>庭園の知恵</b>：7原則×構図×論文の橋渡し。</li>
+        <li>🎯 <b>4原則</b>：C.R.A.P.（悪い例→良い例）。</li>
+        <li>🎓 <b>学びデザイン</b>：問いのお手本＋ペルソナ色トーン（WCAG判定）。</li>
+        <li>🎬 <b>アニメ制作</b>：画像分析・キャラ辞書・数値表・100%再現プロンプト・<b>自作キャラ追加</b>。</li>
+        <li>📄 <b>レポート</b>：資料/文章を入れて、記事・分析・議事録などに。</li>
+      </ul>
+    </div>
+
+    <div class="guidecard">
+      <h3><span class="stepnum">1</span>相談してみる</h3>
+      <ol>
+        <li>💬相談タブの下のテキスト欄に質問を書いて「➤」で送信。</li>
+        <li>上の<b>回答モード</b>（じっくり相談／参照先／考えさせる問／アニメ分析／レポート）と<b>ペルソナ</b>（庭師先生／査読者／現場リーダー／新人代弁者）を選ぶと答え方が変わります。</li>
+        <li>🎤で音声入力、🔊で読み上げON/OFF。</li>
+      </ol>
+    </div>
+
+    <div class="guidecard">
+      <h3><span class="stepnum">2</span>パラメータで“学ぶ”（これを変えるとどうなる？）</h3>
+      <ol>
+        <li>相談タブ右の「🔧 エンジニア向け：AIパラメータ詳細」を開くと、各設定の<b>⬆上げる／⬇下げる→どうなる</b>と🎓学びのヒントが読めます。</li>
+        <li>設定を動かすと、すぐ下の<b>「🔎 いまの設定だと→…」効果プレビュー</b>がリアルタイムに変化します。</li>
+        <li>コツ：<b>同じ質問で1つだけ値を変えて投げ比べる</b>と効きが体感できます。右の「🧪 くらべて学ぶ」で<b>🌡温度</b>・<b>🪴専門度</b>・<b>🎭ペルソナ</b>・<b>🧭モード（じっくり相談↔参照先）</b>・<b>🎚3者くらべ（庭師先生/査読者/新人代弁者）</b>を自動実行でき、結果の<b>👍これを保存</b>で<b>名前を付けて</b>好みの設定を即採用＆⭐保存。<b>🧮2軸マトリクス</b>（例：温度×専門度）で4通りを一気にくらべ、<b>⬇️Markdown/HTML書き出し</b>で結果を持ち出せます。</li>
+      </ol>
+    </div>
+
+    <div class="guidecard">
+      <h3><span class="stepnum">3</span>良い設定を保存・復元（うまくいかない時）</h3>
+      <ol>
+        <li>効いた設定は「💾 保存」で名前付き保存 → 「⭐ よかった設定に戻す」で即復帰。</li>
+        <li>📋 JSON書き出し／読み込みで、次回も同じ設定を再現（メモリ内なので控えを取ると安心）。</li>
+        <li>うまくいかない時の手順：<b>①1つだけ設定変更 →②再生成 →③出力を検証 →④良ければ💾／だめなら↩︎で戻す</b>。</li>
+      </ol>
+    </div>
+
+    <div class="guidecard">
+      <h3><span class="stepnum">4</span>画像を分析する</h3>
+      <ol>
+        <li>相談タブの📎で画像を添付（チップが出ます）。</li>
+        <li>🎬アニメ制作タブで観点（造形/色彩/アニメ）・表現（数値化/言語化）・読者（理系/文系）・アングル（正面/横/上から/表情編）を設定。</li>
+        <li>「🎬 添付画像をこの観点で精密分析」で、数値表＋100%再現プロンプトが返ります。</li>
+      </ol>
+    </div>
+
+    <div class="guidecard">
+      <h3><span class="stepnum">5</span>アニメ制作：キャラ辞書と自作キャラ</h3>
+      <ol>
+        <li>「キャラ辞書」を選ぶと数値表・プロンプト集が切り替わります。</li>
+        <li>「➕ キャラを追加」で<b>名前・配色（色を追加可）・造形メモ・背景・小道具・基本プロンプト</b>を入力 → 💾保存で辞書に追加。表情12・上から・チェックリストは自動生成。</li>
+        <li>⬇️エクスポート／⬆️インポート（JSON）で自作キャラを保存・復元（オフライン・localStorage不使用）。</li>
+      </ol>
+    </div>
+
+    <div class="guidecard">
+      <h3><span class="stepnum">6</span>レポートを作る</h3>
+      <ol>
+        <li>📄レポートタブに資料テキストを貼り付け（または📎で画像添付）。</li>
+        <li>種別（実践記事／定量分析／比較／要約／手順書／プレスリリース／LT構成／ブログ／SNS／<b>議事録要約／FAQ／メール</b>）・読者・長さ・出典を設定。</li>
+        <li>「📄 レポートを生成」→ 相談タブに切り替わって出力。設定は保存／↩︎で戻せます。</li>
+      </ol>
+    </div>
+
+    <div class="guidecard">
+      <h3>🧭 約束（嘘つかない原則）</h3>
+      <p style="font-size:.9rem;margin:.2em 0">査読論文は実在DOIのみ。庭園・構図・4原則は文化的/実務的な“慣習・定石”として、論文の主張とは正直に区別します。色・寸法は“実測/推定”と明記し、資料や画像に無い事実・数値・出典は創作しません。未確認は「分かりません／要確認」と答えます。🐰</p>
+    </section>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  🐰🪴 うさうさ研修工房 庭園デザインラボ <strong>v2.5 統合版（2026-06-24 商用テスト済）</strong>／鍵が空ならアーティファクト版・入れればHTML版に自動切替。
+  査読デザイン論は実在DOIのみ。庭園・構図の原則は文化的/実務的な慣習で、論文の主張とは区別して扱います（嘘つかない原則）。
+</footer>
+
+<script>
+/* ===== 査読論文ライブラリ（DOI実在確認済・15本） ===== */
+const PAPERS=[
+ {id:"sweller2019",au:"Sweller, van Merriënboer & Paas",yr:2019,th:"認知負荷",t:"Cognitive Architecture and Instructional Design: 20 Years Later",j:"Educational Psychology Review, 31(2), 261–292",doi:"10.1007/s10648-019-09465-5",plain:"作業記憶は小さい。教え方で“余計な負荷”を減らすのが設計の肝。"},
+ {id:"sweller1994",au:"Sweller",yr:1994,th:"認知負荷",t:"Cognitive load theory, learning difficulty, and instructional design",j:"Learning and Instruction, 4(4), 295–312",doi:"10.1016/0959-4752(94)90003-5",plain:"学習の難しさは“素材”と“見せ方”に分けられる原典級。"},
+ {id:"paas2020",au:"Paas & van Merriënboer",yr:2020,th:"認知負荷",t:"Cognitive-Load Theory: Methods to Manage Working Memory Load",j:"Current Directions in Psychological Science, 29(4), 394–398",doi:"10.1177/0963721420922183",plain:"作業記憶の負荷を“下げる・割り当てる”手法のまとめ。"},
+ {id:"mayer2024",au:"Mayer",yr:2024,th:"マルチメディア",t:"The past, present, and future of the cognitive theory of multimedia learning",j:"Educational Psychology Review, 36(1), 8",doi:"10.1007/s10648-023-09842-1",plain:"言葉＋絵は言葉だけより学べる。15の実証原則の最新総説。"},
+ {id:"mayer2001",au:"Mayer, Heiser & Lonn",yr:2001,th:"マルチメディア",t:"Cognitive constraints on multimedia learning",j:"Journal of Educational Psychology, 93(1), 187–198",doi:"10.1037/0022-0663.93.1.187",plain:"盛りすぎると理解は減る（一貫性原則）。"},
+ {id:"mayer2008",au:"Mayer & Johnson",yr:2008,th:"マルチメディア",t:"Revising the redundancy principle in multimedia learning",j:"Journal of Educational Psychology, 100(2), 380–386",doi:"10.1037/0022-0663.100.2.380",plain:"ナレーションと同じ全文字は逆効果（冗長性原則）。"},
+ {id:"sonderegger2010",au:"Sonderegger & Sauer",yr:2010,th:"UX/美",t:"The influence of design aesthetics in usability testing",j:"Applied Ergonomics, 41(3), 403–410",doi:"10.1016/j.apergo.2009.09.002",plain:"見た目が良いと“使いやすく感じる”。実測とは別物。"},
+ {id:"moshagen2010",au:"Moshagen & Thielsch",yr:2010,th:"UX/美",t:"Facets of visual aesthetics",j:"International Journal of Human-Computer Studies, 68(10), 689–709",doi:"10.1016/j.ijhcs.2010.05.006",plain:"画面の“美しさ”は4側面（簡潔さ・多様性・色彩・職人技）。"},
+ {id:"mccarthy2010",au:"McCarthy & Swierenga",yr:2010,th:"アクセシビリティ",t:"What we know about dyslexia and web accessibility",j:"Universal Access in the Information Society, 9(2), 147–152",doi:"10.1007/s10209-009-0160-5",plain:"読みやすい配色・行間・書体は“配慮”でなく“設計”。"},
+ {id:"micheli2019",au:"Micheli et al.",yr:2019,th:"デザイン思考",t:"Doing Design Thinking: Conceptual Review, Synthesis, and Research Agenda",j:"Journal of Product Innovation Management",doi:"10.1111/jpim.12466",plain:"デザイン思考の“10属性・8手法”を体系化したレビュー。"},
+ {id:"baker2020",au:"Baker & Moukhliss",yr:2020,th:"デザイン思考",t:"Concretising Design Thinking",j:"Review of Education, 8(1), 305–333",doi:"10.1002/rev3.3186",plain:"デザイン思考を“教育設計”にどう落とすか。"},
+ {id:"carlgren2016",au:"Carlgren, Rauth & Elmquist",yr:2016,th:"デザイン思考",t:"The Challenges of Using Design Thinking in Industry",j:"Creativity and Innovation Management",doi:"10.1111/caim.12176",plain:"現場でDTを回す“あるある”を5社事例で整理。"},
+ {id:"roediger2006",au:"Roediger & Karpicke",yr:2006,th:"学習心理",t:"Test-Enhanced Learning: Taking Memory Tests Improves Long-Term Retention",j:"Psychological Science, 17(3), 249–255",doi:"10.1111/j.1467-9280.2006.01693.x",plain:"思い出す行為が記憶を強める（テスト効果）。"},
+ {id:"dunlosky2013",au:"Dunlosky et al.",yr:2013,th:"学習心理",t:"Improving Students' Learning With Effective Learning Techniques",j:"Psychological Science in the Public Interest, 14(1), 4–58",doi:"10.1177/1529100612453266",plain:"練習テスト・自己説明・精緻化質問が高効果。"},
+ {id:"valdez1994",au:"Valdez & Mehrabian",yr:1994,th:"カラー心理",t:"Effects of Color on Emotions",j:"Journal of Experimental Psychology: General, 123(4), 394–409",doi:"10.1037/0096-3445.123.4.394",plain:"明度↑で快、彩度↑で覚醒（PADモデル）。"}
+];
+
+/* ===== 構図フレームワーク ===== */
+const FRAMEWORKS=[
+ {key:"thirds",nm:"三分割法",en:"Rule of Thirds",desc:"3×3分割の交点に主役を置く基本の型。",use:"迷ったらまず。風景/人物/スナップ全般。"},
+ {key:"phi",nm:"黄金比グリッド",en:"Phi Grid",desc:"約0.382:0.618の繊細グリッド。上品・静か。",use:"きっちり整った印象を出したい時。"},
+ {key:"spiral",nm:"黄金螺旋",en:"Golden Spiral",desc:"渦の中心に主役。視線を巻き込む。",use:"動き・流れを見せたい時。"},
+ {key:"diagonal",nm:"対角線構図",en:"Diagonal",desc:"対角線で奥行きと動き。",use:"道・階段・並木。退屈を崩したい時。"},
+ {key:"triangle",nm:"三角構図",en:"Triangle",desc:"3要素を三角形に。安定とまとまり。",use:"集合・静物・建築。安定させたい時。"},
+ {key:"center",nm:"日の丸構図",en:"Center",desc:"主役を中央に。力強いが単調になりやすい。",use:"主役が強い時。背景は整理。"},
+ {key:"symmetry",nm:"対称構図",en:"Symmetry",desc:"中央軸で鏡像。秩序・静けさ。",use:"建築・反射・並木トンネル。"},
+ {key:"frame",nm:"額縁構図",en:"Framing",desc:"前景で主役を囲み視線を内へ。",use:"奥行きと物語性を足したい時。"},
+ {key:"leading",nm:"リーディングライン",en:"Leading Lines",desc:"線で視線を主役(消失点)へ導く。",use:"奥行き・誘導を強く出したい時。"}
+];
+
+/* ===== 庭園の知恵（橋渡し） ===== */
+const GARDEN=[
+ {jp:"間（ま）・余白",kana:"Ma / Negative Space",fw:"leading",
+  def:"何も置かない“余白”を、積極的なデザイン要素として効かせる考え方。",
+  ex:"茶室のがらんとした空間。何もないからこそ、一輪の花が際立つ。",
+  gd:"砂庭の白砂や苔の広がり。石を引き立てるために“空ける”。",
+  br:'引き算は理解を助ける。余計を削る＝外在的な認知負荷を下げる発想と響き合う。構図では“主役の進行方向に余白”。',
+  doi:["sweller2019","mayer2001"], one:"足すより、空ける。"},
+ {jp:"不均整（不等辺）",kana:"Asymmetry",fw:"thirds",
+  def:"中央のべったり対称を避け、不揃いな重みで動きとバランスを作る。",
+  ex:"主石を中央から外し、添石を小さく離す。緊張と自然さが生まれる。",
+  gd:"三尊石も大中小で不等辺に。きっちり等間隔にしない。",
+  br:'真ん中を外す感覚は、写真の“三分割法”そのもの。整い過ぎない美が知覚的な好ましさにつながる。',
+  doi:["moshagen2010"], one:"真ん中を、外す。"},
+ {jp:"借景（しゃっけい）",kana:"Shakkei / Borrowed Scenery",fw:"frame",
+  def:"庭の外の遠山や樹木を、庭の構図の一部として“借りて”取り込む。",
+  ex:"生垣や軒で遠景を切り取り、庭と山を一枚の絵にする。",
+  gd:"窓・門・木立を“額縁”にして、遠くの景色を主役の背景に据える。",
+  br:'前景で主役を囲んで奥行きを足す“額縁構図”と同じ発想。視線を内へ誘導する。',
+  doi:["moshagen2010"], one:"遠くを、借りる。"},
+ {jp:"見え隠れ",kana:"Miegakure / Hide-and-Reveal",fw:"leading",
+  def:"全部を一度に見せず、曲がり道や植栽で“少しずつ”見せて歩を誘う。",
+  ex:"露地の飛び石。先が隠れているから、次を見たくて進みたくなる。",
+  gd:"園路を曲げ、要石を植栽で半分隠す。期待が視線と足を動かす。",
+  br:'視線を導く“リーディングライン”と同じ。学びでも、全部説明せず問いで関与を促す（テスト効果）と定着する。',
+  doi:["roediger2006","dunlosky2013"], one:"隠して、誘う。"},
+ {jp:"三尊石（不等三角）",kana:"Triad / Sanzon",fw:"triangle",
+  def:"主・添・控の3石を大中小・不等辺の三角に組み、安定とまとまりを作る。",
+  ex:"中央に主石、脇に低い添石、奥に控石。三点で“締まる”。",
+  gd:"植栽や景物も3点を基本に。点が散らず一群にまとまる。",
+  br:'写真の“三角構図”と同型。底辺で安定、頂点へ視線。群化（近いものはまとまって見える）も効く。',
+  doi:["moshagen2010"], one:"三点で、締める。"},
+ {jp:"簡素・枯山水",kana:"Simplicity / Karesansui",fw:"center",
+  def:"水を使わず砂と石で水景を“見立てる”。最小の要素で多くを語る。",
+  ex:"白砂の波紋と数個の石だけで、大海と島を想像させる。",
+  gd:"要素を絞り、背景を徹底して整理。主役（石）を潔く立てる。",
+  br:'“盛らない”は冗長性・一貫性原則と響き合う。日の丸構図も、主役が強く背景が整理された時に最も効く。',
+  doi:["mayer2008","mayer2001"], one:"少なさで、語る。"},
+ {jp:"侘び寂び・自然石",kana:"Wabi-sabi / Naturalness",fw:"diagonal",
+  def:"不均整・経年・素材の質感など“自然の不完全さ”に美を見出す感性。",
+  ex:"苔むした石、ふぞろいの飛び石。完璧でないからこその味わい。",
+  gd:"直線一辺倒を避け、自然な曲線・斜めの流れで“動”と素材感を出す。",
+  br:'対角線で“動”を足す感覚に近い。視覚的美の「職人技・色彩・多様性」の側面とも響き合う（文化的美意識として）。',
+  doi:["moshagen2010"], one:"不揃いを、味わう。"}
+];
+
+const GARDEN_PALETTE=[
+ {n:"苔",hex:"#5f7d4f"},{n:"石",hex:"#9b968a"},{n:"水",hex:"#41607a"},{n:"朱",hex:"#b5462f"},{n:"和紙",hex:"#f6f1e6"}
+];
+
+/* ===== 基本デザイン4原則（C.R.A.P.／Robin Williams） ===== */
+const CRAP=[
+ {nm:"コントラスト",en:"Contrast",demo:"contrast",
+  def:"違うものは“はっきり”違わせる。中途半端な差は迷いを生む。",
+  ex:"見出しと本文を、サイズ・太さ・色で明確に変える。",
+  why:"差が明確だと視線の優先順位が即わかり、探す負荷が下がる。",
+  ground:"視覚的美の一側面（Moshagen 2010）／WCAG 2.x AA コントラスト：本文4.5:1・大文字3:1（W3C）",
+  doi:["moshagen2010"]},
+ {nm:"反復",en:"Repetition",demo:"repetition",
+  def:"色・書体・余白などのルールを繰り返し、一貫性を作る。",
+  ex:"見出しスタイルや余白を全ページで揃える。",
+  why:"繰り返しは“同じ仲間”の合図。予測が当たり、読む負荷が減る。",
+  ground:"一貫性原則（Mayer 2001）／認知負荷の低減（Sweller 2019）",
+  doi:["mayer2001","sweller2019"]},
+ {nm:"整列",en:"Alignment",demo:"alignment",
+  def:"要素を見えない線に揃える。“なんとなく置く”を無くす。",
+  ex:"左端・中心・グリッドに沿って配置する。",
+  why:"整列は秩序の合図。視線が滑らかに動き、洗練して見える。",
+  ground:"視覚的美の簡潔さ・秩序（Moshagen 2010）／美的ユーザビリティ効果（Sonderegger 2010）",
+  doi:["moshagen2010","sonderegger2010"]},
+ {nm:"近接",en:"Proximity",demo:"proximity",
+  def:"関係するものは近づけ、しないものは離す。距離で“まとまり”を作る。",
+  ex:"ラベルと入力欄をくっつけ、別グループは余白で離す。",
+  why:"近いものは一群に見える（Gestaltの近接）。情報構造が一目で伝わる。",
+  ground:"Gestaltの近接の法則（定番リファレンス）／認知負荷の整理（Sweller 2019）",
+  doi:["sweller2019"]},
+];
+/* ===== 心理学ベース「問いを投げる」お手本 ===== */
+const QDESIGN=[
+ {nm:"予測ギャップ",icon:"🔮",q:"この後どうなると思う？まず予想してから先へ。",
+  why:"答えを見る前に予測させると、当たっても外れても記憶に残る（生成効果・テスト効果）。",
+  tip:"答えを“折りたたみ/次ページ”に隠し、予測欄を先に置く。",doi:["roediger2006","dunlosky2013"]},
+ {nm:"自己説明プロンプト",icon:"🗣",q:"なぜそうなるの？自分の言葉で説明してみよう。",
+  why:"自分で理由を語らせると、知識の穴が見え、理解が深まる（自己説明）。",
+  tip:"重要ステップの直後に“なぜ？”の記入欄を差し込む。",doi:["dunlosky2013"]},
+ {nm:"反例チャレンジ",icon:"⚡",q:"この原則が“破れる”のはどんな時？例を1つ。",
+  why:"境界条件を探させると、丸暗記でなく転移できる理解になる。",
+  tip:"原則の提示後に“例外を探す”ミニ課題を置く。",doi:["dunlosky2013"]},
+ {nm:"想起チェックポイント",icon:"🎯",q:"ここまでの要点を、見ずに3つ挙げてみよう。",
+  why:"思い出す行為そのものが記憶を強める（テスト効果）。",
+  tip:"節の終わりに“閉じて3つ”の小テストを必ず入れる。",doi:["roediger2006"]},
+];
+/* ===== ペルソナ別カラートーン ===== */
+const PERSONA_TONE=[
+ {nm:"安心の新人研修",icon:"🌱",mood:"安心・低覚醒",
+  cols:[{n:"背景",hex:"#f2f6f4"},{n:"主役",hex:"#6fa3a0"},{n:"差し色",hex:"#e0a96d"},{n:"文字",hex:"#2e3a3a"},{n:"補助",hex:"#7c8b8a"}],
+  why:"高明度・低彩度の青緑で“快・落ち着き”。暖色の差し色を小面積で安心のアクセントに（Valdez & Mehrabian 1994）。"},
+ {nm:"集中のエンジニア資料",icon:"🛠",mood:"無駄なし・可読",
+  cols:[{n:"背景",hex:"#f6f7f8"},{n:"主役",hex:"#3f4a55"},{n:"差し色",hex:"#2f7dd1"},{n:"文字",hex:"#20262c"},{n:"補助",hex:"#6b7480"}],
+  why:"無彩色グレー＋リンク青1色で認知負荷を抑える（簡潔さ：Moshagen 2010）。本文は高コントラストで可読性を確保（WCAG 4.5:1の目安）。"},
+ {nm:"信頼の経営層プレゼン",icon:"🏛",mood:"格・信頼",
+  cols:[{n:"背景",hex:"#f7f5ef"},{n:"主役",hex:"#1f3a5f"},{n:"差し色",hex:"#c79a3a"},{n:"文字",hex:"#1c2530"},{n:"補助",hex:"#6b6f78"}],
+  why:"高明度の背景で“快”、濃紺で落ち着いた信頼感、金を一点の格に（Valdez：明度=快／配色慣習）。"},
+ {nm:"活気のワークショップ",icon:"🎨",mood:"覚醒・楽しさ",
+  cols:[{n:"背景",hex:"#fff7f0"},{n:"主役",hex:"#e0653f"},{n:"差し色",hex:"#2bb3a3"},{n:"文字",hex:"#2a2320"},{n:"補助",hex:"#8a7c72"}],
+  why:"高彩度＝覚醒（Valdez & Mehrabian 1994）。暖色を主役に活気を出し、補色の青緑で締める。"},
+];
+function doiLinks(ids){ return ids.map(id=>{const x=PAPERS.find(z=>z.id===id);return x?`<a href="https://doi.org/${x.doi}" target="_blank" rel="noopener">${x.au.split(" ")[0]} ${x.yr}</a>`:"";}).filter(Boolean).join(" ／ "); }
+function crapDemo(key){
+ const W=300,H=96,R="#5f7d4f",G="#b5462f",bg="#f4f1e6";
+ const frame=(x,mark,inner)=>`<g transform="translate(${x},0)"><rect x="0" y="0" width="130" height="${H}" rx="8" fill="${bg}" stroke="#e0d7c2"/>${inner}<text x="65" y="${H-7}" font-size="10" text-anchor="middle" fill="${mark==='✓'?R:G}">${mark}</text></g>`;
+ let bad="",good="";
+ if(key==="proximity"){
+  const dots=pts=>pts.map(q=>`<circle cx="${q[0]}" cy="${q[1]}" r="5" fill="${R}"/>`).join("");
+  bad=dots([[22,22],[74,30],[42,55],[104,22],[60,60],[96,52]]); good=dots([[28,26],[42,26],[35,42],[88,46],[102,46],[95,62]]);
+ } else if(key==="alignment"){
+  const bars=xs=>xs.map((x,i)=>`<rect x="${x}" y="${20+i*18}" width="72" height="10" rx="2" fill="${R}"/>`).join("");
+  bad=bars([18,44,30]); good=bars([22,22,22]);
+ } else if(key==="contrast"){
+  bad=`<rect x="18" y="24" width="94" height="12" rx="2" fill="#bcb6a6"/><rect x="18" y="44" width="94" height="12" rx="2" fill="#bcb6a6"/><rect x="18" y="64" width="94" height="12" rx="2" fill="#bcb6a6"/>`;
+  good=`<rect x="18" y="22" width="94" height="18" rx="2" fill="#435a36"/><rect x="18" y="48" width="72" height="9" rx="2" fill="#c4cab8"/><rect x="18" y="62" width="82" height="9" rx="2" fill="#c4cab8"/>`;
+ } else if(key==="repetition"){
+  const card=(x,y,c,w,h)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="4" fill="none" stroke="${c}" stroke-width="2"/>`;
+  bad=card(18,22,"#8a9aa6",34,24)+card(60,30,"#c6a08a",34,20)+card(98,20,"#a6b58a",18,34);
+  good=card(20,24,R,32,26)+card(58,24,R,32,26)+card(96,24,R,32,26);
+ }
+ return `<svg viewBox="0 0 ${W} ${H}" width="100%" height="${H}" xmlns="http://www.w3.org/2000/svg">${frame(0,'✗',bad)}<text x="148" y="50" font-size="16" text-anchor="middle" fill="#9b968a">→</text>${frame(170,'✓',good)}</svg>`;
+}
+function attachImage(file){ if(!file)return; const r=new FileReader(); r.onload=()=>{ pendingImage={data:String(r.result).split(",")[1], media:file.type||"image/png", name:file.name||"image"}; showImgChip(); }; r.readAsDataURL(file); }
+function showImgChip(){ const html=pendingImage?`<span class="imgchip">🖼 ${pendingImage.name} <button class="imgClearBtn" title="外す">✕</button></span>`:""; ["#imgChip","#reportImgChip"].forEach(id=>{ const c=$(id); if(c)c.innerHTML=html; }); $$(".imgClearBtn").forEach(b=>b.onclick=()=>{pendingImage=null;showImgChip();}); }
+function animeDirective(){
+ const v=[];
+ if(animeParams.form) v.push("【写真家の造形学】プロポーション・頭身比・顔パーツ配置(目間隔/直径の頭幅比)・対称性。");
+ if(animeParams.color) v.push("【色彩工学】主要色のHEX/RGB/HSV・トーン(明度/彩度)・配色比率・コントラスト(WCAG)。");
+ if(animeParams.anime) v.push("【アニメ制作】線(太さ・色)・セル塗り・影の段階・ハイライト・トレードマーク・NG。");
+ if(!v.length) v.push("【総合】造形・色彩・アニメ制作の要点。");
+ const express=animeParams.express==="num"?"数値化のみ（HEX/RGB/HSV・%・px比の表で）":animeParams.express==="verbal"?"言語化のみ（言葉で特徴を描写）":"数値化＋言語化の両方（まず数値表、続けてやさしい言葉で要約）";
+ const aud=animeParams.audience==="sci"?"理系向け：定義→比率/数式→根拠の順。曖昧語を避け数値で正確に。":animeParams.audience==="hum"?"文系向け：たとえ話と情景描写中心。専門語は最小限で噛み砕く。":"理系・文系の両方：先に数値（理系）、続けてやさしい言い換え（文系）。";
+ const out=animeParams.out==="num"?"数値表のみ":animeParams.out==="prompt"?"100%再現プロンプトのみ":"①数値表→②100%再現プロンプト の両方";
+ const angle=({front:"正面",side:"横",top:"上から(俯瞰)",expr:"表情編"})[animeParams.angle]||"正面";
+ const cname=(CHARACTERS[curChar]||{}).name||"対象キャラ";
+ return `- 対象キャラ：${cname}（このキャラを100%再現する前提）\n- 観点：\n  ${v.join("\n  ")}\n- 表現：${express}\n- 読者：${aud}\n- 出力：${out}（表はMarkdown、プロンプトはコピーしやすい1ブロック）\n- 重点アングル：${angle}\n- 再現率目標：100%（誰が生成しても同一キャラ。HEX固定・比率固定・NG明記）\n- 嘘つかない：色や寸法は“推定値”と明記し断定しない。画像に無い情報は創作しない。`;
+}
+function updateAnimeCfg(){ const el=$("#animeCfg"); if(!el)return;
+ const asp=[animeParams.form&&"造形",animeParams.color&&"色彩",animeParams.anime&&"アニメ"].filter(Boolean).join("+")||"なし";
+ const ex={both:"数値+言語",num:"数値のみ",verbal:"言語のみ"}[animeParams.express];
+ const au={both:"理系+文系",sci:"理系",hum:"文系"}[animeParams.audience];
+ const an={front:"正面",side:"横",top:"上から",expr:"表情編"}[animeParams.angle];
+ el.textContent=`対象=${(CHARACTERS[curChar]||{}).name||""} | 観点=${asp} | 表現=${ex} | 読者=${au} | アングル=${an} | 出力=${animeParams.out} | 再現率=100%`;
+}
+function applyAnimeCfg(cfg){ Object.assign(animeParams,cfg);
+ $$("#animeAspects .chip").forEach(c=>{ const k=c.dataset.k; if(k) c.classList.toggle("on",!!animeParams[k]); });
+ const set=(id,v)=>{ const e=$(id); if(e)e.value=v; };
+ set("#animeExpress",animeParams.express); set("#animeAudience",animeParams.audience); set("#animeAngle",animeParams.angle); set("#animeOut",animeParams.out);
+ updateAnimeCfg();
+}
+function renderAnimePresets(){ const box=$("#apList"); if(!box)return; box.innerHTML="";
+ animePresets.forEach((pr,i)=>{ const el=document.createElement("div"); el.className="preset";
+  el.innerHTML=`<span class="pn">🎬 ${pr.name}</span><span style="display:flex;gap:6px"><button class="copybtn" data-r="${i}">↩︎ 戻す</button><button class="copybtn" data-x="${i}">✕</button></span>`;
+  box.appendChild(el); });
+ $$("#apList .copybtn[data-r]").forEach(b=>b.onclick=()=>applyAnimeCfg(animePresets[+b.dataset.r].cfg));
+ $$("#apList .copybtn[data-x]").forEach(b=>b.onclick=()=>{ animePresets.splice(+b.dataset.x,1); renderAnimePresets(); });
+}
+function saveAnimePreset(){ const n=($("#apName").value||"").trim()||("設定"+(animePresets.length+1)); animePresets.push({name:n,cfg:{...animeParams}}); $("#apName").value=""; renderAnimePresets(); }
+function renderAnimeNumbers(key){ const box=$("#animeNumbers"); if(!box)return; const ch=CHARACTERS[key]; if(!ch){box.innerHTML="";return;}
+ let h='<h3 style="font-size:.8rem;color:var(--moss-deep);margin:.6em 0 .3em">■ 配色（実測 HEX / RGB / HSV）</h3><div style="overflow:auto"><table class="numtab"><tr><th>パーツ</th><th>実測HEX</th><th>RGB</th><th>HSV</th><th>設計書値</th><th>一致</th></tr>';
+ ch.colors.forEach(c=>{ h+=`<tr><td><span class="sw" style="background:${c.hex}"></span>${c.p}</td><td>${c.hex}</td><td>${c.rgb}</td><td>${c.hsv}</td><td>${c.spec}</td><td>${c.m}</td></tr>`; });
+ h+='</table></div><h3 style="font-size:.8rem;color:var(--moss-deep);margin:.9em 0 .3em">■ 造形（実測 / 設計書）</h3><div style="overflow:auto"><table class="numtab"><tr><th>項目</th><th>値</th><th>出所・注記</th></tr>';
+ ch.form.forEach(f=>{ h+=`<tr><td>${f.k}</td><td>${f.v}</td><td>${f.s}</td></tr>`; });
+ h+='</table></div>'; box.innerHTML=h;
+}
+function renderAnimeParams(){
+ const cs=$("#charSel"); if(cs){ cs.innerHTML=Object.keys(CHARACTERS).map(k=>`<option value="${k}">${CHARACTERS[k].name}</option>`).join(""); cs.value=curChar; cs.onchange=()=>{ curChar=cs.value; const nN=$("#charNameN"),nP=$("#charNameP"); if(nN)nN.textContent=CHARACTERS[curChar].name; if(nP)nP.textContent=CHARACTERS[curChar].name; renderAnimeNumbers(curChar); renderPrompts(curChar); updateAnimeCfg(); }; }
+ const box=$("#animeAspects"); if(box){ box.innerHTML=""; [["form","🖊 写真家の造形学"],["color","🎨 色彩工学"],["anime","🎬 アニメ制作"]].forEach(a=>{ const c=document.createElement("div"); c.className="chip"+(animeParams[a[0]]?" on":""); c.dataset.k=a[0]; c.textContent=a[1]; c.onclick=()=>{ animeParams[a[0]]=!animeParams[a[0]]; c.classList.toggle("on"); updateAnimeCfg(); }; box.appendChild(c); }); }
+ const bind=(id,key)=>{ const e=$(id); if(e){ e.value=animeParams[key]; e.onchange=()=>{ animeParams[key]=e.value; updateAnimeCfg(); }; } };
+ bind("#animeExpress","express"); bind("#animeAudience","audience"); bind("#animeAngle","angle"); bind("#animeOut","out");
+ const sv=$("#apSave"); if(sv)sv.onclick=saveAnimePreset;
+ const rs=$("#apReset"); if(rs)rs.onclick=()=>applyAnimeCfg({...ANIME_DEFAULT});
+ const run=$("#animeRun"); if(run) run.onclick=()=>{ if(!pendingImage){ goTab("chat"); alert("先に相談タブの 📎 から見本画像を添付してね。"); return; } mode="anime"; $$("#modes .mode").forEach(x=>x.classList.toggle("on",x.dataset.m==="anime")); updateCfg(); goTab("chat"); ask(`この画像を、選択した観点で精密に分析して。対象キャラ「${CHARACTERS[curChar].name}」の100%再現が目的。設定の表現/読者/アングルに従い、造形は%・px比、色はHEX/RGB/HSVで。`); };
+ const nN=$("#charNameN"),nP=$("#charNameP"); if(nN)nN.textContent=CHARACTERS[curChar].name; if(nP)nP.textContent=CHARACTERS[curChar].name;
+ renderAnimeNumbers(curChar); renderPrompts(curChar); renderAnimePresets(); updateAnimeCfg();
+}
+const EXPR12=`表情編（12種・差し色つき／目は黒丸+白点のみ・カラー/造形は固定）
+1 通常 neutral：丸い黒目、小さなモーヴ鼻、小さな口。
+2 にっこり：目はぱっちり、口は小さく閉じ笑み。
+3 笑顔 happy：閉じた弧の目(^^)、開いた口に赤い舌 #D64E59。
+4 大笑い：きゅっと閉じた目(><)、大きく開けた笑い口。
+5 泣き crying：涙目、青い涙 #99B7D2 が流れる、わーんと開いた口、頬染め #FDCBCF。
+6 怒り angry：V字の怒り眉/目、赤いプンプンマーク #D64E59、への字に開いた口。
+7 焦り anxious：困り目、青い汗 #99B7D2 を数滴、波打つ口。
+8 困り troubled：八の字眉、小さな不安げな口、薄い頬染め。
+9 きょとん blank：素の丸目、無表情、鼻先を小さく。
+10 じと目：半目のジト目、汗1滴、真一文字の口。
+11 安堵 relieved：とろんと閉じた目、ほっとした柔らか笑み。
+12 ウインク&ピース：片目ウインク、にっこり開口、ピースの手＋黄色いキラ #FAE078。`;
+const TOPVIEW=`[上から] top-down / high-angle view looking down: the round fluffy head and two ears dominate the frame, the body is foreshortened and small below. Same HEX & flat 2D. （俯瞰：頭と耳が大きく、体は下に小さく。色・造形は固定）`;
+const CHARACTERS={
+ announcer:{ name:"しろうさぎアナウンサー",
+  colors:[
+   {p:"体毛・主",hex:"#FEEDEA",rgb:"254,237,234",hsv:"10°,8,100",spec:"#FDF5EE",m:"ほぼ一致"},
+   {p:"輪郭/目(暗部)",hex:"#363330",rgb:"54,51,43",hsv:"44°,22,21",spec:"#2D2A24",m:"近い(やや明)"},
+   {p:"頬ピンク",hex:"#FBD2D8",rgb:"251,210,216",hsv:"351°,17,99",spec:"#FFC7CF",m:"近い"},
+   {p:"耳内(実測淡)",hex:"#FCE2E4",rgb:"252,226,228",hsv:"356°,10,99",spec:"#EDA8A8",m:"設計はより濃い"},
+   {p:"鼻",hex:"#D4939A*",rgb:"212,147,154",hsv:"355°,31,83",spec:"#D4939A",m:"*小面積:設計値"},
+   {p:"スーツ(navy)",hex:"#394A70",rgb:"57,74,112",hsv:"221°,49,44",spec:"#334469",m:"ほぼ一致"},
+   {p:"スーツ影",hex:"#203252",rgb:"32,50,82",hsv:"218°,60,32",spec:"#243051",m:"ほぼ一致"},
+   {p:"蝶ネクタイ(赤)",hex:"#C14945",rgb:"193,73,69",hsv:"2°,64,76",spec:"#AF3533",m:"実測やや明るい"},
+   {p:"ボタン(金)",hex:"#E8AD44*",rgb:"232,173,68",hsv:"42°,71,91",spec:"#E8AD44",m:"*小面積:設計値"},
+   {p:"にんじん",hex:"#F18439",rgb:"241,132,57",hsv:"24°,76,94",spec:"#F78430",m:"ほぼ一致"},
+   {p:"にんじん葉",hex:"#63A25A",rgb:"99,162,90",hsv:"112°,44,63",spec:"#5A9E45",m:"ほぼ一致"},
+   {p:"机(木)",hex:"#A67350",rgb:"166,115,80",hsv:"24°,52,65",spec:"#AA7452",m:"ほぼ一致"},
+   {p:"マイク",hex:"#49494B",rgb:"73,73,75",hsv:"224°,3,29",spec:"#3A3A3C",m:"近い"},
+   {p:"スタジオ背景(可視)",hex:"#7D91B0",rgb:"125,145,176",hsv:"217°,29,69",spec:"#334469(基)",m:"LEDで明るい"},
+  ],
+  form:[
+   {k:"頭身（大頭）",v:"頭部 ≈ 全体の55%",s:"設計書値・視覚的に整合"},
+   {k:"頭部 横:縦",v:"≈ 1.05:1（ほぼ正円）",s:"設計書値"},
+   {k:"目の間隔 ÷ 頭幅",v:"≈ 30%",s:"実測：間隔75px ÷ 逆算頭幅≈250px"},
+   {k:"目の直径 ÷ 頭幅",v:"≈ 12%",s:"実測：直径≈31px（→設計書と一致）"},
+   {k:"目の高さ",v:"顔のほぼ中央・左右対称",s:"実測（左右目 y一致）"},
+   {k:"頬の幅 ÷ 頭幅",v:"≈ 14%",s:"設計書値"},
+  ],
+  prompts:[
+   {t:"基本プロンプト（English・汎用）",lg:"EN",body:`A cute flat 2D anime-style fluffy white rabbit news announcer "Shiro Usagi Announcer", front view, sitting behind a wooden NEWS desk.
+Body: round alpaca-like bumpy fur, warm off-white #FEEDEA, soft light-taupe outline; large round dark eyes #363330 each with one white highlight dot; rosy pink cheeks #FBD2D8; small mauve nose #D4939A; tall rounded ears with pale pink inner #FCE2E4.
+Outfit: navy suit jacket #394A70 (shadow #203252), deep red bow tie #C14945, two gold buttons #E8AD44, white shirt collar #F8F4EF.
+Props: a "NEWS" nameplate on the desk front; an orange carrot #F18439 with green leaves #63A25A on the desk; a vintage charcoal microphone #49494B on a stand at the left.
+Proportion: big-head kawaii ratio (head ~55%), head almost circular (w:h ~1.05:1), eyes spaced ~30% of head width, eye diameter ~12% of head width, symmetric.
+Style: strictly flat 2D cel anime, clean uniform outlines, simple 1-step shading (NO gradients), kawaii. NO 3D, NO realistic textures, NO photoreal.`},
+   {t:"基本プロンプト（日本語・推奨）",lg:"JP",body:`フラット2Dアニメの可愛い白ウサギのニュースアナウンサー「しろうさぎアナウンサー」を正面で。木製のNEWSデスクに座る。
+体：アルパカ風の雲形もこもこ毛、ウォームオフホワイト #FEEDEA、淡いトープの均一アウトライン／大きな丸い暗色の目 #363330（右上に白ハイライト点1つ）／丸いピンクの頬 #FBD2D8／小さなモーヴの鼻 #D4939A／高く丸い耳・内側は淡ピンク #FCE2E4。
+衣装：ネイビースーツ #394A70（影 #203252）／ディープレッドの蝶ネクタイ #C14945／金ボタン2個 #E8AD44／白シャツ衿 #F8F4EF。
+小道具：机前面に"NEWS"プレート／机上にオレンジのにんじん #F18439（葉 #63A25A）／左にヴィンテージのチャコールマイク #49494B。
+造形：大頭（頭部≒55%）、ほぼ正円（横:縦≒1.05:1）、目の間隔≒頭幅の30%、目の直径≒頭幅の12%、左右対称。
+スタイル：完全フラット2Dセルアニメ、均一アウトライン、影は1段階のみ（グラデ禁止）。3D・リアル・写真調は禁止。`},
+   {t:"ポーズ：正面/横/後ろ/手を上げる",lg:"JP+EN",body:`[正面] front view, both paws on the desk.（正面・両手を机に）
+[横] side view (90° profile, facing left), microphone in front, carrot visible.（左向き側面）
+[後ろ] back view, navy jacket back and round fluffy head/ears from behind.（後頭部・スーツの背中）
+[手を上げる] raising one paw up with 3 small red motion lines, other paw on desk, front-facing.（片手を斜め上＋赤い効果線3本）
+※ 同一HEX・同一比率・フラット2Dを厳守。`},
+   {t:"ポーズ追加：上から（俯瞰）",lg:"JP+EN",body:TOPVIEW},
+   {t:"背景：白 / ニューススタジオ",lg:"JP+EN",body:`[白背景] white background, reference-sheet style.（白一色）
+[スタジオ] TV news studio interior, base navy #334469 with blue LED glow (visible ~#7D91B0), curved screens with NEWS graphics, flat 2D (NO 3D). Tone: navy+gold+white.`},
+   {t:EXPR12.split("\n")[0],lg:"表情×12",body:EXPR12},
+   {t:"ギャラリーシート（一覧）",lg:"JP+EN",body:`Character reference sheet for "Shiro Usagi Announcer". White background.
+Top row [横 Side][正面 Front][後ろ Back], bottom center [手を上げる Hand Raise]. Label each in Japanese.
+Navy suit #394A70, red bow tie #C14945, NEWS desk, carrot #F18439, mic #49494B. Consistent proportions & HEX. Flat 2D anime, kawaii.`},
+   {t:"NG と対処（必須遵守）",lg:"NG",body:`✗ 体が青白い → "warm off-white #FEEDEA, not pure white"
+✗ スーツが黒 → "navy #394A70, NOT black"
+✗ 蝶ネクタイが明るすぎ/暗すぎ → "deep red #C14945 (朱より暗め)"
+✗ 3D/リアル → "strictly flat 2D cel anime, NO 3D"
+✗ リアルな目 → "simple round black dot eyes #363330 + white highlight"
+✗ にんじんが消える → "IMPORTANT: always include orange carrot #F18439"
+✗ 背景が真っ白(スタジオ時) → "navy studio #334469 with blue LED glow"`},
+   {t:"一貫性チェックリスト（生成後）",lg:"CHK",body:`□ 体毛=オフホワイト #FEEDEA（純白/灰でない）
+□ 輪郭=淡トープ均一・目鼻のみ濃色 #363330
+□ スーツ=ネイビー #394A70 / 蝶ネクタイ=赤 #C14945
+□ 金ボタン2個 / 白シャツ衿
+□ 机のNEWSプレート / にんじん #F18439 / マイク #49494B
+□ 完全フラット2D（3D影なし・グラデなし）
+□ 大頭（頭部>50%）/ 目間隔≒30% / 目直径≒12%
+□ 両頬ピンク #FBD2D8 / 耳内ピンク`},
+  ]},
+ merhen:{ name:"しろうさぎ（メルヘン版・スーツなし）",
+  colors:[
+   {p:"体毛・主",hex:"#FCF2EC",rgb:"252,242,236",hsv:"23°,6,99",spec:"—",m:"アナウンサーと同系"},
+   {p:"輪郭(淡トープ)",hex:"#E4CCC8",rgb:"228,204,200",hsv:"8°,12,89",spec:"—",m:"淡い縁取り"},
+   {p:"目(暗部)",hex:"#2F2A23",rgb:"47,42,35",hsv:"37°,26,18",spec:"#2D2A24",m:"近い"},
+   {p:"頬ピンク",hex:"#FCC8D3",rgb:"252,200,211",hsv:"347°,21,99",spec:"#FFC7CF",m:"近い"},
+   {p:"耳内ピンク",hex:"#FCE2E4",rgb:"252,226,228",hsv:"356°,10,99",spec:"—",m:"淡ピンク"},
+   {p:"鼻",hex:"#D4939A*",rgb:"212,147,154",hsv:"355°,31,83",spec:"#D4939A",m:"*小面積:設計値"},
+   {p:"にんじん",hex:"#F38338",rgb:"243,131,56",hsv:"24°,77,95",spec:"—",m:"トレードマーク"},
+   {p:"にんじん葉",hex:"#60A756",rgb:"96,167,86",hsv:"113°,49,65",spec:"—",m:"鮮やか緑"},
+   {p:"お腹/しっぽ毛",hex:"#FFFFFF",rgb:"255,255,255",hsv:"0°,0,100",spec:"—",m:"ふわ毛ハイライト"},
+  ],
+  form:[
+   {k:"頭身（大頭）",v:"頭部 ≈ 全体の55%",s:"アナウンサーと共通"},
+   {k:"頭部 横:縦",v:"≈ 1.05:1（ほぼ正円）",s:"共通造形"},
+   {k:"目の間隔 ÷ 頭幅",v:"≈ 30%",s:"共通造形（実測）"},
+   {k:"目の直径 ÷ 頭幅",v:"≈ 12%",s:"共通造形（実測）"},
+   {k:"体型",v:"座り・ふっくら楕円・白いお腹毛",s:"メルヘン版の特徴"},
+   {k:"しっぽ",v:"丸いふわ毛（後ろで顕著）",s:"メルヘン版の特徴"},
+  ],
+  prompts:[
+   {t:"基本プロンプト（日本語・推奨）",lg:"JP",body:`フラット2Dアニメの可愛いふわふわ白ウサギ「しろうさぎ（メルヘン版）」を正面で。スーツや机はなし。座ってにんじんを持つ。
+体：アルパカ風の雲形もこもこ毛、オフホワイト #FCF2EC、淡いトープの均一アウトライン #E4CCC8／大きな丸い暗色の目 #2F2A23（白点1つ）／丸いピンクの頬 #FCC8D3／小さなモーヴ鼻 #D4939A／高く丸い耳・内側は淡ピンク #FCE2E4／白いお腹毛のふわ塊。
+小道具：オレンジのにんじん #F38338（葉 #60A756）を片手に。
+造形：大頭（頭部≒55%）、ほぼ正円、目の間隔≒頭幅の30%、目の直径≒12%、左右対称、ふっくら座り。
+スタイル：完全フラット2Dセルアニメ、均一アウトライン、影は1段階、白背景。3D・リアル・写真調は禁止。`},
+   {t:"基本プロンプト（English）",lg:"EN",body:`A cute flat 2D anime fluffy white rabbit "Shiro Usagi (storybook ver.)", front view, NO suit, NO desk, sitting and holding a carrot.
+Body: alpaca-like bumpy fur, off-white #FCF2EC, soft light-taupe outline #E4CCC8; large round dark eyes #2F2A23 with a white dot; pink cheeks #FCC8D3; small mauve nose #D4939A; tall ears with pale pink inner #FCE2E4; a white fluffy belly tuft.
+Prop: an orange carrot #F38338 with green leaves #60A756 held in one paw.
+Proportion: big-head ~55%, near-circular head (1.05:1), eyes ~30% spacing, eye diameter ~12% of head width, symmetric, chubby sitting body.
+Style: strictly flat 2D cel anime, uniform outlines, 1-step shading, white background. NO 3D, NO realistic texture.`},
+   {t:"ポーズ：正面/横/後ろ/手を上げる",lg:"JP+EN",body:`[正面] front, holding carrot, white belly tuft visible.（正面・にんじんを持つ・白いお腹）
+[横] side (left profile), holding carrot, round fluffy tail behind.（左向き側面・丸いしっぽ）
+[後ろ] back view: all-white fluffy back, two ears, a round fluffy tail at the bottom.（後ろ・丸いふわしっぽ）
+[手を上げる] raising one paw up with 3 small pink motion lines, other holds carrot, front-facing.（片手を上げる＋ピンク効果線3本）
+※ 同一HEX・同一比率・フラット2D厳守。`},
+   {t:"ポーズ追加：上から（俯瞰）",lg:"JP+EN",body:TOPVIEW},
+   {t:EXPR12.split("\n")[0],lg:"表情×12",body:EXPR12},
+   {t:"ギャラリーシート（一覧）",lg:"JP+EN",body:`Reference sheet for "Shiro Usagi (storybook ver.)". White background.
+Top row [横 Side][正面 Front][後ろ Back], bottom center [手を上げる Hand Raise]. Label in Japanese.
+All-white fluffy rabbit holding a carrot #F38338, white belly tuft, round fluffy tail. Consistent HEX & proportions. Flat 2D anime, kawaii, no suit/desk.`},
+   {t:"NG と対処",lg:"NG",body:`✗ 体が青白い → "warm off-white #FCF2EC, not pure white"
+✗ スーツや机が出る → "NO suit, NO desk, storybook fluffy rabbit only"
+✗ 3D/リアル → "strictly flat 2D cel anime, NO 3D"
+✗ にんじんが消える → "IMPORTANT: always include orange carrot #F38338"
+✗ しっぽが無い(後ろ) → "round fluffy white tail at the back"`},
+   {t:"一貫性チェックリスト",lg:"CHK",body:`□ 体毛=オフホワイト #FCF2EC / 輪郭=淡トープ #E4CCC8
+□ 目=黒丸+白点 #2F2A23 / 頬=ピンク #FCC8D3
+□ にんじん #F38338（葉 #60A756）あり
+□ 白いお腹毛 / 後ろは丸いふわしっぽ
+□ スーツ・机・マイクは無し
+□ 完全フラット2D / 大頭 / 目間隔≒30% / 目直径≒12%`},
+  ]},
+};
+function renderPrompts(key){ const box=$("#promptbox"); if(!box)return; const ch=CHARACTERS[key]; if(!ch){box.innerHTML="";return;} box.innerHTML="";
+ ch.prompts.forEach((pr,i)=>{ const el=document.createElement("div"); el.className="promptcard";
+  el.innerHTML=`<div class="ph"><b>${pr.t}</b><span style="display:flex;gap:8px;align-items:center"><span class="lg">${pr.lg}</span><button class="copybtn" data-i="${i}">📋 コピー</button></span></div><pre>${pr.body.replace(/&/g,"&amp;").replace(/</g,"&lt;")}</pre>`;
+  box.appendChild(el); });
+ $$("#promptbox .copybtn").forEach(b=>b.onclick=()=>{ const t=CHARACTERS[curChar].prompts[+b.dataset.i].body; if(navigator.clipboard)navigator.clipboard.writeText(t); const o=b.textContent; b.textContent="✓ コピー済"; setTimeout(()=>b.textContent=o,1200); });
+}
+const REPORT_DEFAULT={type:"framework",audience:"both",length:"std",cite:"strict"};
+const reportParams={...REPORT_DEFAULT};
+let reportPresets=[
+ {name:"Qiita実践記事",cfg:{type:"framework",audience:"both",length:"std",cite:"strict"}},
+ {name:"定量分析レポート",cfg:{type:"analysis",audience:"sci",length:"deep",cite:"strict"}},
+ {name:"やさしい要約",cfg:{type:"summary",audience:"hum",length:"brief",cite:"strict"}},
+];
+function reportDirective(){
+ const T={
+  framework:`実践フレームワーク記事（Qiita/Zenn風）。構成：# タイトル → ## はじめに（対象読者を箇条書き）→ ## 基本構造（要素を表で）→ ## 実践例（パターンA/B・コードや具体例ブロック）→ ## 再利用テンプレート集（[ ]で穴埋め）→ ## コツ（番号付き）→ ## まとめ。`,
+  analysis:`定量分析レポート。構成：# タイトル → ## 要旨 → ## 1. はじめに（対象/手法）→ ## 2. 抽出データ（表でHEX/数値）→ ## 3. 分析（色彩/造形などのクラスタ考察）→ ## 4. 考察 → ## 5. 総合考察（レイヤー整理）→ ## 6. 結論 → ## 参考理論（※入力にあるものだけ。無ければ「理論引用なし」と明記）。`,
+  compare:`比較検討レポート。構成：# タイトル → ## 概要 → ## 比較軸（表）→ ## 各案の詳細 → ## トレードオフ → ## 推奨 → ## まとめ。`,
+  summary:`要約レポート。構成：# タイトル → ## 要点（3行）→ ## 背景 → ## 主要ポイント（箇条書き）→ ## 詳細 → ## まとめ。`,
+  howto:`手順書（How-to）。構成：# タイトル → ## 目的 → ## 前提 → ## 手順（番号付き）→ ## つまずきと対処（表）→ ## チェックリスト → ## まとめ。`,
+  press:`プレスリリース。構成：# 見出し（端的に）→ （日付・発信元）→ ## リード（要点を1段落で5W1H）→ ## 本文（背景→発表内容）→ ## 特徴・ポイント（箇条書き）→ ## コメント（> "関係者の引用"）→ ## 会社概要 → ## お問い合わせ → 以上。報道発表の定型・客観的なトーン。`,
+  lt:`LT（ライトニングトーク）登壇スライド構成。1枚1メッセージで「## Slide N: 見出し」を5〜10枚。各スライドは箇条書き2〜4点＋（> 想定セリフ）。最初に自己紹介＆つかみ、最後に「まとめ」と「告知（リンク/連絡先）」。5分で話せる分量。`,
+  blog:`ブログ記事（カジュアル）。構成：# タイトル → 導入（共感・問題提起）→ ## 見出し複数（体験談・具体例つき）→ ## まとめ → CTA（次の一歩）。一人称・親しみやすい文体。`,
+  sns:`SNS投稿（X/スレッド形式）。「1/n 〜 n/n」で1ポスト140〜280字。1ポスト1メッセージ、先頭に結論、絵文字は控えめ、最後のポストにハッシュタグ2〜4個。スレッド全体で起承転結。`,
+  minutes:`議事録要約。構成：# タイトル（会議名・日付）→ ## 決定事項（箇条書き）→ ## ToDo（表：タスク/担当/期限）→ ## 論点と結論 → ## 次回 → ## 議事メモ（時系列の要約）。資料(発言録)に無い決定・担当・期限を創作しない。不明は「未定/要確認」と明記。`,
+  faq:`FAQ生成。入力資料からよくある質問を抽出し「### Q. 〜 / A. 〜」を5〜12組。回答は2〜4文で簡潔、資料の根拠に基づく。資料に無い事実は作らず、最後に「※不明点は要確認」を付す。`,
+  email:`ビジネスメール下書き。構成：件名 → 宛名 → 挨拶 → 用件（結論先出し）→ 詳細（箇条書き可）→ 依頼/次アクション → 結び → 署名（[会社名][氏名]は穴埋め）。敬体・簡潔・失礼のないトーン。`,
+  manual:`業務マニュアル。構成：# タイトル → ## 目的・対象読者 → ## 用語 → ## 全体フロー → ## 手順（番号付き・各ステップに「注意」「補足」）→ ## トラブルシューティング（表：症状/原因/対処）→ ## チェックリスト → ## 改訂履歴。資料に無い手順・数値を創作しない。`,
+  lp:`LP（ランディングページ）構成。構成：# キャッチコピー → ## ファーストビュー（主訴求＋CTA）→ ## 課題提起（共感）→ ## 解決策・特徴（ベネフィットを箇条書き）→ ## 社会的証明（事例/お客様の声）→ ## 料金・プラン → ## FAQ → ## 最終CTA。各セクションに狙いを一言。誇大・虚偽の効果は書かない。`,
+  proposal:`提案書。構成：# 表紙（件名）→ ## 背景・課題 → ## 提案概要 → ## 詳細（スコープ/体制/スケジュール表）→ ## 期待効果 → ## 費用（[要見積]で可）→ ## 前提・留意事項 → ## 次のステップ。客観的・説得的に。資料に無い数値・実績を創作しない。`
+ }[reportParams.type]||"";
+ const aud=reportParams.audience==="sci"?"理系向け：定義→根拠→数値の順、用語は正確に、曖昧語を避ける。":reportParams.audience==="hum"?"文系向け：たとえ話と平易な言葉中心、専門語は噛み砕く。":"理系・文系の両方に配慮（数値の後にやさしい言い換えを添える）。";
+ const len={brief:"簡潔（要点中心・短め）",std:"標準",deep:"詳細（各セクション厚め）"}[reportParams.length];
+ const cite=reportParams.cite==="strict"?"出典は検証可能なものだけ。DOI・理論名・数値を創作しない。入力資料に無い出典は書かない。不明なら「出典なし/要確認」と明記。":"一般に知られた事実は補ってよいが、固有の数値・出典の捏造は禁止。";
+ return `# 応答モード：レポート生成モード
+- 出力タイプ：${T}
+- 読者：${aud}
+- 長さ：${len}
+- 出典/事実：${cite}
+- 体裁：Qiita/Zenn風のMarkdown（見出し・表・コードブロック・箇条書き）。読みやすく整える。
+- 嘘つかない原則：入力資料（貼り付けテキスト/添付画像）に無い事実・数値・固有名詞は創作しない。推定は「推定」と明記。資料が不足する箇所は「資料に情報なし」と書く。
+- 末尾に区切り線と「🐰 うさうさ研修工房」を付す。`;
+}
+function updateReportCfg(){ const el=$("#reportCfg"); if(!el)return;
+ const ty={framework:"実践記事",analysis:"定量分析",compare:"比較検討",summary:"要約",howto:"手順書",press:"プレスリリース",lt:"LTスライド",blog:"ブログ",sns:"SNSスレッド",minutes:"議事録要約",faq:"FAQ",email:"メール",manual:"業務マニュアル",lp:"LP構成",proposal:"提案書"}[reportParams.type];
+ const au={both:"理系+文系",sci:"理系",hum:"文系"}[reportParams.audience];
+ const ln={brief:"簡潔",std:"標準",deep:"詳細"}[reportParams.length];
+ const ci={strict:"厳しめ",normal:"通常"}[reportParams.cite];
+ el.textContent=`種別=${ty} | 読者=${au} | 長さ=${ln} | 出典=${ci}`;
+}
+function applyReportCfg(cfg){ Object.assign(reportParams,cfg);
+ const set=(id,v)=>{ const e=$(id); if(e)e.value=v; };
+ set("#rpType",reportParams.type); set("#rpAudience",reportParams.audience); set("#rpLength",reportParams.length); set("#rpCite",reportParams.cite);
+ updateReportCfg();
+}
+function renderReportPresets(){ const box=$("#rpList"); if(!box)return; box.innerHTML="";
+ reportPresets.forEach((pr,i)=>{ const el=document.createElement("div"); el.className="preset";
+  el.innerHTML=`<span class="pn">📄 ${pr.name}</span><span style="display:flex;gap:6px"><button class="copybtn" data-r="${i}">↩︎ 戻す</button><button class="copybtn" data-x="${i}">✕</button></span>`;
+  box.appendChild(el); });
+ $$("#rpList .copybtn[data-r]").forEach(b=>b.onclick=()=>applyReportCfg(reportPresets[+b.dataset.r].cfg));
+ $$("#rpList .copybtn[data-x]").forEach(b=>b.onclick=()=>{ reportPresets.splice(+b.dataset.x,1); renderReportPresets(); });
+}
+function saveReportPreset(){ const n=($("#rpName").value||"").trim()||("設定"+(reportPresets.length+1)); reportPresets.push({name:n,cfg:{...reportParams}}); $("#rpName").value=""; renderReportPresets(); }
+function reportRun(){ const txt=($("#reportInput").value||"").trim(); if(!txt&&!pendingImage){ alert("資料テキストを貼り付けるか、📎で画像を添付してね。"); return; } mode="report"; $$("#modes .mode").forEach(x=>x.classList.toggle("on",x.dataset.m==="report")); updateCfg(); goTab("chat"); ask(txt?("以下の資料からレポートを作成して：\n\n"+txt):"添付資料からレポートを作成して。"); }
+function renderReport(){
+ const bind=(id,key)=>{ const e=$(id); if(e){ e.value=reportParams[key]; e.onchange=()=>{ reportParams[key]=e.value; updateReportCfg(); }; } };
+ bind("#rpType","type"); bind("#rpAudience","audience"); bind("#rpLength","length"); bind("#rpCite","cite");
+ const sv=$("#rpSave"); if(sv)sv.onclick=saveReportPreset;
+ const rs=$("#rpReset"); if(rs)rs.onclick=()=>applyReportCfg({...REPORT_DEFAULT});
+ const run=$("#reportRun"); if(run)run.onclick=reportRun;
+ const ib=$("#reportImgBtn"); if(ib)ib.onclick=()=>{ const f=$("#imgFile"); if(f)f.click(); };
+ renderReportPresets(); updateReportCfg();
+}
+function hexToRgb(h){ const m=/^#?([0-9a-f]{6})$/i.exec(String(h).trim()); if(!m)return "—"; const n=parseInt(m[1],16); return ((n>>16)&255)+","+((n>>8)&255)+","+(n&255); }
+function hexToHsv(h){ const m=/^#?([0-9a-f]{6})$/i.exec(String(h).trim()); if(!m)return "—"; const n=parseInt(m[1],16); let r=((n>>16)&255)/255,g=((n>>8)&255)/255,b=(n&255)/255; const mx=Math.max(r,g,b),mn=Math.min(r,g,b),d=mx-mn; let hh=0; if(d){ if(mx===r)hh=((g-b)/d)%6; else if(mx===g)hh=(b-r)/d+2; else hh=(r-g)/d+4; hh*=60; if(hh<0)hh+=360; } const sv=mx?d/mx:0; return Math.round(hh)+"\u00b0,"+Math.round(sv*100)+","+Math.round(mx*100); }
+let ccRows=[{p:"体毛・主",hex:"#FCF2EC"},{p:"輪郭/目",hex:"#2F2A23"},{p:"頬ピンク",hex:"#FCC8D3"},{p:"アクセント",hex:"#F38338"}];
+function renderCCColors(){ const box=$("#ccColors"); if(!box)return; box.innerHTML="";
+ ccRows.forEach((r,i)=>{ const el=document.createElement("div"); el.className="setrow"; el.style.marginBottom="4px";
+  const safe=/^#[0-9A-Fa-f]{6}$/.test(r.hex)?r.hex:"#cccccc";
+  el.innerHTML=`<input class="ccp" data-i="${i}" value="${r.p.replace(/"/g,'&quot;')}" placeholder="パーツ名" style="flex:1">`+
+   `<input type="color" class="cch" data-i="${i}" value="${safe}" style="width:38px;padding:0;border:1px solid var(--line);border-radius:6px">`+
+   `<input class="cct" data-i="${i}" value="${r.hex}" style="width:90px">`+
+   `<button class="copybtn ccdel" data-i="${i}">✕</button>`;
+  box.appendChild(el); });
+ $$("#ccColors .ccp").forEach(e=>e.oninput=()=>{ ccRows[+e.dataset.i].p=e.value; });
+ $$("#ccColors .cch").forEach(e=>e.oninput=()=>{ const i=+e.dataset.i; ccRows[i].hex=e.value; const t=box.querySelectorAll(".cct")[i]; if(t)t.value=e.value; });
+ $$("#ccColors .cct").forEach(e=>e.oninput=()=>{ const i=+e.dataset.i; ccRows[i].hex=e.value; const c=box.querySelectorAll(".cch")[i]; if(c&&/^#[0-9A-Fa-f]{6}$/.test(e.value))c.value=e.value; });
+ $$("#ccColors .ccdel").forEach(b=>b.onclick=()=>{ ccRows.splice(+b.dataset.i,1); renderCCColors(); });
+}
+function ccSave(){ const name=($("#ccName").value||"").trim(); if(!name){ alert("キャラ名を入れてね。"); return; }
+ const key="cc_"+Date.now();
+ const colors=ccRows.filter(r=>(r.p||"").trim()).map(r=>({p:r.p,hex:r.hex,rgb:hexToRgb(r.hex),hsv:hexToHsv(r.hex),spec:"\u2014",m:"利用者入力"}));
+ if(!colors.length){ alert("配色を1つ以上入れてね。"); return; }
+ const formLines=($("#ccForm").value||"").split("\n").map(x=>x.trim()).filter(Boolean);
+ const form=formLines.length?formLines.map(l=>{ const idx=l.search(/[=：:]/); return idx>0?{k:l.slice(0,idx).trim(),v:l.slice(idx+1).trim(),s:"利用者入力"}:{k:"メモ",v:l,s:"利用者入力"}; }):[{k:"メモ",v:"（未入力）",s:"利用者入力"}];
+ const bg=($("#ccBg").value||"").trim(); const props=($("#ccProps").value||"").trim();
+ const extra=(bg?("背景："+bg):"")+(bg&&props?"／":"")+(props?("小道具："+props):"");
+ const baseP=(($("#ccPrompt").value||"").trim()||(name+"のフラット2Dアニメ・カワイイ系。色は上の配色HEXに従う。完全フラット2D・均一アウトライン・影1段階。3D/リアル/写真調は禁止。"))+(extra?("\n"+extra):"");
+ if(bg)form.push({k:"背景",v:bg,s:"利用者入力"}); if(props)form.push({k:"小道具",v:props,s:"利用者入力"});
+ const chk="\u25a1 "+colors.map(c=>c.p+" "+c.hex).join("\n\u25a1 ")+"\n\u25a1 完全フラット2D / 大頭 / 目間隔\u224830% / 目直径\u224812%"+(bg?("\n\u25a1 背景="+bg):"")+(props?("\n\u25a1 小道具="+props):"");
+ const promptsArr=[
+  {t:"基本プロンプト（利用者）",lg:"JP",body:baseP},
+  {t:"ポーズ追加：上から（俯瞰）",lg:"JP+EN",body:TOPVIEW},
+  {t:EXPR12.split("\n")[0],lg:"表情\u00d712",body:EXPR12},
+  {t:"一貫性チェックリスト",lg:"CHK",body:chk},
+ ];
+ if(bg||props)promptsArr.splice(1,0,{t:"背景・小道具",lg:"JP",body:(bg?("背景："+bg+"\n"):"")+(props?("小道具："+props):"")});
+ CHARACTERS[key]={name,colors,form,prompts:promptsArr};
+ curChar=key; renderAnimeParams();
+ $("#ccName").value=""; $("#ccForm").value=""; $("#ccPrompt").value=""; if($("#ccBg"))$("#ccBg").value=""; if($("#ccProps"))$("#ccProps").value="";
+ alert("「"+name+"」を辞書に追加しました。上の「キャラ辞書」で選べます。");
+}
+function ccExport(){ const custom={}; Object.keys(CHARACTERS).filter(k=>k.indexOf("cc_")===0).forEach(k=>custom[k]=CHARACTERS[k]);
+ if(!Object.keys(custom).length){ alert("保存した利用者キャラがまだありません。"); return; }
+ const j=JSON.stringify(custom); $("#ccIO").value=j; if(navigator.clipboard)navigator.clipboard.writeText(j); }
+function ccImport(){ try{ const obj=JSON.parse($("#ccIO").value); let n=0; Object.keys(obj).forEach(k=>{ const c=obj[k]; if(c&&c.name&&c.colors&&c.prompts){ CHARACTERS[k.indexOf("cc_")===0?k:("cc_"+Date.now()+"_"+(n++))]=c; } }); renderAnimeParams(); alert("インポートしました。"); }catch(e){ alert("JSONを確認してね。"); } }
+function renderCustomChar(){ renderCCColors();
+ const a=$("#ccAddColor"); if(a)a.onclick=()=>{ ccRows.push({p:"",hex:"#cccccc"}); renderCCColors(); };
+ const sv=$("#ccSave"); if(sv)sv.onclick=ccSave;
+ const ex=$("#ccExport"); if(ex)ex.onclick=ccExport;
+ const im=$("#ccImport"); if(im)im.onclick=ccImport;
+}
+function escH(t){ return String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;"); }
+const AXES={
+ temp:{label:"温度",kind:"temp",opts:[["0.2","0.2(決定的)"],["0.5","0.5(中間)"],["0.9","0.9(多様)"]]},
+ level:{label:"専門度",kind:"level",opts:[["new","新人"],["mid","中級"],["eng","エンジニア"]]},
+ persona:{label:"ペルソナ",kind:"persona",opts:[["sensei","庭師先生"],["review","査読者"],["newbie","新人代弁者"]]},
+ mode:{label:"モード",kind:"mode",opts:[["consult","じっくり相談"],["reference","参照先"],["socratic","考えさせる問"]]},
+};
+function renderTempCard(label,sub,text,pick){
+ const save=pick?`<button class="copybtn pickbtn" data-kind="${pick.kind}" data-val="${escH(pick.value).replace(/"/g,"&quot;")}" data-label="${escH(pick.plabel).replace(/"/g,"&quot;")}">👍 これを保存</button>`:"";
+ return `<div class="promptcard"><div class="ph"><b>${label}</b><span style="display:flex;gap:8px;align-items:center">${sub?`<span class="lg">${sub}</span>`:""}${save}</span></div><pre style="white-space:pre-wrap">${escH(text)}</pre></div>`;
+}
+function wirePickButtons(){ $$("#tempDemoOut .pickbtn").forEach(b=>b.onclick=()=>pickAndSave(b.dataset.kind,b.dataset.val,b.dataset.label)); }
+function applyPick(kind,value){
+ if(kind==="temp"){ params.temp=parseFloat(value); const e=$("#pTemp"); if(e)e.value=params.temp; }
+ else if(kind==="level"){ params.level=value; const e=$("#pLevel"); if(e)e.value=value; }
+ else if(kind==="persona"){ persona=value; $$(".persona").forEach(x=>x.classList.toggle("on",x.dataset.k===value)); ctxBadge(); }
+ else if(kind==="mode"){ mode=value; $$("#modes .mode").forEach(x=>x.classList.toggle("on",x.dataset.m===value)); }
+ else if(kind==="combo"){ try{ const st=JSON.parse(value);
+   if(st.temp!=null){ params.temp=parseFloat(st.temp); const e=$("#pTemp"); if(e)e.value=params.temp; }
+   if(st.level){ params.level=st.level; const e=$("#pLevel"); if(e)e.value=st.level; }
+   if(st.persona){ persona=st.persona; $$(".persona").forEach(x=>x.classList.toggle("on",x.dataset.k===st.persona)); ctxBadge(); }
+   if(st.mode){ mode=st.mode; $$("#modes .mode").forEach(x=>x.classList.toggle("on",x.dataset.m===st.mode)); }
+  }catch(e){} }
+ updateCfg();
+}
+function pickAndSave(kind,value,label){
+ applyPick(kind,value);
+ const out=$("#tempDemoOut"); if(!out)return;
+ const prev=out.querySelector(".namedlg"); if(prev)prev.remove();
+ const dlg=document.createElement("div"); dlg.className="namedlg hint"; dlg.style.cssText="margin-top:8px;padding:8px;border:1px dashed var(--moss);border-radius:10px;color:var(--moss-deep)";
+ dlg.innerHTML='✅ 「'+escH(label)+'」を現在の設定に反映しました。プリセット名を付けて保存：<div style="display:flex;gap:6px;margin-top:6px;flex-wrap:wrap"><input id="pickName" value="'+escH(label+"（くらべで採用）")+'" style="flex:1;min-width:170px;border:1px solid var(--line);border-radius:8px;padding:6px;font-size:.84rem"><button class="btn" id="pickSaveBtn">💾 保存</button><button class="copybtn" id="pickCancelBtn">キャンセル</button></div>';
+ out.appendChild(dlg);
+ const sb=$("#pickSaveBtn"); if(sb)sb.onclick=()=>{ const nm=($("#pickName").value||"").trim()||(label+"（くらべで採用）"); const ex=presets.find(p=>p.name===nm); if(ex){ ex.cfg=currentCfg(); } else { presets.push({name:nm,good:false,cfg:currentCfg()}); } presets.forEach(p=>p.good=(p.name===nm)); renderPresets(); dlg.innerHTML='✅ 「'+escH(nm)+'」を⭐付きでプリセット保存しました（左の一覧／⭐で復帰可）。'; };
+ const cb=$("#pickCancelBtn"); if(cb)cb.onclick=()=>dlg.remove();
+}
+let lastCompare=null;
+function settingsSummary(){
+ const md={consult:"じっくり相談",reference:"参照先",socratic:"考えさせる問",anime:"アニメ分析",report:"レポート"}[mode]||mode;
+ const lv={"new":"新人",mid:"中級",eng:"エンジニア"}[params.level]||params.level;
+ const pl=(typeof PERSONAS!=="undefined"&&PERSONAS[persona])?PERSONAS[persona].label:persona;
+ const ex={few:"少なめ",std:"普通",many:"多め"}[params.examples]||params.examples;
+ const ci=params.cite==="strict"?"必須":"任意";
+ return "モード="+md+"／温度="+params.temp.toFixed(2)+"／専門度="+lv+"／ペルソナ="+pl+"／たとえ="+ex+"／出典="+ci;
+}
+function finishCompare(title,q,items,learnHTML,cols){
+ lastCompare={title,q,settings:settingsSummary(),items:items.map(it=>({label:it.label,text:it.text}))};
+ const out=$("#tempDemoOut"); if(!out)return;
+ const cards=items.map(it=>renderTempCard(it.label,it.sub,it.text,it.pick)).join("");
+ const wrap=cols?('<div style="display:grid;grid-template-columns:repeat('+cols+',1fr);gap:8px">'+cards+'</div>'):cards;
+ out.innerHTML='<div class="hint" style="margin-bottom:6px">同じ質問：「'+escH(q)+'」'+(title?(' ／ '+escH(title)):'')+'<br>設定：'+escH(lastCompare.settings)+'</div>'
+  +wrap
+  +(learnHTML?('<div class="hint" style="margin-top:6px">'+learnHTML+'</div>'):'')
+  +'<div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap"><button class="copybtn" id="expMd">⬇️ Markdown書き出し</button><button class="copybtn" id="expHtml">⬇️ HTML書き出し</button></div>'
+  +'<textarea id="exportArea" placeholder="書き出し結果がここに出ます（自動でクリップボードにもコピー）" style="width:100%;box-sizing:border-box;min-height:84px;margin-top:6px;border:1px solid var(--line);border-radius:8px;padding:8px;font-family:ui-monospace,monospace;font-size:.72rem;display:none"></textarea>';
+ wirePickButtons();
+ const md=$("#expMd"); if(md)md.onclick=()=>exportCompare("md");
+ const hb=$("#expHtml"); if(hb)hb.onclick=()=>exportCompare("html");
+}
+function exportCompare(fmt){
+ if(!lastCompare){ return; } const ta=$("#exportArea"); if(!ta)return;
+ let txt;
+ if(fmt==="md"){
+  txt="# くらべ結果"+(lastCompare.title?("："+lastCompare.title):"")+"\n\n質問：" + lastCompare.q + "\n\n設定：" + (lastCompare.settings||"") + "\n\n"
+   + lastCompare.items.map(it=>"## "+it.label+"\n\n"+it.text+"\n").join("\n")
+   + "\n---\n🐰 うさうさ研修工房";
+ } else {
+  txt="<h1>くらべ結果"+(lastCompare.title?("："+escH(lastCompare.title)):"")+"</h1>\n<p>質問："+escH(lastCompare.q)+"</p>\n<p>設定："+escH(lastCompare.settings||"")+"</p>\n"
+   + lastCompare.items.map(it=>"<h2>"+escH(it.label)+"</h2>\n<pre>"+escH(it.text)+"</pre>").join("\n")
+   + "\n<hr>\n<p>🐰 うさうさ研修工房</p>";
+ }
+ ta.style.display="block"; ta.value=txt; try{ta.select();}catch(e){} if(navigator.clipboard)navigator.clipboard.writeText(txt);
+}
+async function comboCall(q,settings){
+ const oldL=params.level, oldP=persona;
+ if(settings.level) params.level=settings.level;
+ if(settings.persona) persona=settings.persona;
+ const useMode=settings.mode||mode;
+ const sys=buildSystem(useMode);
+ params.level=oldL; persona=oldP;
+ const temp=settings.temp!=null?parseFloat(settings.temp):params.temp;
+ return callClaude(sys,[{role:"user",content:q}],{temp,maxtok:Math.min(params.maxtok,600)});
+}
+function demoQ(){ return ($("#tempDemoQ").value||"").trim()||"資料デザインで『余白（間）』が大事な理由を説明して"; }
+async function tempDemoRun(){
+ const q=demoQ(); const out=$("#tempDemoOut"); if(!out)return; const btn=$("#tempDemoRun"); if(btn)btn.disabled=true;
+ out.innerHTML='<div class="hint">🐰 温度くらべ中…（温度0.2と0.9で1回ずつ）</div>';
+ try{ const sys=buildSystem(mode); const msgs=[{role:"user",content:q}];
+  const [lo,hi]=await Promise.all([ callClaude(sys,msgs,{temp:0.2,maxtok:Math.min(params.maxtok,900)}), callClaude(sys,msgs,{temp:0.9,maxtok:Math.min(params.maxtok,900)}) ]);
+  finishCompare("温度くらべ（モード/ペルソナ/専門度は同じ）",q,[
+   {label:"🧊 温度 0.2",sub:"決定的・再現性↑",text:lo,pick:{kind:"temp",value:"0.2",plabel:"温度0.2（決定的）"}},
+   {label:"🔥 温度 0.9",sub:"多様・発想的",text:hi,pick:{kind:"temp",value:"0.9",plabel:"温度0.9（多様）"}},
+  ],"🎓 学び：低温は安定して似た答え、高温は切り口が広がります。<b>👍これを保存</b>で採用。",false);
+ }catch(e){ out.innerHTML='<div class="hint">⚠️ エラー: '+String(e.message||e)+'</div>'; } finally{ if(btn)btn.disabled=false; }
+}
+async function lvlDemoRun(){
+ const q=demoQ(); const out=$("#tempDemoOut"); if(!out)return; const btn=$("#lvlDemoRun"); if(btn)btn.disabled=true;
+ out.innerHTML='<div class="hint">🐰 専門度くらべ中…（新人向け／エンジニア向け）</div>';
+ try{ const old=params.level; const msgs=[{role:"user",content:q}];
+  params.level="new"; const sN=buildSystem(mode); params.level="eng"; const sE=buildSystem(mode); params.level=old;
+  const [a,bb]=await Promise.all([ callClaude(sN,msgs,{maxtok:Math.min(params.maxtok,900)}), callClaude(sE,msgs,{maxtok:Math.min(params.maxtok,900)}) ]);
+  finishCompare("専門度くらべ（温度/モード/ペルソナは同じ）",q,[
+   {label:"🌱 新人向け",sub:"専門語をかみ砕く",text:a,pick:{kind:"level",value:"new",plabel:"専門度：新人向け"}},
+   {label:"🛠 エンジニア向け",sub:"擬似コード・運用含意",text:bb,pick:{kind:"level",value:"eng",plabel:"専門度：エンジニア向け"}},
+  ],"🎓 学び：専門度で語彙・粒度・含意が変わります。<b>👍これを保存</b>で採用。",false);
+ }catch(e){ out.innerHTML='<div class="hint">⚠️ エラー: '+String(e.message||e)+'</div>'; } finally{ if(btn)btn.disabled=false; }
+}
+async function personaDemoRun(){
+ const q=demoQ(); const out=$("#tempDemoOut"); if(!out)return; const btn=$("#personaDemoRun"); if(btn)btn.disabled=true;
+ out.innerHTML='<div class="hint">🐰 ペルソナくらべ中…（査読者／新人代弁者）</div>';
+ try{ const oldP=persona; const msgs=[{role:"user",content:q}];
+  persona="review"; const sR=buildSystem(mode); persona="newbie"; const sNb=buildSystem(mode); persona=oldP;
+  const [r,n]=await Promise.all([ callClaude(sR,msgs,{maxtok:Math.min(params.maxtok,900)}), callClaude(sNb,msgs,{maxtok:Math.min(params.maxtok,900)}) ]);
+  finishCompare("ペルソナくらべ（温度/モード/専門度は同じ）",q,[
+   {label:"🔍 査読者モード",sub:"厳密・根拠要求",text:r,pick:{kind:"persona",value:"review",plabel:"ペルソナ：査読者"}},
+   {label:"🌱 新人代弁者",sub:"噛み砕き要求",text:n,pick:{kind:"persona",value:"newbie",plabel:"ペルソナ：新人代弁者"}},
+  ],"🎓 学び：語り手で着眼点と口調が変わります。<b>👍これを保存</b>で採用。",false);
+ }catch(e){ out.innerHTML='<div class="hint">⚠️ エラー: '+String(e.message||e)+'</div>'; } finally{ if(btn)btn.disabled=false; }
+}
+async function modeDemoRun(){
+ const q=demoQ(); const out=$("#tempDemoOut"); if(!out)return; const btn=$("#modeDemoRun"); if(btn)btn.disabled=true;
+ out.innerHTML='<div class="hint">🐰 モードくらべ中…（じっくり相談／参照先）</div>';
+ try{ const msgs=[{role:"user",content:q}]; const sC=buildSystem("consult"); const sR=buildSystem("reference");
+  const [c,r]=await Promise.all([ callClaude(sC,msgs,{maxtok:Math.min(params.maxtok,900)}), callClaude(sR,msgs,{maxtok:Math.min(params.maxtok,900)}) ]);
+  finishCompare("モードくらべ（温度/ペルソナ/専門度は同じ）",q,[
+   {label:"🪴 じっくり相談",sub:"四段構成",text:c,pick:{kind:"mode",value:"consult",plabel:"モード：じっくり相談"}},
+   {label:"📚 参照先",sub:"即答＋DOI出典",text:r,pick:{kind:"mode",value:"reference",plabel:"モード：参照先"}},
+  ],"🎓 学び：モードは答えの“骨格”を変えます。<b>👍これを保存</b>で採用。",false);
+ }catch(e){ out.innerHTML='<div class="hint">⚠️ エラー: '+String(e.message||e)+'</div>'; } finally{ if(btn)btn.disabled=false; }
+}
+async function persona3DemoRun(){
+ const q=demoQ(); const out=$("#tempDemoOut"); if(!out)return; const btn=$("#persona3DemoRun"); if(btn)btn.disabled=true;
+ out.innerHTML='<div class="hint">🐰 3者くらべ中…（庭師先生／査読者／新人代弁者）</div>';
+ try{ const oldP=persona; const msgs=[{role:"user",content:q}]; const mt=Math.min(params.maxtok,700);
+  persona="sensei"; const s1=buildSystem(mode); persona="review"; const s2=buildSystem(mode); persona="newbie"; const s3=buildSystem(mode); persona=oldP;
+  const [a,bb,c]=await Promise.all([ callClaude(s1,msgs,{maxtok:mt}), callClaude(s2,msgs,{maxtok:mt}), callClaude(s3,msgs,{maxtok:mt}) ]);
+  finishCompare("3者くらべ（温度/モード/専門度は同じ）",q,[
+   {label:"🐰 庭師先生",sub:"やさしいたとえ",text:a,pick:{kind:"persona",value:"sensei",plabel:"ペルソナ：庭師先生"}},
+   {label:"🔍 査読者",sub:"厳密・根拠要求",text:bb,pick:{kind:"persona",value:"review",plabel:"ペルソナ：査読者"}},
+   {label:"🌱 新人代弁者",sub:"噛み砕き要求",text:c,pick:{kind:"persona",value:"newbie",plabel:"ペルソナ：新人代弁者"}},
+  ],"🎓 学び：3者で着眼点・口調が変わります。<b>👍これを保存</b>で好きな1者を採用。",false);
+ }catch(e){ out.innerHTML='<div class="hint">⚠️ エラー: '+String(e.message||e)+'</div>'; } finally{ if(btn)btn.disabled=false; }
+}
+async function matrixRun(){
+ const A=$("#mxAxisA").value, B=$("#mxAxisB").value;
+ if(A===B){ alert("2つの軸は別々に選んでね（例：温度×専門度）。"); return; }
+ const nA=parseInt((($("#mxNA")||{}).value)||"2"), nB=parseInt((($("#mxNB")||{}).value)||"2");
+ const optsA=AXES[A].opts.slice(0,nA), optsB=AXES[B].opts.slice(0,nB);
+ const q=demoQ(); const out=$("#tempDemoOut"); if(!out)return; const btn=$("#matrixRun"); if(btn)btn.disabled=true;
+ const total=optsA.length*optsB.length;
+ out.innerHTML='<div class="hint">🐰 2軸マトリクス中…（'+AXES[A].label+'('+optsA.length+')×'+AXES[B].label+'('+optsB.length+')＝'+total+'通りを投げています）</div>';
+ try{
+  const combos=[]; optsB.forEach(bv=>optsA.forEach(av=>combos.push({av,bv})));
+  const settingsOf=cb=>{ const st={}; st[AXES[A].kind]=cb.av[0]; st[AXES[B].kind]=cb.bv[0]; return st; };
+  const results=await Promise.all(combos.map(cb=>comboCall(q,settingsOf(cb))));
+  const items=combos.map((cb,i)=>{ const st=settingsOf(cb); const label=AXES[A].label+"="+cb.av[1]+" × "+AXES[B].label+"="+cb.bv[1]; return {label,sub:"",text:results[i],pick:{kind:"combo",value:JSON.stringify(st),plabel:label}}; });
+  finishCompare("2軸マトリクス（"+AXES[A].label+"×"+AXES[B].label+" / "+optsA.length+"×"+optsB.length+"）",q,items,"🎓 学び：2軸を同時に動かすと“相互作用”が見えます。<b>👍これを保存</b>で好みの組合せを採用。",optsA.length);
+ }catch(e){ out.innerHTML='<div class="hint">⚠️ エラー: '+String(e.message||e)+'</div>'; } finally{ if(btn)btn.disabled=false; }
+}
+function renderTempDemo(){ const w=(id,fn)=>{ const e=$(id); if(e)e.onclick=fn; };
+ w("#tempDemoRun",tempDemoRun); w("#lvlDemoRun",lvlDemoRun); w("#personaDemoRun",personaDemoRun); w("#modeDemoRun",modeDemoRun); w("#persona3DemoRun",persona3DemoRun); w("#matrixRun",matrixRun); }
+function renderCRAP(){
+ const box=$("#crap"); if(!box)return; box.innerHTML="";
+ CRAP.forEach((p,i)=>{
+  const el=document.createElement("div"); el.className="gcard";
+  el.innerHTML=`<div class="ghead"><span class="jp">${i+1}. ${p.nm}</span><span class="kana">${p.en}</span></div>
+   <div class="gbody">
+     <div class="gbox"><span class="glab def">定義</span><p>${p.def}</p></div>
+     <div class="gbox"><span class="glab ex">たとえ</span><p>${p.ex}</p></div>
+     <div class="gbox"><span class="glab gd">なぜ効く</span><p>${p.why}</p></div>
+     <div class="gbox"><span class="glab br">お手本デモ</span><div class="demo">${crapDemo(p.demo)}</div></div>
+   </div>
+   <div class="bridge">🔗 <strong>根拠：</strong>${p.ground}　<span style="font-size:.72rem;color:var(--sub)">響く論文: ${doiLinks(p.doi)}</span>
+     <button class="gpill" data-q="基本デザイン4原則の「${p.nm}（${p.en}）」を、悪い例→良い例の対比で四段構成で教えて。可能なら庭の知恵か構図ともつなげて。">相談する</button></div>`;
+  box.appendChild(el);
+ });
+ $$("#crap .gpill").forEach(b=>b.onclick=()=>{ goTab("chat"); $("#input").value=b.dataset.q; $("#input").focus(); });
+}
+function renderQDesign(){
+ const box=$("#qdesign"); if(!box)return; box.innerHTML="";
+ QDESIGN.forEach(q=>{
+  const el=document.createElement("div"); el.className="gcard";
+  el.innerHTML=`<div class="ghead"><span class="jp">${q.icon} ${q.nm}</span></div>
+   <div class="gbody">
+     <div class="gbox"><span class="glab ex">問いの例</span><p>${q.q}</p></div>
+     <div class="gbox"><span class="glab gd">なぜ効く（心理学）</span><p>${q.why}</p></div>
+     <div class="gbox"><span class="glab def">配置のコツ</span><p>${q.tip}</p></div>
+     <div class="gbox"><span class="glab br">根拠</span><p>${doiLinks(q.doi)}</p></div>
+   </div>
+   <div class="bridge"><button class="gpill" data-q="「${q.nm}」の考え方で、いまの研修テーマに使える“読み手に考えさせる問いを投げるデザイン”の具体例を3つ、配置のコツと心理学の根拠つきで提案して。">この型で作ってもらう</button></div>`;
+  box.appendChild(el);
+ });
+ $$("#qdesign .gpill").forEach(b=>b.onclick=()=>{ goTab("chat"); $("#input").value=b.dataset.q; $("#input").focus(); });
+}
+function relLum(hex){ const c=hex.replace("#",""); const r=parseInt(c.slice(0,2),16)/255,g=parseInt(c.slice(2,4),16)/255,b=parseInt(c.slice(4,6),16)/255; const f=v=>v<=0.03928?v/12.92:Math.pow((v+0.055)/1.055,2.4); return 0.2126*f(r)+0.7152*f(g)+0.0722*f(b); }
+function contrastRatio(h1,h2){ const a=relLum(h1),b=relLum(h2),hi=Math.max(a,b),lo=Math.min(a,b); return (hi+0.05)/(lo+0.05); }
+function wcagBadge(r,large){ const th=large?3:4.5,pass=r>=th; return `<span class="wcag ${pass?"ok":"ng"}">${pass?"✓":"✗"} ${r.toFixed(1)}:1 ${large?"(大/UI 3:1)":"(本文 4.5:1)"} ${pass?"AA合格":"AA未満"}</span>`; }
+function wcagLine(t){ const bg=t.cols[0].hex,primary=t.cols[1].hex,accent=t.cols[2].hex,text=t.cols[3].hex;
+ return `<span class="wlab">WCAG自動判定</span>文字/背景 ${wcagBadge(contrastRatio(text,bg),false)}　主役/背景 ${wcagBadge(contrastRatio(primary,bg),true)}　差し色/背景 ${wcagBadge(contrastRatio(accent,bg),true)}`; }
+function renderPersonaTone(){
+ const box=$("#ptone"); if(!box)return; box.innerHTML="";
+ PERSONA_TONE.forEach(t=>{
+  const sw=t.cols.map(c=>`<span style="background:${c.hex}" data-n="${c.n}" data-hex="${c.hex}" title="${c.n} ${c.hex}"></span>`).join("");
+  const el=document.createElement("div"); el.className="gcard";
+  el.innerHTML=`<div class="ghead"><span class="jp">${t.icon} ${t.nm}</span><span class="kana">${t.mood}</span></div>
+   <div style="padding:12px 16px"><div class="palette tone">${sw}</div>
+     <div class="wcagrow">${wcagLine(t)}</div>
+     <div class="hint" style="margin-top:6px">🔗 <strong>根拠：</strong>${t.why}　<span style="color:var(--sub)">※差し色は小面積アクセント用。本文には主役/文字の組を使う。</span></div>
+     <button class="gpill" data-q="ペルソナ「${t.nm}（${t.mood}）」向けの配色トーンを、明度=快・彩度=覚醒（Valdez & Mehrabian 1994）と用途・アクセント比率を添えて提案して。">このペルソナで提案</button></div>`;
+  box.appendChild(el);
+ });
+ $$("#ptone .palette.tone span").forEach(sp=>sp.onclick=()=>{ if(navigator.clipboard)navigator.clipboard.writeText(sp.dataset.hex); });
+ $$("#ptone .gpill").forEach(b=>b.onclick=()=>{ goTab("chat"); $("#input").value=b.dataset.q; $("#input").focus(); });
+ const cb=$("#customPersonaBtn"); if(cb) cb.onclick=()=>{ const v=($("#customPersona").value||"").trim()||"医療系の落ち着いた管理画面"; goTab("chat"); $("#input").value=`ペルソナ「${v}」向けのデザイン色トーンを、明度=快・彩度=覚醒（Valdez & Mehrabian 1994）と視覚的美の色側面（Moshagen 2010）を根拠に、5色（背景/主役/差し色/文字/補助）＋アクセント比率＋用途つきで提案して。`; $("#input").focus(); };
+}
+
+const $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
+let persona="sensei", tts=true, history=[], curFW="thirds", showSubj=true;
+let mode="consult", ttsRate=1.0, pendingImage=null;
+let curChar="announcer";
+const ANIME_DEFAULT={form:true,color:true,anime:true,out:"both",express:"both",audience:"both",angle:"front"};
+const animeParams={...ANIME_DEFAULT};
+let animePresets=[
+ {name:"理系・厳密（数値中心）",cfg:{form:true,color:true,anime:true,out:"both",express:"num",audience:"sci",angle:"front"}},
+ {name:"文系・やさしく（言葉中心）",cfg:{form:true,color:false,anime:true,out:"both",express:"verbal",audience:"hum",angle:"front"}},
+ {name:"色だけ精密",cfg:{form:false,color:true,anime:false,out:"num",express:"num",audience:"both",angle:"front"}},
+];
+let presets=[
+ {name:"設計書レビュー・厳格", good:true, cfg:{mode:"reference",temp:0.2,maxtok:1600,verbosity:"std",level:"eng",examples:"few",cite:"strict",rate:1.0}},
+ {name:"設計書レビュー・教育的", good:false, cfg:{mode:"socratic",temp:0.5,maxtok:1600,verbosity:"std",level:"mid",examples:"std",cite:"strict",rate:1.0}},
+ {name:"設計書レビュー・解説", good:false, cfg:{mode:"consult",temp:0.4,maxtok:2200,verbosity:"long",level:"eng",examples:"std",cite:"strict",rate:1.0}}
+];
+function currentCfg(){ return {mode, persona, temp:params.temp, maxtok:params.maxtok, verbosity:params.verbosity, level:params.level, examples:params.examples, cite:params.cite, rate:ttsRate}; }
+function applyCfg(c){
+ if(c.mode){ mode=c.mode; $$("#modes .mode").forEach(x=>x.classList.toggle("on", x.dataset.m===mode)); }
+ if(c.persona){ persona=c.persona; $$(".persona").forEach(x=>x.classList.toggle("on",x.dataset.k===persona)); ctxBadge(); }
+ if(c.temp!=null){ params.temp=c.temp; const e=$("#pTemp"); if(e)e.value=c.temp; }
+ if(c.maxtok!=null && $("#pMax")){ params.maxtok=c.maxtok; $("#pMax").value=c.maxtok; }
+ if(c.verbosity){ params.verbosity=c.verbosity; const e=$("#pVerb"); if(e)e.value=c.verbosity; }
+ if(c.level){ params.level=c.level; const e=$("#pLevel"); if(e)e.value=c.level; }
+ if(c.examples){ params.examples=c.examples; const e=$("#pEx"); if(e)e.value=c.examples; }
+ if(c.cite){ params.cite=c.cite; const e=$("#pCite"); if(e)e.value=c.cite; }
+ if(c.rate!=null){ ttsRate=c.rate; const e=$("#pRate"); if(e)e.value=c.rate; }
+ updateCfg();
+}
+function renderPresets(){
+ const box=$("#presetList"); if(!box)return; box.innerHTML="";
+ presets.forEach((p,i)=>{
+  const d=document.createElement("div"); d.className="preset"+(p.good?" good":"");
+  d.innerHTML=`<span class="pn">${p.good?"⭐ ":""}${p.name}</span> <button class="star" title="この設定を“よかった”目印にする">⭐</button> <button class="del" title="削除">✕</button>`;
+  d.querySelector(".pn").onclick=()=>applyCfg(p.cfg);
+  d.querySelector(".star").onclick=ev=>{ ev.stopPropagation(); presets.forEach(q=>q.good=false); p.good=true; renderPresets(); };
+  d.querySelector(".del").onclick=ev=>{ ev.stopPropagation(); presets.splice(i,1); renderPresets(); };
+  box.appendChild(d);
+ });
+}
+function savePreset(){
+ const n=$("#presetName").value.trim(); if(!n){ alert("設定名を入力してね（例：設計書レビュー・厳格）"); return; }
+ const ex=presets.find(p=>p.name===n);
+ if(ex){ ex.cfg=currentCfg(); } else { presets.push({name:n,good:false,cfg:currentCfg()}); }
+ $("#presetName").value=""; renderPresets();
+}
+function loadGood(){ const g=presets.find(p=>p.good); if(!g){ alert("⭐を付けた設定がありません。気に入った設定の⭐を押して目印にしてね。"); return; } applyCfg(g.cfg); }
+function exportPresets(){ const j=JSON.stringify(presets,null,2); if(navigator.clipboard)navigator.clipboard.writeText(j); const t=$("#presetJSON"); if(t)t.value=j; }
+function importPresets(){ try{ const a=JSON.parse($("#presetJSON").value); if(!Array.isArray(a))throw new Error("配列ではありません"); presets=a.map(p=>({name:String(p.name||"無題"),good:!!p.good,cfg:p.cfg||{}})); renderPresets(); alert("プリセットを読み込みました（"+presets.length+"件）"); }catch(e){ alert("JSONの読み込みに失敗: "+(e.message||e)); } }
+const params={temp:0.7, maxtok:1600, verbosity:"std", level:"mid", examples:"std", cite:"strict"};
+function modeDirective(m){
+ if(m==="reference") return `# 応答モード：参照先モード（即答・出典重視）
+- 前置き・たとえを省き、すぐ結論。要点は箇条書き3点以内。
+- 各要点の末尾に必ず「参照先: 著者(年) doi:番号」を付ける（検証済みライブラリのDOIのみ）。
+- 該当する査読論文が無ければ「手元の検証済み論文には該当なし」と明記。構図/庭園の話なら“慣習/定石”と断る。`;
+ if(m==="socratic") return `# 応答モード：考えさせる問モード（答えを与えない）
+- 直接の答えは出さず、学習者に“考えさせる問い”を投げる。
+- 型：①予測 ②自己説明 ③反例・境界条件 ④転移(現場接続) ⑤想起 から3〜5問。各問に【ねらい】を一行。
+- 根拠：テスト効果(Roediger & Karpicke 2006)・Dunlosky 2013。最後に「ヒントが欲しければ言ってね」と添える。`;
+ if(m==="anime") return `# 応答モード：アニメ精密分析モード\n${animeDirective()}`;
+ if(m==="report") return reportDirective();
+ return `# 応答モード：じっくり相談モード（四段構成）
+- WHY→WHAT→HOWで、本文は【定義】【たとえ】【詳細】【一言まとめ】の四段。
+- 可能なら「庭の知恵⇄構図⇄デザイン論」を1本の線でつなぐ。`;
+}
+function paramDirective(){
+ const v={short:"短め（1〜3文で簡潔に。冗長禁止）",std:"標準",long:"詳しめ（具体例を増やす。ただし冗長は避ける）"}[params.verbosity];
+ const lv={"new":"新人（専門語は必ずかみ砕く）",mid:"中級",eng:"エンジニア（専門語OK。実装・運用の含意、擬似コードや設定例も歓迎）"}[params.level];
+ const ex={few:"少なめ",std:"普通",many:"多め（たとえ話を厚めに）"}[params.examples];
+ const ci=params.cite==="strict"?"各主張に可能な限りDOIを添える。無ければ『該当論文なし』と明記":"出典は要点のみで可（ただし捏造は禁止）";
+ return `# チューニング（エンジニア設定）
+- 詳しさ：${v}
+- 専門度：${lv}
+- たとえの量：${ex}
+- 出典の厳しさ：${ci}`;
+}
+function effectText(){
+ const t=params.temp;
+ const tone=t<=0.3?"ブレが少なく再現性が高い（設計書レビュー・出典重視向き）":t>=0.7?"発想が広がり多様（アイデア出し向き・ブレも増える）":"バランス型";
+ const len=params.maxtok<800?"短め（途中で切れることあり）":params.maxtok>2200?"長文も可（待ち時間・消費↑）":"標準的な長さ";
+ const lv={"new":"新人向け（専門語をかみ砕く）",mid:"中級者向け",eng:"エンジニア向け（擬似コード・運用含意あり）"}[params.level];
+ const md={consult:"四段構成でじっくり",reference:"即答＋DOI出典",socratic:"答えず問いを投げる",anime:"画像を造形/色彩/アニメで数値分析",report:"資料をレポート化"}[mode]||mode;
+ const ci=params.cite==="strict"?"主張にDOIを厳しく要求":"出典は要点のみ";
+ return `🔎 いまの設定だと → モード=${md}／温度${t.toFixed(2)}=${tone}／最大${params.maxtok}=${len}／${lv}／${ci}。`;
+}
+function updateCfg(){
+ if($("#pTempV")) $("#pTempV").textContent=params.temp.toFixed(2);
+ if($("#pMaxV")) $("#pMaxV").textContent=String(params.maxtok);
+ if($("#pRateV")) $("#pRateV").textContent=ttsRate.toFixed(2)+"x";
+ const el=$("#cfgLine"); if(el) el.textContent=`mode=${mode} | temp=${params.temp.toFixed(2)} | max=${params.maxtok} | 詳しさ=${params.verbosity} | 専門度=${params.level} | たとえ=${params.examples} | 出典=${params.cite} | 話速=${ttsRate.toFixed(2)}x`;
+ const ep=$("#effectPreview"); if(ep) ep.textContent=effectText();
+}
+
+const PERSONAS={
+ sensei:{label:"🐰 庭師先生",sys:"あなたは『うさうさ庭師先生🐰』。やさしく、たとえ話（🍜うさうさラーメン店や、茶室・枯山水など庭のたとえ）でかみ砕く。励ましながら教える。"},
+ review:{label:"🔍 査読者モード",sys:"あなたは『査読者』。厳密で建設的。主張には根拠（提供論文DOI）を要求し、過度な一般化やエビデンスの飛躍を指摘。庭園/構図の原則を論文の主張と混同しないよう厳しく区別する。"},
+ field:{label:"🛠 現場リーダー",sys:"あなたは『現場リーダー』。理論や庭の知恵を、資料・UI・撮影・研修で“明日から使える具体策”に翻訳する。"},
+ newbie:{label:"🌱 新人代弁者",sys:"あなたは『新人の代弁者』。『それ知識ゼロの新人に本当に伝わる？』の視点で、難所を率直に質問し噛み砕きを引き出す。"}
+};
+
+function buildSystem(mode){
+ const lib=PAPERS.map(p=>`- [${p.id}] ${p.au} (${p.yr}). ${p.t}. ${p.j}. doi:${p.doi} ｜要点:${p.plain}`).join("\n");
+ const fw=FRAMEWORKS.map(f=>`- ${f.nm}(${f.en}): ${f.desc}`).join("\n");
+ const gd=GARDEN.map(g=>`- ${g.jp}(${g.kana}): ${g.def} ｜対応する構図=${(FRAMEWORKS.find(f=>f.key===g.fw)||{}).nm}`).join("\n");
+ const crap=CRAP.map(p=>`- ${p.nm}(${p.en}): ${p.def}`).join("\n");
+ return `あなたは「うさうさ庭園デザインラボ」の解説AIです。日本語で、3つの知をつなげて教えます：①最新の査読デザイン論 ②写真の構図の型 ③日本庭園の設計思想。
+
+# いまの役回り
+${PERSONAS[persona].sys}
+
+${modeDirective(mode)}
+
+${paramDirective()}
+
+# 嘘つかない原則（最重要）
+- 査読デザイン論の出典は下の「検証済みライブラリ」のDOIだけを引用。ライブラリ外のDOI・論文名・数値を絶対に捏造しない。無ければ「手元の検証済み論文には無い」と正直に言う。
+- 日本庭園の設計思想や写真の構図は“文化的・実務的な慣習/定石（例外あり）”であり、査読論文の主張ではない。両者をつなぐ時は「論文が庭園を実証した」とは言わず、「概念が響き合うアナロジー」として明確に区別する。
+- 実在の作庭家・写真家の発言や経歴を確証なく断定で作り話ししない。
+
+# 検証済みライブラリ（査読・15本）
+${lib}
+
+# 写真の構図（定石・例外あり）
+${fw}
+
+# 日本庭園の設計思想（伝統的慣習）
+${gd}
+
+# 基本デザイン4原則（C.R.A.P.｜Robin Williams『ノンデザイナーズ・デザインブック』由来の定石・例外あり）
+${crap}
+
+# 定番リファレンス（慣習・公式ガイドライン。査読論文とは区別して扱う）
+- Gestaltの近接/類同の法則（知覚のまとまり）
+- WCAG 2.x（W3C）コントラスト基準：本文4.5:1・大文字3:1
+- Nielsenの10ユーザビリティ・ヒューリスティック（NN/g）
+- Material Design / Apple HIG などの公式デザインガイド
+（上記は“定番リファレンス/慣習”であり、査読論文の主張ではない。引用時は明確に区別する）
+
+# ペルソナ別カラートーンの考え方
+- 明度↑=快、彩度↑=覚醒（Valdez & Mehrabian 1994）。ペルソナの目的に合わせ、背景は高明度、差し色は小面積で一点強調。可読性はWCAGのコントラストを目安に。`;
+}
+
+async function callClaude(system, messages, opts){
+ opts=opts||{}; const _t=opts.temp!=null?opts.temp:params.temp, _m=opts.maxtok!=null?opts.maxtok:params.maxtok;
+ const key=$("#apikey").value.trim();
+ let headers, body;
+ if(key){ // HTML版：自分の鍵でブラウザから直接
+  headers={"content-type":"application/json","x-api-key":key,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"};
+  body={model:$("#model").value, max_tokens:_m, temperature:_t, system, messages};
+ } else { // アーティファクト版：claude.ai内・鍵不要（自動注入）
+  headers={"content-type":"application/json"};
+  body={model:"claude-sonnet-4-6", max_tokens:Math.min(_m,1000), temperature:_t, system, messages};
+ }
+ const res=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers,body:JSON.stringify(body)});
+ if(!res.ok){ const e=await res.text(); throw new Error(res.status+" "+e.slice(0,200)); }
+ const data=await res.json();
+ return (data.content||[]).filter(c=>c.type==="text").map(c=>c.text).join("\n").trim()||"(応答が空でした)";
+}
+function linkifyDOI(text){
+ const known=new Set(PAPERS.map(p=>p.doi));
+ return text.replace(/doi:\s*(10\.\d{4,9}\/[^\s)）、]+)/g,(m,d)=>{
+  const clean=d.replace(/[.,。]$/,"");
+  if(known.has(clean)) return `<a class="doi" href="https://doi.org/${clean}" target="_blank" rel="noopener">🔗 doi:${clean}</a>`;
+  return m;
+ }).replace(/【(定義|たとえ|詳細|一言まとめ)】/g,'<h4>【$1】</h4>');
+}
+
+const chat=()=>$("#chat");
+function addMsg(role,text,img){
+ $("#empty")?.remove();
+ const wrap=document.createElement("div"); wrap.className="msg "+(role==="user"?"me":"ai");
+ const ava=document.createElement("div"); ava.className="ava"; ava.textContent=role==="user"?"🧑":"🐰";
+ const b=document.createElement("div"); b.className="bubble";
+ if(role==="user"){ if(img){ const im=document.createElement("img"); im.src="data:"+img.media+";base64,"+img.data; im.style.cssText="max-width:170px;border-radius:8px;display:block;margin-bottom:6px"; b.appendChild(im); } const tx=document.createElement("div"); tx.textContent=text; b.appendChild(tx); }
+ else{ b.innerHTML=linkifyDOI(text);
+  const tb=document.createElement("div"); tb.className="toolbar";
+  const sp=document.createElement("button"); sp.className="speakbtn"; sp.textContent="🔊"; sp.title="読み上げ"; sp.onclick=()=>speak(text); tb.appendChild(sp); b.appendChild(tb); }
+ wrap.appendChild(ava); wrap.appendChild(b); chat().appendChild(wrap); b.scrollIntoView({block:"nearest"}); return b;
+}
+async function ask(userText,isTransform=false){
+ const img=pendingImage;
+ if(!isTransform) addMsg("user",userText,img);
+ const content = img ? [{type:"image",source:{type:"base64",media_type:img.media,data:img.data}},{type:"text",text:userText||"この画像を分析して"}] : userText;
+ history.push({role:"user",content});
+ pendingImage=null; showImgChip();
+ const thinking=addMsg("assistant","🐰 考え中…"); $("#sendBtn").disabled=true;
+ try{ const text=await callClaude(buildSystem(mode),history.slice(-10)); thinking.parentElement.remove(); addMsg("assistant",text); history.push({role:"assistant",content:text}); if(tts)speak(text); }
+ catch(err){ thinking.innerHTML="⚠️ エラー: "+String(err.message||err); }
+ finally{ $("#sendBtn").disabled=false; }
+}
+function send(){ const t=$("#input").value.trim(); if(!t&&!pendingImage)return; $("#input").value=""; ask(t); }
+
+let jpVoice=null;
+function pickVoice(){ const vs=speechSynthesis.getVoices(); jpVoice=vs.find(v=>/ja|Japanese/i.test(v.lang))||null; }
+if("speechSynthesis" in window){ pickVoice(); speechSynthesis.onvoiceschanged=pickVoice; }
+function speak(text){ if(!("speechSynthesis" in window))return; speechSynthesis.cancel();
+ const u=new SpeechSynthesisUtterance(text.replace(/doi:[^\s]+/g,"").replace(/【|】/g,"。").replace(/[#*_`>]/g,""));
+ u.lang="ja-JP"; if(jpVoice)u.voice=jpVoice; u.rate=ttsRate; u.pitch=1.04; speechSynthesis.speak(u); }
+let rec=null,recOn=false;
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+if(SR){ rec=new SR(); rec.lang="ja-JP"; rec.interimResults=true; rec.continuous=false;
+ rec.onresult=e=>{ let t=""; for(const r of e.results)t+=r[0].transcript; $("#input").value=t; };
+ rec.onend=()=>{ recOn=false; $("#micBtn").classList.remove("rec"); $("#recHint").textContent=""; };
+ rec.onerror=()=>{ recOn=false; $("#micBtn").classList.remove("rec"); $("#recHint").textContent="🎤認識エラー"; }; }
+function micToggle(){ if(!rec){ alert("この環境は音声入力に対応していません（Chrome系推奨）"); return; }
+ if(recOn){ rec.stop(); return; } recOn=true; $("#micBtn").classList.add("rec"); $("#recHint").textContent="🎤聞いています…"; rec.start(); }
+
+/* theory */
+function renderPapers(filter="all"){
+ const box=$("#papers"); box.innerHTML="";
+ PAPERS.filter(p=>filter==="all"||p.th===filter).forEach(p=>{
+  const d=document.createElement("div"); d.className="paper";
+  d.innerHTML=`<div class="t">${p.t}</div><div class="m">${p.au} (${p.yr}) ｜ ${p.j}</div>
+    <div class="m" style="color:var(--moss-deep);margin-top:3px">${p.plain}</div>
+    <span class="tag">${p.th}</span>
+    <a class="doilink" href="https://doi.org/${p.doi}" target="_blank" rel="noopener" onclick="event.stopPropagation()"> 🔗 doi:${p.doi}</a>`;
+  d.onclick=()=>{ goTab("chat"); $("#input").value=`「${p.t}」(${p.au}, ${p.yr}) の内容を、四段構成でやさしく。可能なら庭の知恵か構図ともつなげて。`; $("#input").focus(); };
+  box.appendChild(d);
+ });
+}
+function ctxBadge(){ $("#ctxbadge").textContent=PERSONAS[persona].label; }
+
+/* composition overlay */
+function powerPoint(key,W,H){
+ switch(key){
+  case "thirds": return {x:W/3,y:H/3};
+  case "phi": return {x:0.618*W,y:0.382*H};
+  case "spiral": return {x:0.62*W,y:0.62*H};
+  case "diagonal": return {x:0.66*W,y:0.66*H};
+  case "triangle": return {x:W/2,y:0.7*H};
+  case "center": return {x:W/2,y:H/2};
+  case "symmetry": return {x:W/2,y:0.4*H};
+  case "frame": return {x:W/2,y:H/2};
+  case "leading": return {x:0.5*W,y:0.42*H};
+  default: return {x:W/3,y:H/3};
+ }
+}
+function manualPos(pos,W,H){ const m={tl:[W/3,H/3],tr:[2*W/3,H/3],bl:[W/3,2*H/3],br:[2*W/3,2*H/3],c:[W/2,H/2]}; return m[pos]?{x:m[pos][0],y:m[pos][1]}:null; }
+function overlay(key,W,H){
+ const R="#5f7d4f",G="#b5462f";
+ const L=(x1,y1,x2,y2,dash)=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${R}" stroke-width="1.5" ${dash?'stroke-dasharray="5 5"':''} opacity=".9"/>`;
+ let s="";
+ if(key==="thirds"){ s+=L(W/3,0,W/3,H)+L(2*W/3,0,2*W/3,H)+L(0,H/3,W,H/3)+L(0,2*H/3,W,2*H/3); }
+ else if(key==="phi"){ [0.382,0.618].forEach(f=>{ s+=L(f*W,0,f*W,H)+L(0,f*H,W,f*H); }); }
+ else if(key==="spiral"){ const cx=0.618*W,cy=0.618*H,b=Math.log(1.618)/(Math.PI/2),base=Math.max(W,H)/120; let pts=[];
+  for(let i=0;i<=240;i++){ const th=-i*Math.PI/40,r=base*Math.exp(b*Math.abs(th)),x=cx+r*Math.cos(th),y=cy+r*Math.sin(th); if(x<-50||x>W+50||y<-50||y>H+50)break; pts.push(x.toFixed(1)+","+y.toFixed(1)); }
+  s+=`<polyline points="${pts.join(' ')}" fill="none" stroke="${R}" stroke-width="1.7" opacity=".9"/>`+L(0.382*W,0,0.382*W,H,1)+L(0,0.382*H,W,0.382*H,1); }
+ else if(key==="diagonal"){ s+=L(0,0,W,H)+L(W,0,0,H)+`<line x1="0" y1="0" x2="${H}" y2="${H}" stroke="${G}" stroke-width="1.2" opacity=".75"/><line x1="${W}" y1="0" x2="${W-H}" y2="${H}" stroke="${G}" stroke-width="1.2" opacity=".75"/>`; }
+ else if(key==="triangle"){ s+=`<polygon points="${W/2},${0.18*H} ${0.18*W},${0.86*H} ${0.82*W},${0.86*H}" fill="none" stroke="${R}" stroke-width="1.7" opacity=".9"/>`; }
+ else if(key==="center"){ s+=L(W/2,0,W/2,H,1)+L(0,H/2,W,H/2,1)+`<circle cx="${W/2}" cy="${H/2}" r="${Math.min(W,H)*0.16}" fill="none" stroke="${R}" stroke-width="1.7" opacity=".85"/>`; }
+ else if(key==="symmetry"){ s+=L(W/2,0,W/2,H,1)+`<text x="${W/2+6}" y="16" font-size="11" fill="${R}">対称軸</text>`; }
+ else if(key==="frame"){ const ix=W*0.16,iy=H*0.16; s+=`<rect x="${ix}" y="${iy}" width="${W-2*ix}" height="${H-2*iy}" fill="none" stroke="${R}" stroke-width="1.9" opacity=".9"/>`; }
+ else if(key==="leading"){ const vx=0.5*W,vy=0.42*H; s+=L(0,H,vx,vy)+L(W,H,vx,vy)+L(0.2*W,H,vx,vy)+L(0.8*W,H,vx,vy)+`<circle cx="${vx}" cy="${vy}" r="4" fill="${R}"/>`; }
+ return s;
+}
+function renderStage(){
+ const [rw,rh]=$("#ratio").value.split(",").map(Number); const maxLen=560; let W,H;
+ if(rw>=rh){ W=maxLen; H=maxLen*rh/rw; } else { H=Math.min(420,maxLen); W=H*rw/rh; }
+ const pos=$("#subjPos").value;
+ let pt=pos==="auto"?powerPoint(curFW,W,H):(manualPos(pos,W,H)||powerPoint(curFW,W,H));
+ const subj=showSubj?`<circle cx="${pt.x}" cy="${pt.y}" r="${Math.min(W,H)*0.07}" fill="#435a36" opacity=".9"/><circle cx="${pt.x}" cy="${pt.y}" r="${Math.min(W,H)*0.07}" fill="none" stroke="#fff" stroke-width="2.5"/><text x="${pt.x}" y="${pt.y-Math.min(W,H)*0.09}" font-size="11" fill="#435a36" text-anchor="middle">主役</text>`:"";
+ $("#stage").innerHTML=`<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg" style="border-radius:10px;box-shadow:0 4px 16px rgba(67,90,54,.18)">
+   <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#eef0e3"/><stop offset=".6" stop-color="#e7e2d2"/><stop offset="1" stop-color="#d9ddc8"/></linearGradient></defs>
+   <rect width="${W}" height="${H}" fill="url(#g)"/><rect x="0" y="${H*0.66}" width="${W}" height="${H*0.34}" fill="#c3cbb0" opacity=".7"/>
+   ${overlay(curFW,W,H)}${subj}</svg>`;
+ const f=FRAMEWORKS.find(x=>x.key===curFW);
+ $("#fwInfo").innerHTML=`<h3>${f.nm} <span style="font-size:.72rem;color:var(--sub)">${f.en}</span></h3><div>${f.desc}</div><div class="use">📌 使いどころ：${f.use}</div>`;
+}
+function renderFWGrid(){
+ const g=$("#fwGrid"); g.innerHTML="";
+ FRAMEWORKS.forEach(f=>{ const d=document.createElement("div"); d.className="fw"+(f.key===curFW?" on":""); d.innerHTML=`<div class="nm">${f.nm}</div><div class="en">${f.en}</div>`; d.onclick=()=>{ curFW=f.key; renderFWGrid(); renderStage(); }; g.appendChild(d); });
+}
+
+/* garden */
+function renderGarden(){
+ const box=$("#garden"); box.innerHTML="";
+ GARDEN.forEach(g=>{
+  const fwNm=(FRAMEWORKS.find(f=>f.key===g.fw)||{}).nm||"";
+  const dois=g.doi.map(id=>{ const p=PAPERS.find(x=>x.id===id); return p?`<a href="https://doi.org/${p.doi}" target="_blank" rel="noopener">${p.au.split(" ")[0]} ${p.yr}</a>`:""; }).join(" ／ ");
+  const el=document.createElement("div"); el.className="gcard";
+  el.innerHTML=`
+   <div class="ghead"><span class="jp">${g.jp}</span><span class="kana">${g.kana}</span></div>
+   <div class="gbody">
+     <div class="gbox"><span class="glab def">定義</span><p>${g.def}</p></div>
+     <div class="gbox"><span class="glab ex">🍵 たとえ</span><p>${g.ex}</p></div>
+     <div class="gbox"><span class="glab gd">庭での例</span><p>${g.gd}</p></div>
+     <div class="gbox"><span class="glab br">一言まとめ</span><p>${g.one}</p></div>
+   </div>
+   <div class="bridge">🔗 <strong>つながり：</strong>${g.br}　
+     <span class="gpill" data-fw="${g.fw}">構図「${fwNm}」を見る</span>
+     <span style="font-size:.72rem;color:var(--sub)">　響き合う論文: ${dois}</span></div>`;
+  box.appendChild(el);
+ });
+ $$("#garden .gpill").forEach(b=>b.onclick=()=>{ curFW=b.dataset.fw; renderFWGrid(); renderStage(); goTab("comp"); });
+}
+function renderGardenQuick(){
+ const g=$("#gardenQuick"); g.innerHTML="";
+ GARDEN.forEach(x=>{ const c=document.createElement("div"); c.className="chip"; c.textContent=x.jp; c.onclick=()=>{ goTab("chat"); $("#input").value=`日本庭園の「${x.jp}（${x.kana}）」を、写真の構図とデザイン論の両方につなげて、四段構成で教えて。`; $("#input").focus(); }; g.appendChild(c); });
+}
+function renderGardenPalette(){
+ const g=$("#gardenPalette"); g.innerHTML="";
+ GARDEN_PALETTE.forEach(c=>{ const s=document.createElement("span"); s.style.background=c.hex; s.dataset.n=c.n; s.dataset.hex=c.hex; s.title=c.n+" "+c.hex; s.onclick=()=>{ if(navigator.clipboard)navigator.clipboard.writeText(c.hex); }; g.appendChild(s); });
+}
+
+/* questions transform */
+function toQuestions(){
+ const last=[...history].reverse().find(h=>h.role==="assistant");
+ if(!last){ alert("先に相談して回答を出してね。"); return; }
+ ask("直前の回答について、読み手に“考えさせる問い”を5タイプ（予測/自己説明/反例・境界条件/転移/想起）作って。各問に【ねらい】を一行。テスト効果(Roediger&Karpicke 2006)とDunlosky 2013の趣旨に沿って。",true);
+}
+
+function goTab(name){
+ $$(".tab").forEach(t=>t.classList.toggle("on",t.dataset.tab===name));
+ $$(".pane").forEach(p=>p.classList.toggle("on",p.id==="pane-"+name));
+ if(name==="comp") renderStage();
+}
+
+function updateMode(){ const k=$("#apikey")&&$("#apikey").value.trim(); const el=$("#modeInd"); if(el) el.innerHTML = k ? '<b style="color:var(--water)">HTML版</b>（自分の鍵）' : '<b style="color:var(--moss-deep)">アーティファクト版</b>（鍵不要）'; }
+function wire(){
+ $("#tabs").onclick=e=>{ const t=e.target.closest(".tab"); if(t)goTab(t.dataset.tab); };
+ $("#sendBtn").onclick=send; $("#micBtn").onclick=micToggle;
+ $("#input").addEventListener("keydown",e=>{ if(e.key==="Enter"&&(e.ctrlKey||e.metaKey)){ e.preventDefault(); send(); }});
+ $("#personas").onclick=e=>{ const c=e.target.closest(".chip"); if(!c)return; $$(".persona").forEach(x=>x.classList.remove("on")); c.classList.add("on"); persona=c.dataset.k; ctxBadge(); };
+ $("#ttsToggle").onclick=()=>{ tts=!tts; $("#ttsToggle").classList.toggle("on",tts); $("#ttsState").textContent=tts?"ON":"OFF"; if(!tts)speechSynthesis.cancel(); };
+ $("#quick").addEventListener("click",e=>{ const m=e.target.closest(".mini"); if(m)renderPapers(m.dataset.th); });
+ $("#ratio").onchange=renderStage; $("#subjPos").onchange=renderStage;
+ $("#toggleSubj").onclick=()=>{ showSubj=!showSubj; $("#toggleSubj").textContent="主役マーカー: "+(showSubj?"ON":"OFF"); renderStage(); };
+ $("#toQuestions").onclick=toQuestions;
+ $("#modes").onclick=e=>{ const c=e.target.closest(".chip"); if(!c)return; $$("#modes .mode").forEach(x=>x.classList.remove("on")); c.classList.add("on"); mode=c.dataset.m; updateCfg(); };
+ $("#pTemp").oninput=e=>{ params.temp=parseFloat(e.target.value); updateCfg(); };
+ $("#pMax").oninput=e=>{ params.maxtok=parseInt(e.target.value); updateCfg(); };
+ $("#pVerb").onchange=e=>{ params.verbosity=e.target.value; updateCfg(); };
+ $("#pLevel").onchange=e=>{ params.level=e.target.value; updateCfg(); };
+ $("#pEx").onchange=e=>{ params.examples=e.target.value; updateCfg(); };
+ $("#pCite").onchange=e=>{ params.cite=e.target.value; updateCfg(); };
+ $("#pRate").oninput=e=>{ ttsRate=parseFloat(e.target.value); updateCfg(); };
+ $("#presetSave").onclick=savePreset;
+ $("#presetGood").onclick=loadGood;
+ $("#presetCopy").onclick=exportPresets;
+ $("#presetImport").onclick=importPresets;
+ $("#apikey").addEventListener("input",updateMode);
+ const ib=$("#imgBtn"); if(ib) ib.onclick=()=>$("#imgFile").click();
+ const iff=$("#imgFile"); if(iff) iff.onchange=e=>{ if(e.target.files&&e.target.files[0]) attachImage(e.target.files[0]); e.target.value=""; };
+}
+
+renderPapers("all"); ctxBadge(); renderFWGrid(); renderStage(); renderGarden(); renderGardenQuick(); renderGardenPalette(); wire(); updateCfg(); renderPresets(); updateMode(); renderCRAP(); renderQDesign(); renderPersonaTone(); renderAnimeParams(); renderReport(); renderCustomChar(); renderTempDemo();
+</script>
+</body>
+</html>
